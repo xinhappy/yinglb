@@ -8,7 +8,7 @@
       <div class="item"><img src="/src/assets/login/icon_login_pwd.png" style="width: 4vw;height: 4vw;margin-right: 2vw" alt=""><input type="number" v-model="rePassWord" placeholder="请确认交易密码(6位数字)"></div>
     </div>
     <div class="save">
-      <button @click="save"> 确定</button>
+      <button @click="save">确定</button>
     </div>
     <toast v-model="showValue" type="text" :time="800" is-show-mask :text="resultDesc" position="bottom"></toast>
   </div>
