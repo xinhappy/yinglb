@@ -1,0 +1,170 @@
+<template>
+  <div class="loginWrap">
+    <div class="loginForm">
+      <form @submit.prevent="submit">
+        <div class="input"><img src="../../assets/login/icon_login_name.png" alt=""><input v-model="formData.telephone"
+                                                                                           type="text" required
+                                                                                           placeholder="手机号码"></div>
+        <div class="input"><img src="../../assets/login/icon_login_pwd.png" alt=""><input v-model="formData.password"
+                                                                                          type="password" required
+                                                                                          placeholder="密码"></div>
+        <div class="save">
+          <button type="submit">登录</button>
+        </div>
+      </form>
+      <div class="clearfix">
+        <a class="fl" href="" style="margin-left: 3vw;color: #aaa;font-size: 2vw">用户注册</a>
+        <a class="fr" href="" style="margin-right: 3vw;color:#aaa;font-size: 2vw">忘记密码？</a>
+      </div>
+    </div>
+    <div class="qita">
+      <p>其他登录方式</p>
+      <p><img src="../../assets/login/i_type_line.png" alt="" style="width: 50vw"></p>
+      <p><img src="../../assets/login/icon_login_wx.png" alt=""><img src="../../assets/login/icon_login_qq.png" alt="">
+      </p>
+    </div>
+  </div>
+</template>
+
+<script type="text/ecmascript-6">
+  import * as ApiService from 'api/api'
+  import {AlertModule, Alert, TransferDomDirective as TransferDom} from 'vux'
+  import * as types from 'src/store/mutation-types'
+  export default {
+    components: {
+      Alert
+    },
+    data () {
+      return {
+        formData: []
+      }
+    },
+    created () {
+      this.getNavgation()
+    },
+    methods: {
+      submit: function () {
+        this.formData.type = 1
+        this.formData.loginInfo = this.uuid()
+        ApiService.login('/api/h5Member/loginH5.htm', this.formData).then((res) => {
+          if (res.data.resultCode === '0') {
+            AlertModule.show({
+              content: res.data.resultDesc,
+              onShow () {
+              },
+              onHide () {
+              }
+            })
+            setTimeout(() => {
+              AlertModule.hide()
+            }, 2000)
+          } else {
+            this.$store.commit(types.LOGIN, res.data.object)
+            this.$router.push('/community')
+          }
+        })
+      },
+      uuid: function () {
+        const len = 32  // 32长度
+        let radix = 16  // 16进制
+        const chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'.split('')
+        const uuid = []
+        let i
+        radix = radix || chars.length
+        if (len) {
+          for (i = 0; i < len; i++)uuid[i] = chars[0 | Math.random() * radix]
+        } else {
+          var r
+          uuid[8] = uuid[13] = uuid[18] = uuid[23] = '-'
+          uuid[14] = '4'
+          for (i = 0; i < 36; i++) {
+            if (!uuid[i]) {
+              r = 0 | Math.random() * 16
+              uuid[i] = chars[(i === 19) ? (r & 0x3) | 0x8 : r]
+            }
+          }
+        }
+        return uuid.join('')
+      },
+      getNavgation: function () {
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(
+            function (position) {
+              let longitude = position.coords.longitude
+              let latitude = position.coords.latitude
+              localStorage.setItem('local', JSON.stringify({longitude: longitude, latitude: latitude}))
+            },
+            function (e) {
+              let msg = e.code
+              let dd = e.message
+            }
+          )
+        }
+      }
+    }
+  }
+</script>
+
+<style scoped lang="less" rel="stylesheet/less">
+  .loginWrap {
+    background: url(../../assets/login/i_login_bg1.png) no-repeat;
+    background-size: contain;
+    height: 100%;
+    &:before {
+      content: '';
+      display: table;
+    }
+  }
+
+  .loginForm {
+    margin: 30vw auto 0;
+    background: url("../../assets/login/i_login_bg2.png") no-repeat;
+    background-size: contain;
+    width: 60%;
+    height: 66vw;
+    padding-top: 25vw;
+  }
+
+  .input {
+    border-bottom: 1px solid #eee;
+    width: 90%;
+    margin: 0 auto 2vw;
+    img {
+      display: inline-block;
+      width: 5vw;
+      vertical-align: middle;
+      margin: 0 2vw;
+    }
+    input {
+      display: inline-block;
+      height: 6vw;
+      width: 80%;
+    }
+  }
+
+  .save {
+    text-align: center;
+    button {
+      width: 90%;
+      margin: 0 auto;
+      border: none;
+      background: url(../../assets/login/i_login_bt.png) no-repeat;
+      background-size: contain;
+      height: 12vw;
+      color: #fff;
+      font-size: 4vw;
+      &:focus {
+        outline: none;
+      }
+    }
+  }
+
+  .qita {
+    text-align: center;
+    img {
+      width: 8vw;
+      margin: 0 3vw;
+    }
+  }
+
+</style>
