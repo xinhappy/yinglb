@@ -174,6 +174,7 @@
       this.week()
       this.time()
       this.getAddress()
+      console.log(this.userInfo)
       let hour = new Date().getHours()
       let min = new Date().getMinutes()
       if (hour + min / 60 > 12.5) {
@@ -247,7 +248,10 @@
             goodsList: goodsList,
             appointmentTime: this.yuId[0],
             userId: this.userInfo.id,
-            remark: this.remark[0]
+            remark: this.remark[0],
+            checkFlag: '',
+            deviceInfo: this.userInfo.deviceInfo,
+            peopleId: this.userInfo.id
           }).then(res => {
             if (res.data.resultCode === '1') {
               this.show = true
@@ -260,13 +264,16 @@
             this.resultDesc = '请选择配送地址'
             return
           }
-          ApiService.post('/api/h5DistributorOrder/saveDistributionalOrderH5', {
+          ApiService.post('/api/h5DistributorOrder/saveDistributionalOrderH5.htm', {
             businessId: this.companyInfo.id,
             goodsList: goodsList,
             appointmentTime: this.yuId[0],
             userId: this.userInfo.id,
             remark: this.remark[0],
-            userAddress: this.userAddress.id
+            userAddress: this.userAddress.id,
+            checkFlag: '',
+            deviceInfo: this.userInfo.deviceInfo,
+            peopleId: this.userInfo.id
           }).then(res => {
             if (res.data.resultCode === '1') {
               this.show = true
@@ -336,13 +343,18 @@
               userId: this.userInfo.id,
               redId: redId,
               orderId: this.orderId,
-              userPwd: val
+              userPwd: val,
+              checkFlag: '',
+              deviceInfo: this.userInfo.deviceInfo,
+              peopleId: this.userInfo.id
             }).then(res => {
               if (res.data.resultCode === '0') {
                 this.showValue = true
                 this.resultDesc = res.data.resultDesc
                 this.show = false
                 this.password = ''
+              } else {
+                console.log(res.data)
               }
             })
           } else {
@@ -350,7 +362,10 @@
               userId: this.userInfo.id,
               userRedId: redId,
               orderId: this.orderId,
-              userPwd: val
+              userPwd: val,
+              checkFlag: '',
+              deviceInfo: this.userInfo.deviceInfo,
+              peopleId: this.userInfo.id
             }).then(res => {
               if (res.data.resultCode === '0') {
                 this.showValue = true
@@ -363,12 +378,15 @@
         }
       },
       userAddress (val) {
-        console.log(val)
         ApiService.get('/api/h5DistributorOrder/countDistributionFeeH5.htm?addressId=' + val.id + '&businessId=' + this.companyInfo.id + '&checkFlag&deviceInfo=' + this.userInfo.deviceInfo + '&peopleId=' + this.userInfo.id).then(res => {
           if (res.data.resultCode === '1') {
             this.distributionFee = res.data.object
           }
         })
+      },
+      userInfo (val) {
+        console.log(val)
+        this.userInfo = val
       }
     }
   }
