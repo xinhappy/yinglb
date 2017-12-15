@@ -4,14 +4,17 @@
               :left-options="{backText: ''}" :title="title">
     </x-header>
     <scroller lock-x height="-7vw" @on-scroll-bottom="onScrollBottom" ref="scrollerBottom"
-              :scroll-bottom-offst="50">
-      <div class="search-results" v-if="inners.length > 0">
-        <listInner v-bind:items="inners"></listInner>
-        <load-more tip="loading"></load-more>
+              :scroll-bottom-offst="10">
+      <div>
+        <div class="search-results" v-if="inners.length > 0">
+          <listInner v-bind:items="inners"></listInner>
+          <!--<load-more tip="loading"></load-more>-->
+        </div>
+        <div style="text-align: center" v-if="inners.length === 0">
+          暂无数据
+        </div>
       </div>
-      <div style="text-align: center" v-if="inners.length === 0">
-        暂无数据
-      </div>
+
     </scroller>
   </div>
 </template>
@@ -42,9 +45,15 @@
     },
     methods: {
       getList: function () {
-        ApiService.getClassCompanyList('/api/h5BusinessManage/queryBusinessInfoH5.htm?goodsType=' + this.goodsType + '&memberId=' + this.userInfo.id + '&terminalType=1&latitude=0.0&longitude=0.0&businessRegion&peopleId=' + this.userInfo.id + '&deviceInfo=' + this.userInfo.deviceInfo + '&checkFlag&page=' + this.page + '&limit=8').then(res => {
-          this.inners.push.apply(this.inners, res.data.rows)
-        })
+        if (this.title === '商家活动') {
+          ApiService.getClassCompanyList('/api/h5AdvertisementBusiness/queryBusinessH5.htm?adId=' + this.goodsType + '&latitude=0.0&longitude=0.0&businessRegion&peopleId=' + this.userInfo.id + '&deviceInfo=' + this.userInfo.deviceInfo + '&checkFlag&page=' + this.page + '&limit=8').then(res => {
+            this.inners.push.apply(this.inners, res.data.rows)
+          })
+        } else {
+          ApiService.getClassCompanyList('/api/h5BusinessManage/queryBusinessInfoH5.htm?goodsType=' + this.goodsType + '&memberId=' + this.userInfo.id + '&terminalType=1&latitude=0.0&longitude=0.0&businessRegion&peopleId=' + this.userInfo.id + '&deviceInfo=' + this.userInfo.deviceInfo + '&checkFlag&page=' + this.page + '&limit=8').then(res => {
+            this.inners.push.apply(this.inners, res.data.rows)
+          })
+        }
       },
       onScrollBottom: function () {
         if (this.onFetching) {

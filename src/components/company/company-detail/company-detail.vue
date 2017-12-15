@@ -2,7 +2,7 @@
   <div>
     <div>
       <div class="blue_bg">
-        <a href="javascript:history.back();" style="float: left;margin-left: 3vw"><img style="width: 2vw"
+        <a @click="go" style="float: left;margin-left: 3vw"><img style="width: 2vw"
                                                                                        src="../../../assets/i_back_white.png"
                                                                                        alt=""></a>
         商品详情
@@ -35,21 +35,21 @@
         <p class="address"><span class="add_icon"></span>{{companyInfo.businessDetailAddress}}</p>
       </div>
     </div>
-    <div class="list_inner clearfix">
+    <div @click="look" class="list_inner clearfix">
       <div class="fl">
         <div class="title"><i></i>商品列表</div>
         <div class="inner_left">
           <p>在售商品详情</p>
         </div>
       </div>
-      <div @click="look" class="fr see">
+      <div class="fr see">
         <div>
           <img src="../../../assets/i_see.png" style="width: 5vw" alt="">
           <p>去查看</p>
         </div>
       </div>
     </div>
-    <div class="list_inner clearfix">
+    <div @click="lookP" class="list_inner clearfix">
       <div class="fl">
         <div class="title"><i></i>商品评价</div>
         <div class="inner_left">
@@ -62,6 +62,9 @@
           <p>去查看</p>
         </div>
       </div>
+    </div>
+    <div class="save">
+      <button @click="pay">去支付</button>
     </div>
   </div>
 
@@ -93,6 +96,15 @@
       },
       look: function () {
         this.$router.push('/itemList/' + this.companyInfo.id)
+      },
+      pay () {
+        this.$router.push('/payCompany')
+      },
+      go () {
+        this.$router.push('/community')
+      },
+      lookP () {
+        this.$router.push('/companyAppraise/' + this.companyInfo.id)
       }
     }
   }
@@ -184,5 +196,24 @@
       background: url(../../../assets/stars.png) no-repeat;
     }
   }
-
+  .save {
+    text-align: center;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    padding-bottom: 2vw;
+    button {
+      width: 85%;
+      margin: 0 auto;
+      border: none;
+      background: url(../../../assets/i_bg_normal.png) no-repeat;
+      background-size: cover;
+      height: 10vw;
+      color: #fff;
+      font-size: 4vw;
+      &:focus {
+        outline: none;
+      }
+    }
+  }
 </style>

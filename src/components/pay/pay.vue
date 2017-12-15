@@ -174,7 +174,6 @@
       this.week()
       this.time()
       this.getAddress()
-      console.log(this.userInfo)
       let hour = new Date().getHours()
       let min = new Date().getMinutes()
       if (hour + min / 60 > 12.5) {
@@ -354,7 +353,7 @@
                 this.show = false
                 this.password = ''
               } else {
-                console.log(res.data)
+                this.$router.push('/payResult')
               }
             })
           } else {
@@ -372,6 +371,8 @@
                 this.resultDesc = res.data.resultDesc
                 this.show = false
                 this.password = ''
+              } else {
+                this.$router.push('/payResult')
               }
             })
           }
@@ -385,7 +386,6 @@
         })
       },
       userInfo (val) {
-        console.log(val)
         this.userInfo = val
       }
     }

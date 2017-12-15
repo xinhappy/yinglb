@@ -11,8 +11,8 @@
         <span><a href="" style="color: #fff;font-size: 3.8vw">搜索</a></span>
       </div>
     </div>
-    <scroller lock-x height="-7vw" :bounce=false  @on-scroll-bottom="onScrollBottom" ref="scrollerBottom"
-              :scroll-bottom-offst="50">
+    <scroller lock-x height="-7vw" :bounce=false @on-scroll-bottom="onScrollBottom" ref="scrollerBottom"
+              :scroll-bottom-offst="10">
       <div>
         <div class="clearfix"
              style="margin-top:13vw;background: #fff;margin-bottom: 8px;font-size: 3.2vw">
@@ -29,7 +29,8 @@
           </div>
         </div>
         <swiper auto loop dots-position="center" height="40vw">
-          <swiper-item v-for="item in lists" :key="item.id"><img class="img-responsive" :src="item.imgUrl"
+          <swiper-item v-for="item in lists" :key="item.id"><img @click="go(item.id)" class="img-responsive"
+                                                                 :src="item.imgUrl"
                                                                  alt=""></swiper-item>
         </swiper>
         <div class="cumm_list clearfix">
@@ -155,6 +156,9 @@
       },
       select () {
         this.$router.push('/circle')
+      },
+      go (id) {
+        this.$router.push('/companyList/' + id + '/商家活动')
       }
     }
   }

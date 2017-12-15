@@ -1,12 +1,12 @@
 <template>
   <div>
-    <x-header style="background: url('/src/assets/i_bg_normal.png') no-repeat;background-size: cover;"
-              :left-options="{backText: ''}">商品列表
+    <x-header style="background: url('/src/assets/i_bg_normal.png') no-repeat;background-size: cover;" @on-click-back="back"
+              :left-options="{backText: '',preventGoBack:true}">商品列表
     </x-header>
     <div class="item-container">
       <ul>
         <li class="clearfix item-list" v-for="(v,i) in goodsList">
-          <div class="fl">
+          <div class="fl" @click="detail(v)">
             <img :src="v.thumbnail"
                  style="width: 22vw;height: 22vw;display: block;border-bottom-left-radius: 5px;border-top-left-radius: 5px;">
           </div>
@@ -22,6 +22,7 @@
           </div>
         </li>
       </ul>
+      <div style="text-align: center" v-if="goodsList.length === 0">暂无数据</div>
     </div>
     <div class="car-foot-nav clearfix">
       <div class="fl" style="position: relative" @click="showCar">
@@ -88,7 +89,7 @@
 
     methods: {
       ...mapMutations(
-        ['deleteGoods', 'updateGoods', 'clearGoods']
+        ['deleteGoods', 'updateGoods', 'clearGoods', 'addGoods']
       ),
       findPosition(id) {
         return this.goodsList.findIndex(item => {
@@ -139,6 +140,14 @@
         } else {
           this.show1 = true
         }
+      },
+      detail (v) {
+        localStorage.setItem('itemDetail', JSON.stringify(v))
+        this.$router.push('/itemDetail')
+      },
+      back () {
+        this.addGoods([])
+        this.$router.back()
       }
     },
     computed: {
@@ -150,7 +159,7 @@
       }
     },
     mounted() {
-      ApiService.getCompanyList('/api/h5BusinessGoods/queryGoodInfoH5.htm?businessId=' + this.businessId + '&page=1&limit=5').then(res => {
+      ApiService.getCompanyList('/api/h5BusinessGoods/queryGoodInfoH5.htm?businessId=' + this.businessId + '&page=1&limit=100').then(res => {
         this.goodsList.push.apply(this.goodsList, this.fifter(res.data.rows))
       })
     }
