@@ -23,8 +23,8 @@ export function getClassCompanyList(url) {
   return axios.get(url)
 }
 // post
-export function post (url, data) {
-  return axios.post(url, data)
+export function post (url, data, config) {
+  return axios.post(url, data, config)
 }
 // get
 export function get (url) {

@@ -13,7 +13,7 @@ module.exports = {
     proxyTable: {
       "/api":{
         // "target":"http://106.14.5.246:8080"
-        "target":"http://192.168.1.118:8080"
+        "target":"http://192.168.1.110:8080"
       }
     },
 

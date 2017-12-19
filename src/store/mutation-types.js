@@ -8,3 +8,5 @@ export const LOGOUT = 'LOGOUT'
 export const SELECTED = 'SELECTED'
 
 export const SETADS = 'SETADS'
+
+export const ORDER = 'ORDER'

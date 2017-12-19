@@ -9,7 +9,20 @@ import CompanyDetail from 'components/company/company-detail/company-detail'
 import CompanyAppraise from 'components/company/company-appraise/company-appraise'
 import Runner from 'components/runner/runner'
 import Home from 'components/home/home'
-import UserInfo from 'components/home/userInfo'
+import UserInfo from 'components/home/userInfo/userInfo'
+import NickName from 'components/home/userInfo/nickname'
+import Records from 'components/home/records/records'
+import Order from 'components/home/order/order'
+import OrderDetail from 'components/home/order/orderDetail'
+import Certification from 'components/home/certification/certification'
+import ChangePhone from 'components/home/certification/change-phone'
+import ChangeOne from 'components/home/certification/change-one'
+import ChangeNext from 'components/home/certification/change-next'
+import RealName from 'components/home/certification/real-name'
+import ChangeLoginPwd from 'components/home/certification/change-loginPwd'
+import ResetLoginPwd from 'components/home/certification/resetting-loginPwd'
+import ResetPwd from 'components/home/certification/resetting-pwd'
+import ChangePwd from 'components/home/certification/change-pwd'
 import Search from 'components/search/search'
 import SearchResult from 'components/search/search-result'
 import Circle from 'components/circle/circle'
@@ -124,6 +137,71 @@ const router = new Router({
       path: '/userInfo',
       name: 'userInfo',
       component: UserInfo
+    },
+    {
+      path: '/nickname',
+      name: 'nickname',
+      component: NickName
+    },
+    {
+      path: '/records',
+      name: 'records',
+      component: Records
+    },
+    {
+      path: '/order',
+      name: 'order',
+      component: Order
+    },
+    {
+      path: '/orderDetail',
+      name: 'orderDetail',
+      component: OrderDetail
+    },
+    {
+      path: '/certification',
+      name: 'certification',
+      component: Certification
+    },
+    {
+      path: '/changePhone',
+      name: 'changePhone',
+      component: ChangePhone
+    },
+    {
+      path: '/changeOne',
+      name: 'changeOne',
+      component: ChangeOne
+    },
+    {
+      path: '/changeNext',
+      name: 'changeNext',
+      component: ChangeNext
+    },
+    {
+      path: '/realName',
+      name: 'realName',
+      component: RealName
+    },
+    {
+      path: '/changeLoginPwd',
+      name: 'changeLoginPwd',
+      component: ChangeLoginPwd
+    },
+    {
+      path: '/resetLoginPwd',
+      name: 'resetLoginPwd',
+      component: ResetLoginPwd
+    },
+    {
+      path: '/changePwd',
+      name: 'changePwd',
+      component: ChangePwd
+    },
+    {
+      path: '/resetPwd',
+      name: 'resetPwd',
+      component: ResetPwd
     },
     // 重定向
     {path: '*', redirect: '/community'}

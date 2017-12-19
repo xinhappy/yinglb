@@ -13,7 +13,8 @@ export default new Vuex.Store({
     token: null,
     circle: {orgId: 'ff8080815d300215015d40066a300070', text: '河南城建学院商圈'},
     goodsList: localStorage['goodsList'] ? JSON.parse(localStorage['goodsList']) : [],
-    userAddress: []
+    userAddress: [],
+    orderDetail: []
   },
   getters: {
     sum: state => {
@@ -43,6 +44,9 @@ export default new Vuex.Store({
     },
     [types.SETADS] (state, data) {
       state.userAddress.push(data)
+    },
+    [types.ORDER] (state, data) {
+      state.orderDetail.push(data)
     },
     addGoods: (state, data) => {
       state.goodsList = data

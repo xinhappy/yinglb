@@ -11,7 +11,7 @@
         <span><a href="" style="color: #fff;font-size: 3.8vw">搜索</a></span>
       </div>
     </div>
-    <scroller lock-x height="-7vw" :bounce=false @on-scroll-bottom="onScrollBottom" ref="scrollerBottom"
+    <scroller lock-x height="-7vw"  @on-scroll-bottom="onScrollBottom" ref="scrollerBottom"
               :scroll-bottom-offst="10">
       <div>
         <div class="clearfix"

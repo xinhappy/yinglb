@@ -49,6 +49,10 @@
           ApiService.getClassCompanyList('/api/h5AdvertisementBusiness/queryBusinessH5.htm?adId=' + this.goodsType + '&latitude=0.0&longitude=0.0&businessRegion&peopleId=' + this.userInfo.id + '&deviceInfo=' + this.userInfo.deviceInfo + '&checkFlag&page=' + this.page + '&limit=8').then(res => {
             this.inners.push.apply(this.inners, res.data.rows)
           })
+        } else if (this.title === '我的收藏') {
+          ApiService.get('/api/h5BusinessManage/queryCollectionH5.htm?userId=' + this.userInfo.id + '&latitude=0.0&longitude=0.0&peopleId=' + this.userInfo.id + '&deviceInfo=' + this.userInfo.deviceInfo + '&checkFlag&page=' + this.page + '&limit=8').then(res => {
+            this.inners.push.apply(this.inners, res.data.rows)
+          })
         } else {
           ApiService.getClassCompanyList('/api/h5BusinessManage/queryBusinessInfoH5.htm?goodsType=' + this.goodsType + '&memberId=' + this.userInfo.id + '&terminalType=1&latitude=0.0&longitude=0.0&businessRegion&peopleId=' + this.userInfo.id + '&deviceInfo=' + this.userInfo.deviceInfo + '&checkFlag&page=' + this.page + '&limit=8').then(res => {
             this.inners.push.apply(this.inners, res.data.rows)

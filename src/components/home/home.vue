@@ -25,30 +25,30 @@
         </div>
       </div>
       <div class="room">
-        <div class="item clearfix">
+        <div class="item clearfix" @click="to('/records')">
           <img src="/src/assets/home/i_center_consume.png" alt="">
           <span>消费记录</span>
           <a class="fr"><img src="/src/assets/i_row_right_gray.png" alt=""></a>
         </div>
-        <div class="item clearfix">
+        <div class="item clearfix"  @click="to('/order')">
           <img src="/src/assets/home/i_center_consume.png" alt="">
           <span>我的订单</span>
           <a class="fr"><img src="/src/assets/i_row_right_gray.png" alt=""></a>
         </div>
-        <div class="item clearfix">
+        <div class="item clearfix" @click="to('/certification')">
           <img src="/src/assets/home/i_center_ident.png" alt="">
           <span>个人认证</span>
           <a class="fr"><img src="/src/assets/i_row_right_gray.png" alt=""></a>
         </div>
-        <div class="item clearfix">
+        <div class="item clearfix" @click="to('/companyList/00/我的收藏')">
           <img src="/src/assets/home/i_center_collect.png" alt="">
           <span>我的收藏</span>
           <a class="fr"><img src="/src/assets/i_row_right_gray.png" alt=""></a>
         </div>
-        <div class="item clearfix">
+        <div class="item clearfix" @click="to('/setAddress')">
           <img src="/src/assets/home/i_dq.png" alt="">
           <span>地址管理</span>
-          <router-link to="/setAddress" class="fr"><img src="/src/assets/i_row_right_gray.png" alt=""></router-link>
+          <a class="fr"><img src="/src/assets/i_row_right_gray.png" alt=""></a>
         </div>
       </div>
     </div>
@@ -82,6 +82,9 @@
             this.account = res.data.object
           }
         })
+      },
+      to (path) {
+        this.$router.push(path)
       }
     }
   }

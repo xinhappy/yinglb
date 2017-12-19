@@ -1,0 +1,110 @@
+<template>
+  <div>
+    <x-header style="background: url('/src/assets/i_bg_normal.png') no-repeat;background-size: cover;"
+              :left-options="{backText: ''}">消费记录
+    </x-header>
+    <div class="records">
+      <scroller lock-x height="-7vw" @on-scroll-bottom="onScrollBottom" ref="scrollerBottom"
+                :scroll-bottom-offst="10">
+        <div>
+          <div class="clearfix item" v-for="item in list">
+            <div class="fl left">
+              <p>{{item.transactionRemark}}</p>
+              <p>{{item.transactionDate}}</p>
+            </div>
+            <div class="fl center">{{item.moneyYb}}</div>
+            <div class="fr right">
+              <p>交易成功</p>
+              <p>余额：{{item.userBalance}}</p>
+            </div>
+          </div>
+        </div>
+      </scroller>
+    </div>
+    <toast v-model="showValue" type="text" :time="800" is-show-mask text="没有更多数据" position="bottom"></toast>
+  </div>
+</template>
+
+<script type="text/ecmascript-6">
+  import {XHeader, Scroller, Toast} from 'vux'
+  import * as ApiService from 'api/api'
+  export default {
+    components: {
+      XHeader,
+      Scroller,
+      Toast
+    },
+    data () {
+      return {
+        userInfo: JSON.parse(localStorage.getItem('userInfo')),
+        page: 1,
+        list: [],
+        showValue: false,
+        onFetching: false
+      }
+    },
+    created () {
+      this.getConsumption()
+    },
+    methods: {
+      getConsumption () {
+        ApiService.post('/api/h5CapitalRecord/queryCapitalRecordHistoryH5.htm', {
+          userId: this.userInfo.id,
+          userType: '1',
+          type: '',
+          page: this.page,
+          limit: 8
+        }).then(res => {
+          if (res.data.resultCode === '1') {
+            if (res.data.rows.length === 0) {
+              this.showValue = true
+            } else {
+              this.list.push.apply(this.list, res.data.rows)
+            }
+          }
+        })
+      },
+      onScrollBottom () {
+        if (this.onFetching) {
+          // do nothing
+        } else {
+          this.onFetching = true
+          setTimeout(() => {
+            this.page++
+            this.getConsumption()
+            this.onFetching = false
+          }, 2000)
+        }
+      }
+    }
+  }
+</script>
+
+<style lang="less" rel="stylesheet/less">
+  body {
+    background-color: #fff;
+    .records {
+      padding: 2vw;
+      .item {
+        border-bottom: 1px solid #aaa;
+        display: flex;
+        align-content: center;
+        padding: 2vw 0;
+        .left {
+          width: 33vw;
+        }
+        .center {
+          width: 33vw;
+          text-align: center;
+          color: #04acff;
+          padding-top: 5vw;
+        }
+        .right {
+          width: 33vw;
+          text-align: center;
+          padding-top: 3vw;
+        }
+      }
+    }
+  }
+</style>

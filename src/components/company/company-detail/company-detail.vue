@@ -3,10 +3,10 @@
     <div>
       <div class="blue_bg">
         <a @click="go" style="float: left;margin-left: 3vw"><img style="width: 2vw"
-                                                                                       src="../../../assets/i_back_white.png"
-                                                                                       alt=""></a>
+                                                                 src="../../../assets/i_back_white.png"
+                                                                 alt=""></a>
         商品详情
-        <a class="collect"></a>
+        <a class="collect" :class=" {'active': collectionFlag === '1' }" @click="collect"></a>
       </div>
       <swiper auto height="70vw">
         <swiper-item v-for="item in imgs" :key="item.id"><img class="img-responsive" :src="item.photoUrl"
@@ -82,7 +82,8 @@
       return {
         imgs: [],
         userInfo: JSON.parse(localStorage.getItem('userInfo')),
-        companyInfo: JSON.parse(localStorage.getItem('companyInfo'))
+        companyInfo: JSON.parse(localStorage.getItem('companyInfo')),
+        collectionFlag: '0'
       }
     },
     created () {
@@ -92,6 +93,7 @@
       getInfo: function () {
         ApiService.getCompanyList('/api/h5BusinessManage/queryAdsH5.htm?peopleId=' + this.userInfo.id + '&deviceInfo=' + this.userInfo.deviceInfo + '&checkFlag&memberId=' + this.userInfo.id + '&businessAdId=' + this.companyInfo.id).then(res => {
           this.imgs = res.data.rows
+          this.collectionFlag = res.data.rows[0].flag
         })
       },
       look: function () {
@@ -105,6 +107,30 @@
       },
       lookP () {
         this.$router.push('/companyAppraise/' + this.companyInfo.id)
+      },
+      collect () {
+        let flag = this.collectionFlag ? this.collectionFlag : 0
+        ApiService.post('/api/h5Member/businessCollectionH5.htm', {
+          userId: this.userInfo.id,
+          businessId: this.companyInfo.id,
+          flag: flag,
+          deviceInfo: this.userInfo.deviceInfo,
+          checkFlag: '',
+          peopleId: this.userInfo.id
+        }).then(res => {
+          if (res.data.resultCode === '1') {
+            if (res.data.resultDesc === '取消收藏成功') {
+              this.collectionFlag = '0'
+            } else {
+              this.collectionFlag = '1'
+            }
+          }
+        })
+      }
+    },
+    watch: {
+      collectionFlag (val) {
+        this.collectionFlag = val
       }
     }
   }
@@ -194,8 +220,10 @@
     background-size: contain;
     &.active {
       background: url(../../../assets/stars.png) no-repeat;
+      background-size: contain;
     }
   }
+
   .save {
     text-align: center;
     position: fixed;
