@@ -14,7 +14,7 @@
       </form>
       <div class="clearfix">
         <a class="fl" href="" style="margin-left: 3vw;color: #aaa;font-size: 2vw">用户注册</a>
-        <a class="fr" href="" style="margin-right: 3vw;color:#aaa;font-size: 2vw">忘记密码？</a>
+        <a class="fr" href="#/resetLoginPwd" style="margin-right: 3vw;color:#aaa;font-size: 2vw">忘记密码？</a>
       </div>
     </div>
     <div class="qita">

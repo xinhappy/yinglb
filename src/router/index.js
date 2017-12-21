@@ -238,12 +238,10 @@ const router = new Router({
   ]
 })
 router.beforeEach((to, from, next) => {
-  if (!store.state.user.userInfo) {
-    // 获取用户信息
-    next()
-  } else {
-    // 已经登录
-    console.log('已授权')
+  if (localStorage.getItem('userInfo')) {
+    if (to.name === 'login') {
+      router.replace('/community')
+    }
     next()
   }
 })

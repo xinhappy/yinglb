@@ -51,6 +51,9 @@
           <a class="fr"><img src="/src/assets/i_row_right_gray.png" alt=""></a>
         </div>
       </div>
+      <div style="text-align: center;margin-top: 10vw">
+        <button class="btn" @click="logout">退 出</button>
+      </div>
     </div>
     <v-footer></v-footer>
   </div>
@@ -60,6 +63,7 @@
   import {XHeader} from 'vux'
   import Footer from 'components/footer/footer'
   import * as ApiService from 'api/api'
+  import * as types from 'src/store/mutation-types'
   export default {
     components: {
       'v-footer': Footer,
@@ -92,6 +96,15 @@
         } else {
           this.$router.push('/recharge')
         }
+      },
+      logout () {
+        ApiService.post('/api/h5Member/logoutH5.htm', {
+          userId: this.userInfo.id,
+          loginInfo: this.userInfo.deviceInfo
+        }).then(res => {
+          this.$store.commit(types.LOGOUT, [])
+          this.$router.push('/')
+        })
       }
     }
   }
@@ -156,6 +169,17 @@
       &:last-child {
         border-bottom: none;
       }
+    }
+  }
+
+  .btn {
+    background-color: #04a3ff;
+    color: #fff;
+    border: none;
+    padding: 2vw 20vw;
+    border-radius: 50px 50px 50px 50px;
+    &:focus {
+      outline: none;
     }
   }
 </style>

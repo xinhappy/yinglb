@@ -22,6 +22,13 @@ axios.interceptors.request.use(
 // http response 拦截器
 axios.interceptors.response.use(
   response => {
+    if (response.data.resultCode === '-2') {
+      store.commit(types.LOGOUT)
+      router.replace({
+        path: '/',
+        query: {redirect: router.currentRoute.fullPath}
+      })
+    }
     return response
   },
   error => {
@@ -31,7 +38,7 @@ axios.interceptors.response.use(
           // 返回401 清除token信息并跳转到登录页面
           store.commit(types.LOGOUT)
           router.replace({
-            path: 'login',
+            path: '/',
             query: {redirect: router.currentRoute.fullPath}
           })
       }

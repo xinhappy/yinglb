@@ -39,6 +39,12 @@ export default new Vuex.Store({
       localStorage.setItem('userInfo', JSON.stringify(data))
       state.user = data
     },
+    [types.LOGOUT] (state, data) {
+      // localStorage.token = data
+      // state.token = data
+      localStorage.setItem('userInfo', JSON.stringify([]))
+      state.user = []
+    },
     [types.SELECTED] (state, data) {
       state.orgId = data
     },
