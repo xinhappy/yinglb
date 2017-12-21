@@ -32,10 +32,8 @@
     },
     methods: {
       result: function () {
-        let latitude = this.local ? this.local.latitude : '0.0'
-        let longitude = this.local ? this.local.longitude : '0.0'
-        ApiService.getCompanyList('/api/h5BusinessManage/queryBusinessInfoH5.htm?businessName=' + this.businessName + '&terminalType=1&latitude=' + latitude + '&longitude=' + longitude + '&businessRegion=' + this.userInfo.orgId + '&peopleId=' + this.userInfo.id + '&deviceInfo=' + this.userInfo.deviceInfo + '&checkFlag&page=1&limit=100').then(res => {
-          this.inners = res.data.rows
+        ApiService.getCompanyList('/api/h5BusinessManage/queryBusinessInfoH5.htm?businessName=' + this.businessName + '&terminalType=1&latitude=' + this.local.latitude + '&longitude=' + this.local.longitude + '&businessRegion=' + this.userInfo.orgId + '&peopleId=' + this.userInfo.id + '&deviceInfo=' + this.userInfo.deviceInfo + '&checkFlag&page=1&limit=100').then(res => {
+          this.inners.push.apply(this.inner, res.data.rows)
         })
       }
     }

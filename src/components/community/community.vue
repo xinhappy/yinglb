@@ -11,7 +11,7 @@
         <span><a href="" style="color: #fff;font-size: 3.8vw">搜索</a></span>
       </div>
     </div>
-    <scroller lock-x height="-7vw"  @on-scroll-bottom="onScrollBottom" ref="scrollerBottom"
+    <scroller lock-x height="-7vw" @on-scroll-bottom="onScrollBottom" ref="scrollerBottom"
               :scroll-bottom-offst="10">
       <div>
         <div class="clearfix"
@@ -89,6 +89,7 @@
       </div>
 
     </scroller>
+    <local></local>
     <v-footer></v-footer>
   </div>
 </template>
@@ -98,6 +99,7 @@
   import * as ApiService from 'api/api'
   import ListInner from 'components/list-inner/list-inner'
   import Footer from 'components/footer/footer'
+  import Local from 'components/local/local'
   export default {
     components: {
       Swiper,
@@ -105,7 +107,8 @@
       ListInner,
       LoadMore,
       'v-footer': Footer,
-      Scroller
+      Scroller,
+      Local
     },
     data() {
       return {
@@ -113,6 +116,7 @@
         infos: [],
         inners: [],
         userInfo: JSON.parse(localStorage.getItem('userInfo')),
+        local: JSON.parse(localStorage.getItem('local')),
         page: 1,
         onFetching: false,
         circle: this.$store.state.circle
@@ -135,7 +139,7 @@
         })
       },
       getCompanyList () {
-        ApiService.getCompanyList('/api/h5BusinessManage/queryBusinessInfoH5.htm?memberId=' + this.userInfo.id + '&terminalType=1&latitude=0.0&longitude=0.0&businessRegion=' + this.circle.orgId + '&peopleId=' + this.userInfo.id + '&deviceInfo=' + this.userInfo.deviceInfo + '&checkFlag&page=' + this.page + '&limit=3').then(res => {
+        ApiService.getCompanyList('/api/h5BusinessManage/queryBusinessInfoH5.htm?memberId=' + this.userInfo.id + '&terminalType=1&latitude=' + this.local.latitude + '&longitude=' + this.local.longitude + '&businessRegion=' + this.circle.orgId + '&peopleId=' + this.userInfo.id + '&deviceInfo=' + this.userInfo.deviceInfo + '&checkFlag&page=' + this.page + '&limit=3').then(res => {
           this.inners.push.apply(this.inners, res.data.rows)
         })
       },

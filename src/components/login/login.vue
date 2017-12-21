@@ -42,9 +42,6 @@
         show: false
       }
     },
-    created () {
-      this.getNavgation()
-    },
     methods: {
       submit: function () {
         this.formData.type = 1
@@ -80,21 +77,6 @@
           }
         }
         return uuid.join('')
-      },
-      getNavgation: function () {
-        if (navigator.geolocation) {
-          navigator.geolocation.getCurrentPosition(
-            function (position) {
-              let longitude = position.coords.longitude
-              let latitude = position.coords.latitude
-              localStorage.setItem('local', JSON.stringify({longitude: longitude, latitude: latitude}))
-            },
-            function (e) {
-              let msg = e.code
-              let dd = e.message
-            }
-          )
-        }
       }
     }
   }

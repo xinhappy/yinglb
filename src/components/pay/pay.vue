@@ -1,7 +1,7 @@
 <template>
   <div>
-    <x-header style="background: url('/src/assets/i_bg_normal.png') no-repeat;background-size: cover;"
-              :left-options="{backText: ''}">付款
+    <x-header style="background: url('/src/assets/i_bg_normal.png') no-repeat;background-size: cover;" @on-click-back="back"
+              :left-options="{backText: '',preventGoBack:true}">付款
     </x-header>
     <div class="content">
       <div class="companyInfo" v-if="mode == 0">
@@ -121,7 +121,7 @@
 
 <script type="text/ecmascript-6">
   import {XHeader, PopupPicker, TransferDom, Popup, Toast, Checker, CheckerItem} from 'vux'
-  import {mapGetters} from 'vuex'
+  import {mapGetters, mapMutations} from 'vuex'
   import * as ApiService from 'api/api'
   import Keyboard from 'components/keyboard/keyboard'
   export default {
@@ -191,6 +191,9 @@
       }
     },
     methods: {
+      ...mapMutations(
+        ['addGoods']
+      ),
       week () {
         let d = new Date()
         let weekday = new Array(7)
@@ -324,6 +327,10 @@
             }
           })
         }
+      },
+      back () {
+        this.addGoods([])
+        this.$router.back()
       }
     },
     watch: {
