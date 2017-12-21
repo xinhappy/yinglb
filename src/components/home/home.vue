@@ -3,7 +3,7 @@
     <div>
       <x-header style="background: url('/src/assets/i_bg_normal.png') no-repeat;background-size: cover;"
                 :left-options="{showBack: false}">我的
-        <a slot="right" style="color: #fff">消息</a>
+        <a href="#/message" slot="right" style="color: #fff">消息</a>
       </x-header>
       <div class="top clearfix">
         <div class="fl top_left">
@@ -20,7 +20,7 @@
           <span style="margin-left: 7vw;color: #777">账户余额</span>
           <p class="fr right">
             {{account.rebateBalance}}
-            <a style="margin-left: 1vw">充值</a>
+            <a style="margin-left: 1vw" @click="recharge">充值</a>
           </p>
         </div>
       </div>
@@ -30,7 +30,7 @@
           <span>消费记录</span>
           <a class="fr"><img src="/src/assets/i_row_right_gray.png" alt=""></a>
         </div>
-        <div class="item clearfix"  @click="to('/order')">
+        <div class="item clearfix" @click="to('/order')">
           <img src="/src/assets/home/i_center_consume.png" alt="">
           <span>我的订单</span>
           <a class="fr"><img src="/src/assets/i_row_right_gray.png" alt=""></a>
@@ -85,6 +85,13 @@
       },
       to (path) {
         this.$router.push(path)
+      },
+      recharge () {
+        if (this.userInfo.realNameStatus !== 2) {
+          this.$router.push('/realName')
+        } else {
+          this.$router.push('/recharge')
+        }
       }
     }
   }

@@ -1,7 +1,7 @@
 <template>
   <div>
     <x-header style="background: url('/src/assets/i_bg_normal.png') no-repeat;background-size: cover;"
-              :left-options="{backText: ''}">消费记录
+              :left-options="{backText: ''}">充值记录
     </x-header>
     <div class="records">
       <scroller lock-x height="-7vw" @on-scroll-bottom="onScrollBottom" ref="scrollerBottom"
@@ -55,12 +55,12 @@
         ApiService.post('/api/h5CapitalRecord/queryCapitalRecordHistoryH5.htm', {
           userId: this.userInfo.id,
           userType: '1',
-          typeFlag: '',
+          typeFlag: '1',
           page: this.page,
           limit: 8
         }).then(res => {
-          if (res.data.resultCode === '1' && this.page > 1) {
-            if (res.data.rows.length === 0) {
+          if (res.data.resultCode === '1') {
+            if (res.data.rows.length === 0 && this.page > 1) {
               this.showValue = true
             } else {
               this.list.push.apply(this.list, res.data.rows)

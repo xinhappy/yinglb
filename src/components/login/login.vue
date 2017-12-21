@@ -23,20 +23,23 @@
       <p><img src="../../assets/login/icon_login_wx.png" alt=""><img src="../../assets/login/icon_login_qq.png" alt="">
       </p>
     </div>
+    <toast v-model="show" type="text" :time="800" is-show-mask :text="text" position="bottom"></toast>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
   import * as ApiService from 'api/api'
-  import {AlertModule, Alert, TransferDomDirective as TransferDom} from 'vux'
+  import {Toast} from 'vux'
   import * as types from 'src/store/mutation-types'
   export default {
     components: {
-      Alert
+      Toast
     },
     data () {
       return {
-        formData: []
+        formData: [],
+        text: '',
+        show: false
       }
     },
     created () {
@@ -48,16 +51,8 @@
         this.formData.loginInfo = this.uuid()
         ApiService.login('/api/h5Member/loginH5.htm', this.formData).then((res) => {
           if (res.data.resultCode === '0') {
-            AlertModule.show({
-              content: res.data.resultDesc,
-              onShow () {
-              },
-              onHide () {
-              }
-            })
-            setTimeout(() => {
-              AlertModule.hide()
-            }, 2000)
+            this.show = true
+            this.text = res.data.resultDesc
           } else {
             this.$store.commit(types.LOGIN, res.data.object)
             this.$router.push('/community')

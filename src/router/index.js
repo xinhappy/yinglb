@@ -15,6 +15,11 @@ import Records from 'components/home/records/records'
 import Order from 'components/home/order/order'
 import OrderDetail from 'components/home/order/orderDetail'
 import Certification from 'components/home/certification/certification'
+import Recharge from 'components/home/recharge/recharge'
+import RechargeRecords from 'components/home/recharge/recharge-records'
+import Message from 'components/home/message/message'
+import MessageDetail from 'components/home/message/message-detail'
+import MessageEdit from 'components/home/message/message-edit'
 import ChangePhone from 'components/home/certification/change-phone'
 import ChangeOne from 'components/home/certification/change-one'
 import ChangeNext from 'components/home/certification/change-next'
@@ -162,6 +167,31 @@ const router = new Router({
       path: '/certification',
       name: 'certification',
       component: Certification
+    },
+    {
+      path: '/recharge',
+      name: 'recharge',
+      component: Recharge
+    },
+    {
+      path: '/rechargeRecords',
+      name: 'rechargeRecords',
+      component: RechargeRecords
+    },
+    {
+      path: '/message',
+      name: 'message',
+      component: Message
+    },
+    {
+      path: '/messageDetail',
+      name: 'messageDetail',
+      component: MessageDetail
+    },
+    {
+      path: '/messageEdit',
+      name: 'messageEdit',
+      component: MessageEdit
     },
     {
       path: '/changePhone',

@@ -83,7 +83,7 @@
         this.$router.push(path)
       },
       noChange () {
-        if(this.userInfo.orgName){
+        if (this.userInfo.orgName) {
           this.showValue = true
         }
       }
