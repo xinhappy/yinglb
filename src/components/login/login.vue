@@ -64,7 +64,7 @@
       },
       wxLogin () {
         let ua = window.navigator.userAgent.toLowerCase()
-        if (ua.match(/MicroMessenger/i) == 'micromessenger') {
+        if (ua.match(/MicroMessenger/i) == 'micromessenger') {  // eslint-disable-line
           // 跳转到微信授权页面
           let redirectUri = encodeURIComponent('http://3eh94k.natappfree.cc/#/qqLoginBack')
           window.location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx25c0ddea9b3ab62d&redirect_uri=' + redirectUri + '&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect'

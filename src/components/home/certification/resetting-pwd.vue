@@ -58,6 +58,18 @@
       }
     },
     watch: {
+      rePwd (val) {
+        this.rePwd = val.replace(/[^\d]/g, '')
+        if (val.length > 6) {
+          this.rePwd = val.substring(0, 6)
+        }
+      },
+      pwd (val) {
+        this.pwd = val.replace(/[^\d]/g, '')
+        if (val.length > 6) {
+          this.pwd = val.substring(0, 6)
+        }
+      },
       time (val) {
         if (val === 0) {
           this.start = false

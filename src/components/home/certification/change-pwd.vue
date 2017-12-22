@@ -5,18 +5,24 @@
     </x-header>
     <div class="room">
       <div class="item">
-        <span><img src="/src/assets/login/icon_login_pwd.png" alt=""></span><input v-model="oldPwd" placeholder="请输入旧密码(6位数字)" type="password"></div>
+        <span><img src="/src/assets/login/icon_login_pwd.png" alt=""></span><input v-model="oldPwd"
+                                                                                   placeholder="请输入旧密码(6位数字)"
+                                                                                   type="password"></div>
       <div class="item">
-        <span><img src="/src/assets/login/icon_login_pwd.png" alt=""></span><input v-model="pwd" placeholder="请输入密码(6位数字)" type="password">
+        <span><img src="/src/assets/login/icon_login_pwd.png" alt=""></span><input v-model="pwd"
+                                                                                   placeholder="请输入密码(6位数字)"
+                                                                                   type="password">
       </div>
       <div class="item">
-        <span><img src="/src/assets/login/icon_login_pwd.png" alt=""></span><input v-model="rePwd" placeholder="请确认密码(6位数字)" type="password">
+        <span><img src="/src/assets/login/icon_login_pwd.png" alt=""></span><input v-model="rePwd"
+                                                                                   placeholder="请确认密码(6位数字)"
+                                                                                   type="password">
       </div>
     </div>
     <div style="text-align: center;margin-top: 2vw;padding: 0 2vw">
       <button class="btn" @click="save">确定</button>
       <p style="text-align: right">
-        <router-link to="/resetPwd">重置交易密码</router-link>
+        <router-link style="color: #04a3ff" to="/resetPwd">重置交易密码</router-link>
       </p>
     </div>
     <toast v-model="showValue" type="text" :time="800" is-show-mask :text="text" position="bottom"></toast>
@@ -72,6 +78,26 @@
           }
         })
       }
+    },
+    watch: {
+      oldPwd (val) {
+        this.oldPwd = val.replace(/[^\d]/g, '')
+        if (val.length > 6) {
+          this.oldPwd = val.substring(0, 6)
+        }
+      },
+      pwd (val) {
+        this.pwd = val.replace(/[^\d]/g, '')
+        if (val.length > 6) {
+          this.pwd = val.substring(0, 6)
+        }
+      },
+      rePwd (val) {
+        this.rePwd = val.replace(/[^\d]/g, '')
+        if (val.length > 6) {
+          this.pwd = val.substring(0, 6)
+        }
+      }
     }
   }
 </script>
@@ -84,11 +110,11 @@
       background-color: #fff;
       margin: 4vw 0;
       padding: 2vw;
-      .item{
+      .item {
         padding-bottom: 2vw;
         margin-bottom: 2vw;
         border-bottom: 1px solid #eee;
-        img{
+        img {
           width: 5vw;
           height: 5vw;
           vertical-align: middle;

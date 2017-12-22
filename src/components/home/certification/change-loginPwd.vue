@@ -16,7 +16,7 @@
     <div style="text-align: center;margin-top: 2vw;padding: 0 2vw">
       <button class="btn" @click="save">确定</button>
       <p style="text-align: right">
-        <router-link to="/resetLoginPwd">重置登录密码</router-link>
+        <router-link style="color: #04a3ff" to="/resetLoginPwd">重置登录密码</router-link>
       </p>
     </div>
     <toast v-model="showValue" type="text" :time="800" is-show-mask :text="text" position="bottom"></toast>

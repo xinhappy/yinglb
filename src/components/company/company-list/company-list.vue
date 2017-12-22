@@ -53,7 +53,7 @@
             if (res.data.resultCode === '1') {
               if (res.data.rows.length > 0) {
                 this.inners.push.apply(this.inners, res.data.rows)
-              } else if (this.page > 1)  {
+              } else if (this.page > 1) {
                 this.showValue = true
               }
             }
@@ -63,7 +63,7 @@
             if (res.data.resultCode === '1') {
               if (res.data.rows.length > 0) {
                 this.inners.push.apply(this.inners, res.data.rows)
-              } else if (this.page > 1)  {
+              } else if (this.page > 1) {
                 this.showValue = true
               }
             }
@@ -73,7 +73,7 @@
             if (res.data.resultCode === '1') {
               if (res.data.rows.length > 0) {
                 this.inners.push.apply(this.inners, res.data.rows)
-              } else if (this.page > 1)  {
+              } else if (this.page > 1) {
                 this.showValue = true
               }
             }
