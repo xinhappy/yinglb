@@ -23,6 +23,7 @@
 <script type="text/ecmascript-6">
   import {XHeader, Countdown, Toast} from 'vux'
   import * as ApiService from 'api/api'
+  import * as types from 'src/store/mutation-types'
   export default {
     components: {
       XHeader,
@@ -72,6 +73,7 @@
               this.showValue = true
               this.text = res.data.resultDesc
             } else {
+              this.$store.commit(types.LOGIN)
               this.$router.push('/')
             }
           })
