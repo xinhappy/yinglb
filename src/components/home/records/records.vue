@@ -59,8 +59,8 @@
           page: this.page,
           limit: 8
         }).then(res => {
-          if (res.data.resultCode === '1' && this.page > 1) {
-            if (res.data.rows.length === 0) {
+          if (res.data.resultCode === '1') {
+            if (res.data.rows.length === 0 && this.page > 1) {
               this.showValue = true
             } else {
               this.list.push.apply(this.list, res.data.rows)

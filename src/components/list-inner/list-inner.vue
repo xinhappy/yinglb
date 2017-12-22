@@ -54,7 +54,7 @@
     text-overflow: ellipsis;
     white-space: nowrap;
     font-size: 2vw;
-    width: 53vw;
+    width: 50vw;
   }
 
   .add_icon {

@@ -81,7 +81,7 @@
             <!--<app-company-list></app-company-list>-->
             <div>
               <listInner v-bind:items="inners"></listInner>
-              <load-more tip="loading"></load-more>
+              <load-more tip="loading" v-show="onFetching"></load-more>
             </div>
 
           </div>
@@ -90,12 +90,13 @@
 
     </scroller>
     <local></local>
+    <toast v-model="showValue" type="text" :time="800" is-show-mask text="暂无更多数据" position="bottom"></toast>
     <v-footer></v-footer>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
-  import {Swiper, SwiperItem, LoadMore, Scroller} from 'vux'
+  import {Swiper, SwiperItem, LoadMore, Scroller, Toast} from 'vux'
   import * as ApiService from 'api/api'
   import ListInner from 'components/list-inner/list-inner'
   import Footer from 'components/footer/footer'
@@ -108,7 +109,8 @@
       LoadMore,
       'v-footer': Footer,
       Scroller,
-      Local
+      Local,
+      Toast
     },
     data() {
       return {
@@ -119,7 +121,8 @@
         local: JSON.parse(localStorage.getItem('local')),
         page: 1,
         onFetching: false,
-        circle: this.$store.state.circle
+        circle: this.$store.state.circle,
+        showValue: false
       }
     },
     created() {
@@ -140,7 +143,13 @@
       },
       getCompanyList () {
         ApiService.getCompanyList('/api/h5BusinessManage/queryBusinessInfoH5.htm?memberId=' + this.userInfo.id + '&terminalType=1&latitude=' + this.local.latitude + '&longitude=' + this.local.longitude + '&businessRegion=' + this.circle.orgId + '&peopleId=' + this.userInfo.id + '&deviceInfo=' + this.userInfo.deviceInfo + '&checkFlag&page=' + this.page + '&limit=3').then(res => {
-          this.inners.push.apply(this.inners, res.data.rows)
+          if (res.data.resultCode === '1') {
+            if (res.data.rows.length > 0) {
+              this.inners.push.apply(this.inners, res.data.rows)
+            } else if (this.page > 1) {
+              this.showValue = true
+            }
+          }
         })
       },
       onScrollBottom () {
@@ -163,6 +172,11 @@
       },
       go (id) {
         this.$router.push('/companyList/' + id + '/商家活动')
+      }
+    },
+    watch: {
+      circle (val) {
+        this.circle = val
       }
     }
   }

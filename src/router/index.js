@@ -4,6 +4,7 @@ import store from 'src/store'
 import * as types from 'src/store/mutation-types'
 import Community from 'components/community/community'
 import Login from 'components/login/login'
+import QqLoginBack from 'components/login/qqLoginBack'
 import CompanyList from 'components/company/company-list/company-list'
 import CompanyDetail from 'components/company/company-detail/company-detail'
 import CompanyAppraise from 'components/company/company-appraise/company-appraise'
@@ -49,6 +50,11 @@ const router = new Router({
       path: '/',
       name: 'login',
       component: Login
+    },
+    {
+      path: '/qqLoginBack',
+      name: 'qqLoginBack',
+      component: QqLoginBack
     },
     {
       path: '/community',
@@ -239,9 +245,12 @@ const router = new Router({
 })
 router.beforeEach((to, from, next) => {
   if (localStorage.getItem('userInfo')) {
+    // 已登录 重定向到社区
     if (to.name === 'login') {
       router.replace('/community')
     }
+    next()
+  } else {
     next()
   }
 })

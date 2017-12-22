@@ -20,20 +20,24 @@
     <div class="qita">
       <p>其他登录方式</p>
       <p><img src="../../assets/login/i_type_line.png" alt="" style="width: 50vw"></p>
-      <p><img src="../../assets/login/icon_login_wx.png" alt=""><img src="../../assets/login/icon_login_qq.png" alt="">
+      <p><img @click="wxLogin" src="../../assets/login/icon_login_wx.png" alt=""><img @click="qqLogin"
+                                                                                      src="../../assets/login/icon_login_qq.png"
+                                                                                      alt="">
       </p>
     </div>
+    <local></local>
     <toast v-model="show" type="text" :time="800" is-show-mask :text="text" position="bottom"></toast>
   </div>
 </template>
-
 <script type="text/ecmascript-6">
   import * as ApiService from 'api/api'
   import {Toast} from 'vux'
   import * as types from 'src/store/mutation-types'
+  import Local from 'components/local/local'
   export default {
     components: {
-      Toast
+      Toast,
+      Local
     },
     data () {
       return {
@@ -55,6 +59,16 @@
             this.$router.push('/community')
           }
         })
+      },
+      qqLogin () {
+      },
+      wxLogin () {
+        let ua = window.navigator.userAgent.toLowerCase()
+        if (ua.match(/MicroMessenger/i) == 'micromessenger') {
+          // 跳转到微信授权页面
+          let redirectUri = encodeURIComponent('http://3eh94k.natappfree.cc/#/qqLoginBack')
+          window.location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx25c0ddea9b3ab62d&redirect_uri=' + redirectUri + '&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect'
+        }
       },
       uuid: function () {
         const len = 32  // 32长度

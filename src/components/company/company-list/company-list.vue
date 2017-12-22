@@ -8,27 +8,28 @@
       <div>
         <div class="search-results" v-if="inners.length > 0">
           <listInner v-bind:items="inners"></listInner>
-          <!--<load-more tip="loading"></load-more>-->
+          <load-more tip="loading" v-if="onFetching"></load-more>
         </div>
         <div style="text-align: center" v-if="inners.length === 0">
           暂无数据
         </div>
       </div>
-
     </scroller>
+    <toast v-model="showValue" type="text" :time="800" is-show-mask text="暂无更多数据" position="bottom"></toast>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
   import ListInner from 'components/list-inner/list-inner'
-  import {LoadMore, Scroller, XHeader} from 'vux'
+  import {LoadMore, Scroller, XHeader, Toast} from 'vux'
   import * as ApiService from 'api/api'
   export default {
     components: {
       ListInner,
       LoadMore,
       Scroller,
-      XHeader
+      XHeader,
+      Toast
     },
     data () {
       return {
@@ -38,7 +39,8 @@
         title: this.$route.params.title,
         page: 1,
         goodsType: this.$route.params.id,
-        onFetching: false
+        onFetching: false,
+        showValue: false
       }
     },
     created () {
@@ -48,15 +50,33 @@
       getList: function () {
         if (this.title === '商家活动') {
           ApiService.getClassCompanyList('/api/h5AdvertisementBusiness/queryBusinessH5.htm?adId=' + this.goodsType + '&latitude=' + this.local.latitude + '&longitude=' + this.local.longitude + '&businessRegion&peopleId=' + this.userInfo.id + '&deviceInfo=' + this.userInfo.deviceInfo + '&checkFlag&page=' + this.page + '&limit=8').then(res => {
-            this.inners.push.apply(this.inners, res.data.rows)
+            if (res.data.resultCode === '1') {
+              if (res.data.rows.length > 0) {
+                this.inners.push.apply(this.inners, res.data.rows)
+              } else if (this.page > 1)  {
+                this.showValue = true
+              }
+            }
           })
         } else if (this.title === '我的收藏') {
           ApiService.get('/api/h5BusinessManage/queryCollectionH5.htm?userId=' + this.userInfo.id + '&latitude=' + this.local.latitude + '&longitude=' + this.local.longitude + '&peopleId=' + this.userInfo.id + '&deviceInfo=' + this.userInfo.deviceInfo + '&checkFlag&page=' + this.page + '&limit=8').then(res => {
-            this.inners.push.apply(this.inners, res.data.rows)
+            if (res.data.resultCode === '1') {
+              if (res.data.rows.length > 0) {
+                this.inners.push.apply(this.inners, res.data.rows)
+              } else if (this.page > 1)  {
+                this.showValue = true
+              }
+            }
           })
         } else {
           ApiService.getClassCompanyList('/api/h5BusinessManage/queryBusinessInfoH5.htm?goodsType=' + this.goodsType + '&memberId=' + this.userInfo.id + '&terminalType=1&latitude=' + this.local.latitude + '&longitude=' + this.local.longitude + '&businessRegion&peopleId=' + this.userInfo.id + '&deviceInfo=' + this.userInfo.deviceInfo + '&checkFlag&page=' + this.page + '&limit=8').then(res => {
-            this.inners.push.apply(this.inners, res.data.rows)
+            if (res.data.resultCode === '1') {
+              if (res.data.rows.length > 0) {
+                this.inners.push.apply(this.inners, res.data.rows)
+              } else if (this.page > 1)  {
+                this.showValue = true
+              }
+            }
           })
         }
       },
