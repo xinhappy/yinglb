@@ -5,6 +5,8 @@ import * as types from 'src/store/mutation-types'
 import Community from 'components/community/community'
 import Login from 'components/login/login'
 import QqLoginBack from 'components/login/qqLoginBack'
+import Register from 'components/register/register'
+import Protocol from 'components/protocol/protocol'
 import CompanyList from 'components/company/company-list/company-list'
 import CompanyDetail from 'components/company/company-detail/company-detail'
 import CompanyAppraise from 'components/company/company-appraise/company-appraise'
@@ -55,6 +57,16 @@ const router = new Router({
       path: '/qqLoginBack',
       name: 'qqLoginBack',
       component: QqLoginBack
+    },
+    {
+      path: '/register',
+      name: 'register',
+      component: Register
+    },
+    {
+      path: '/protocol',
+      name: 'protocol',
+      component: Protocol
     },
     {
       path: '/community',

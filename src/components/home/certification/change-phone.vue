@@ -6,7 +6,7 @@
     <div class="room">
       <div style="padding-bottom: 2vw;margin-bottom: 2vw;border-bottom: 1px solid #eee"><span>手机号</span><input
         v-model="telephone" type="text"></div>
-      <div><span>验证码</span><input v-model="verifyCode" type="text" placeholder="请输入验证码">
+      <div><span>验证码</span><input v-model="verifyCode" type="text" placeholder="请输入验证码" maxlength="6">
         <button :disabled="disable" type="button" @click="getY">
           {{title}}
           <countdown v-model="time" v-show="time > 0" :start="start"></countdown>
@@ -19,20 +19,22 @@
     <div style="text-align: center;margin-top: 10vw">
       <button class="btn" @click="next">下一步</button>
     </div>
-    <toast v-model="showValue" type="text" :time="800" is-show-mask :text="text" position="bottom"></toast>
+    <toast v-model="showValue" type="text" :time="800" is-show-mask :text="text" width="15em" position="bottom"></toast>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
   import {XHeader, Countdown, Toast} from 'vux'
   import * as ApiService from 'api/api'
+  import * as Reg from 'common/regexp'
+
   export default {
     components: {
       XHeader,
       Countdown,
       Toast
     },
-    data () {
+    data() {
       return {
         userInfo: JSON.parse(localStorage.getItem('userInfo')),
         title: '获取验证码',
@@ -45,11 +47,11 @@
         verifyCode: ''
       }
     },
-    created () {
+    created() {
       this.telephone = this.userInfo.userPhone
     },
     methods: {
-      getY () {
+      getY() {
         ApiService.post('/api/h5Member/smsValidationH5.htm', {telephone: this.telephone, flag: 8}).then(res => {
           if (res.data.resultCode === '1') {
             this.title = ''
@@ -61,28 +63,33 @@
           }
         })
       },
-      next () {
-        if (this.verifyCode) {
-          ApiService.post('/api/h5CheckPhoneRecord/checkVerifyCodeH5.htm', {
-            phone: this.telephone,
-            verifyCode: this.verifyCode,
-            messageType: 8
-          }).then(res => {
-            if (res.data.resultCode === '0') {
-              this.showValue = true
-              this.text = res.data.resultDesc
-            } else {
-              this.$router.push('/changeNext')
-            }
-          })
+      next() {
+        if (this.telephone.match(Reg.telephone)) {
+          if (this.verifyCode) {
+            ApiService.post('/api/h5CheckPhoneRecord/checkVerifyCodeH5.htm', {
+              phone: this.telephone,
+              verifyCode: this.verifyCode,
+              messageType: 8
+            }).then(res => {
+              if (res.data.resultCode === '0') {
+                this.showValue = true
+                this.text = res.data.resultDesc
+              } else {
+                this.$router.push('/changeNext')
+              }
+            })
+          } else {
+            this.showValue = true
+            this.text = '验证码不能为空'
+          }
         } else {
           this.showValue = true
-          this.text = '验证码不能为空'
+          this.text = '手机号格式不正确！'
         }
       }
     },
     watch: {
-      time (val) {
+      time(val) {
         if (val === 0) {
           this.start = false
           this.title = '重新获取验证码'

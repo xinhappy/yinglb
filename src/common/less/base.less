@@ -1,6 +1,7 @@
 html {
   height: 100%;
 }
+
 body {
   font-family: "微软雅黑", Helvetica, sans-serif !important;
   margin: 0;
@@ -11,43 +12,56 @@ body {
   color: #333;
   font-size: 3.2vw;
 }
+
 .wrap {
   width: 100%;
   height: 100%;
 }
+
 .main {
   overflow: auto;
 }
+
 .flex {
   display: flex;
 }
+
 .flex-v {
   flex-direction: column;
 }
+
 .flex-1 {
   flex: 1;
 }
+
 .flex-align-center {
   align-items: center;
 }
+
 .flex-pack-center {
   justify-content: center;
 }
+
 .flex-pack-justify {
   justify-content: space-between;
 }
+
 p {
   margin: 0;
 }
+
 .fl {
   float: left;
 }
+
 .fr {
   float: right;
 }
+
 .clearBoth {
   clear: both;
 }
+
 .clearfix {
   &:after {
     content: '';
@@ -55,19 +69,23 @@ p {
     clear: both;
   }
 }
+
 input, textarea {
   list-style-type: none;
   border-style: none;
   outline: none;
 }
+
 a {
   text-decoration: none !important;
 }
+
 ul {
   list-style: none;
   margin: 0;
   padding-left: 0;
 }
+
 .allWrap {
   height: 100%;
   &:before {
@@ -75,8 +93,27 @@ ul {
     display: table;
   }
 }
+
 .img-responsive {
   display: inline-block;
   height: auto;
   max-width: 100%;
+}
+
+.fixed-top {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+}
+
+.m-header {
+  background: url('/src/assets/i_bg_normal.png') no-repeat;
+  font-family: '微软雅黑', Helvetica, sans-serif;
+  height: 40px;
+  line-height:40px;
+  text-align: center;
+  font-size:18px;
+  color:#ffffff;
 }
