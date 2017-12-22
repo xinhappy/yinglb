@@ -18,7 +18,7 @@
 
 <script type="text/ecmascript-6">
   import {XHeader} from 'vux'
-  import {mapGetters} from 'vuex'
+  import {mapGetters, mapMutations} from 'vuex'
   import {formatDate} from 'common/formDate.js'
   export default {
     components: {
@@ -34,7 +34,11 @@
       this.time = formatDate(new Date(), 'yyyy-MM-dd hh:mm')
     },
     methods: {
+      ...mapMutations(
+        ['addGoods']
+      ),
       back () {
+        this.addGoods([])
         this.$router.push('/companyDetail')
       }
     },

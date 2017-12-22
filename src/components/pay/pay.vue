@@ -63,7 +63,7 @@
           <div class="fl"><input type="password" v-model="pw5"></div>
           <div class="fl"><input type="password" v-model="pw6"></div>
         </div>
-        <div style="text-align: right"><a href="">忘记密码？</a></div>
+        <div style="text-align: right"><a href="#/resetPwd">忘记密码？</a></div>
         <keyboard :keyboard="password" @on-result-change="onResultChange"></keyboard>
       </popup>
     </div>
