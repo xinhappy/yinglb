@@ -10,3 +10,4 @@ export const SELECTED = 'SELECTED'
 export const SETADS = 'SETADS'
 
 export const ORDER = 'ORDER'
+export const SETCODE = 'SETCODE'

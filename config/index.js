@@ -13,7 +13,17 @@ module.exports = {
     proxyTable: {
       "/api":{
         // "target":"http://106.14.5.246:8080"
-        "target":"http://192.168.1.110:8080"
+        // "target":"http://192.168.1.113:8080",
+        "target":"http://192.168.27.229:8089",
+        changeOrigin: true
+      },
+      "/sns":{
+        "target":"https://api.weixin.qq.com",
+        changeOrigin: true
+      },
+      "/connect":{
+        "target":"https://api.weixin.qq.com",
+        changeOrigin: true
       }
     },
 

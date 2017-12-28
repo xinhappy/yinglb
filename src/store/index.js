@@ -14,7 +14,8 @@ export default new Vuex.Store({
     circle: {orgId: 'ff8080815d300215015d40066a300070', text: '河南城建学院商圈'},
     goodsList: localStorage['goodsList'] ? JSON.parse(localStorage['goodsList']) : [],
     userAddress: [],
-    orderDetail: []
+    orderDetail: [],
+    code: ''
   },
   getters: {
     sum: state => {
@@ -44,6 +45,9 @@ export default new Vuex.Store({
       // state.token = data
       localStorage.removeItem('userInfo')
       state.user = null
+    },
+    [types.SETCODE](state, data) {
+      state.code = data
     },
     [types.SELECTED] (state, data) {
       state.circle = data

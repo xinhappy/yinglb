@@ -8,6 +8,7 @@ import store from './store'
 import 'common/less/base.less'
 
 Vue.config.productionTip = false
+Vue.prototype.QC = window.QC
 
 /* eslint-disable no-new */
 new Vue({

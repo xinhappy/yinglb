@@ -62,6 +62,23 @@
         <keyboard :keyboard="password" @on-result-change="onResultChange"></keyboard>
       </popup>
     </div>
+    <div v-transfer-dom>
+      <popup v-model="showPay" position="bottom" height="20%">
+        <div style="border-bottom: 1px solid #ccc;padding: 2vw 0;background-color: #fff;padding-left: 2vw">选择付款方式</div>
+        <div @click="yingPay" class="item clearfix" style="background-color: #eee"><img style="width: 8vw;vertical-align: middle;margin-right: 2vw" src="/src/assets/i_logo.png" alt="">盈磅 <span
+          style="float: right;display: flex;align-content: center;"><img
+          src="/src/assets/i_row_right_gray.png"
+          style="width: 8vw;height: 8vw"
+          alt=""></span>
+        </div>
+        <div class="item clearfix" @click="weiPay" style="background-color: #eee"><img style="width: 8vw;vertical-align: middle;margin-right: 2vw" src="/src/assets/i_pay_wei.png" alt="">微信支付 <span
+          style="float: right;display: flex;align-content: center;"><img
+          src="/src/assets/i_row_right_gray.png"
+          style="width: 8vw;height: 8vw"
+          alt=""></span>
+        </div>
+      </popup>
+    </div>
     <toast v-model="showValue" type="text" :time="800" is-show-mask :text="resultDesc" position="bottom"></toast>
   </div>
 </template>
@@ -101,7 +118,8 @@
         pw4: '',
         pw5: '',
         pw6: '',
-        show: false
+        show: false,
+        showPay: false
       }
     },
     methods: {
@@ -139,7 +157,82 @@
           this.resultDesc = '请输入金额'
           return
         }
+        this.showPay = true
+      },
+      yingPay () {
+        this.showPay = false
         this.show = true
+      },
+      weiPay () {
+        var vm = this
+        let openid = localStorage.getItem('openid')
+        ApiService.post('/api/h5wechatPay/toPayH5.htm', {
+          rechargeNumber: this.rechargeNumber,
+          returnNumber: this.returnNumber,
+          userId: this.userInfo.id,
+          userType: 1,
+          userTelephone: this.userInfo.userPhone,
+          terminal: 1,
+          userName: this.userInfo.realName,
+          openId: openid,
+          ruleId: this.ruleId,
+          rechargeFlag: ''
+        }).then(res => {
+          if (res.data.resultCode === '1') {
+            if (typeof WeixinJSBridge == 'undefined') { // eslint-disable-line
+              if (document.addEventListener) {
+                document.addEventListener('WeixinJSBridgeReady', vm.onBridgeReady(res.data.object), false)
+              } else if (document.attachEvent) {
+                document.attachEvent('WeixinJSBridgeReady', vm.onBridgeReady(res.data.object))
+                document.attachEvent('onWeixinJSBridgeReady', vm.onBridgeReady(res.data.object))
+              }
+            } else {
+              vm.onBridgeReady(res.data.object)
+            }
+          }
+        })
+      },
+      onBridgeReady: function (data) {
+        var vm = this
+        WeixinJSBridge.invoke( // eslint-disable-line
+          'getBrandWCPayRequest', {
+            'appId': data.appid,     // 公众号名称，由商户传入
+            'timeStamp': data.timestamp, // 时间戳，自1970年以来的秒数
+            'nonceStr': data.noncestr, // 随机串
+            'package': data.package,
+            'signType': 'MD5', // 微信签名方式：
+            'paySign': data.sign // 微信签名
+          },
+          function (res) {
+            // 使用以上方式判断前端返回,微信团队郑重提示：res.err_msg将在用户支付成功后返回ok，但并不保证它绝对可靠。
+            if (res.err_msg == 'get_brand_wcpay_request：ok') { // eslint-disable-line
+              let arr = vm.redId.split(',')
+              let redId = arr[0]
+              ApiService.post('/api/h5MemberExchange/exchangeH5.htm', {
+                acceptUserId: vm.companyInfo.userId,
+                outputUserId: vm.userInfo.id,
+                userRedId: redId,
+                exchangeNum: vm.exchangeNum,
+                checkFlag: '',
+                deviceInfo: vm.userInfo.deviceInfo,
+                peopleId: vm.userInfo.id,
+                flag: 2
+              }).then(resp => {
+                if (resp.data.resultCode === '0') {
+                  vm.showValue = true
+                  vm.resultDesc = resp.data.resultDesc
+                  vm.show = false
+                  vm.password = ''
+                } else {
+                  vm.$router.push('/zhuan/' + vm.exchangeNum)
+                }
+              })
+            } else {
+              alert(JSON.stringify(res))
+              alert('支付失败,请跳转页面' + res.err_msg)
+            }
+          }
+        )
       }
     },
     created () {

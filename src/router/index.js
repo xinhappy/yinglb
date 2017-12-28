@@ -5,8 +5,6 @@ import * as types from 'src/store/mutation-types'
 import Community from 'components/community/community'
 import Login from 'components/login/login'
 import QqLoginBack from 'components/login/qqLoginBack'
-import Register from 'components/register/register'
-import Protocol from 'components/protocol/protocol'
 import CompanyList from 'components/company/company-list/company-list'
 import CompanyDetail from 'components/company/company-detail/company-detail'
 import CompanyAppraise from 'components/company/company-appraise/company-appraise'
@@ -26,6 +24,7 @@ import MessageEdit from 'components/home/message/message-edit'
 import ChangePhone from 'components/home/certification/change-phone'
 import ChangeOne from 'components/home/certification/change-one'
 import ChangeNext from 'components/home/certification/change-next'
+import BindPhone from 'components/home/certification/bind-phone'
 import RealName from 'components/home/certification/real-name'
 import ChangeLoginPwd from 'components/home/certification/change-loginPwd'
 import ResetLoginPwd from 'components/home/certification/resetting-loginPwd'
@@ -57,16 +56,6 @@ const router = new Router({
       path: '/qqLoginBack',
       name: 'qqLoginBack',
       component: QqLoginBack
-    },
-    {
-      path: '/register',
-      name: 'register',
-      component: Register
-    },
-    {
-      path: '/protocol',
-      name: 'protocol',
-      component: Protocol
     },
     {
       path: '/community',
@@ -250,6 +239,11 @@ const router = new Router({
       path: '/resetPwd',
       name: 'resetPwd',
       component: ResetPwd
+    },
+    {
+      path: '/bindPhone/:id',
+      name: 'bindPhone',
+      component: BindPhone
     },
     // 重定向
     {path: '*', redirect: '/community'}

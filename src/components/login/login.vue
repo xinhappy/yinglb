@@ -20,7 +20,7 @@
     <div class="qita">
       <p>其他登录方式</p>
       <p><img src="../../assets/login/i_type_line.png" alt="" style="width: 50vw"></p>
-      <p><img @click="wxLogin" src="../../assets/login/icon_login_wx.png" alt=""><img @click="qqLogin"
+      <p><img @click="wxLogin" src="../../assets/login/icon_login_wx.png" alt=""><img id="qq" @click="qqLogin"
                                                                                       src="../../assets/login/icon_login_qq.png"
                                                                                       alt="">
       </p>
@@ -61,13 +61,37 @@
         })
       },
       qqLogin () {
+        let QC = this.QC
+        if (QC.Login.check()) { // 如果已登录
+          QC.Login.getMe(function (openId, accessToken) {
+            QC.api('get_user_info', {access_token: accessToken, openid: openId})
+            // 指定接口访问成功的接收函数，s为成功返回Response对象
+              .success(function (s) {
+                // 成功回调，通过s.data获取OpenAPI的返回数据
+              })
+              // 指定接口访问失败的接收函数，f为失败返回Response对象
+              .error(function (f) {
+                // 失败回调
+              })
+              // 指定接口完成请求后的接收函数，c为完成请求返回Response对象
+              .complete(function (c) {
+                // 完成请求回调
+              })
+          })
+//          ApiService.post('/api/h5Member/otherLoginH5.htm', {accountId: openId}).then(res => {})
+        } else {
+          QC.Login.showPopup()
+        }
       },
       wxLogin () {
         let ua = window.navigator.userAgent.toLowerCase()
         if (ua.match(/MicroMessenger/i) == 'micromessenger') {  // eslint-disable-line
           // 跳转到微信授权页面
-          let redirectUri = encodeURIComponent('http://3eh94k.natappfree.cc/#/qqLoginBack')
-          window.location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx25c0ddea9b3ab62d&redirect_uri=' + redirectUri + '&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect'
+          let redirectUri = encodeURIComponent('http://by4xkr.natappfree.cc/#/qqLoginBack')
+          window.location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxae9cdc00bf788458&redirect_uri=' + redirectUri + '&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect'
+          if (!this.$store.state.code) {
+            this.$store.commit(types.SETCODE, this.getQueryString('code'))
+          }
         }
       },
       uuid: function () {
@@ -91,6 +115,12 @@
           }
         }
         return uuid.join('')
+      },
+      getQueryString (name) {
+        let reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i')
+        let r = window.location.search.substr(1).match(reg)
+        if (r != null) return unescape(r[2])
+        return null
       }
     }
   }

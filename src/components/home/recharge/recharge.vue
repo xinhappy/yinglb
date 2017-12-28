@@ -12,7 +12,7 @@
         <checker-item radio-required v-for="item in list" :value="item.rechargeNumber" :key="item.imgSrc"
                       @on-item-click="select(item)">{{item.rechargeNumber}}
         </checker-item>
-        <checker-item :value="inputting"><input type="text" v-model="inputting" placeholder="输入金额"></checker-item>
+        <checker-item :value="inputting" @on-item-click="selectIn()"><input type="text" v-model="inputting" placeholder="输入金额"></checker-item>
       </checker>
     </div>
     <div class="bottom">
@@ -41,6 +41,7 @@
 <script type="text/ecmascript-6">
   import {XHeader, Checker, CheckerItem, XDialog, TransferDom} from 'vux'
   import * as ApiService from 'api/api'
+  import wx from 'weixin-js-sdk'
   export default {
     directives: {
       TransferDom
@@ -59,12 +60,16 @@
         account: [],
         inputting: '',
         money: '',
-        show: false
+        show: false,
+        returnNumber: '',
+        ruleId: '',
+        rechargeFlag: ''
       }
     },
     created () {
       this.getRule()
       this.getAccount()
+      console.log(this.userInfo)
     },
     methods: {
       getAccount () {
@@ -86,18 +91,72 @@
           }
         })
       },
+      selectIn () {
+
+      },
       select (item) {
         this.src = item.imgSrc
+        this.returnNumber = item.returnNumber
+        this.ruleId = item.ruleId
+        this.rechargeNumber = item.rechargeNumber
+      },
+      onBridgeReady: function (data) {
+        var vm = this
+        WeixinJSBridge.invoke( // eslint-disable-line
+          'getBrandWCPayRequest', {
+            'appId': data.appid,     // 公众号名称，由商户传入
+            'timeStamp': data.timestamp, // 时间戳，自1970年以来的秒数
+            'nonceStr': data.noncestr, // 随机串
+            'package': data.package,
+            'signType': 'MD5', // 微信签名方式：
+            'paySign': data.sign // 微信签名
+          },
+          function (res) {
+            // 使用以上方式判断前端返回,微信团队郑重提示：res.err_msg将在用户支付成功后返回ok，但并不保证它绝对可靠。
+            if (res.err_msg == 'get_brand_wcpay_request：ok') { // eslint-disable-line
+              vm.$router.push('/')
+            } else {
+              alert(JSON.stringify(res))
+              alert('支付失败,请跳转页面' + res.err_msg)
+            }
+          }
+        )
       },
       save () {
-        window.open('https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx25c0ddea9b3ab62d&redirect_uri=http%3A%2F%2192.168.1.111%3A8080&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect ')
+        var vm = this
+        let openid = localStorage.getItem('openid')
+        ApiService.post('/api/h5wechatPay/toPayH5.htm', {
+          rechargeNumber: this.rechargeNumber,
+          returnNumber: this.returnNumber,
+          userId: this.userInfo.id,
+          userType: 1,
+          userTelephone: this.userInfo.userPhone,
+          terminal: 1,
+          userName: this.userInfo.realName,
+          openId: openid,
+          ruleId: this.ruleId,
+          rechargeFlag: ''
+        }).then(res => {
+          if (res.data.resultCode === '1') {
+            if (typeof WeixinJSBridge == 'undefined') { // eslint-disable-line
+              if (document.addEventListener) {
+                document.addEventListener('WeixinJSBridgeReady', vm.onBridgeReady(res.data.object), false)
+              } else if (document.attachEvent) {
+                document.attachEvent('WeixinJSBridgeReady', vm.onBridgeReady(res.data.object))
+                document.attachEvent('onWeixinJSBridgeReady', vm.onBridgeReady(res.data.object))
+              }
+            } else {
+              vm.onBridgeReady(res.data.object)
+            }
+          }
+        })
       }
     }
   }
 </script>
 
 <style scoped lang="less" rel="stylesheet/less">
-  .room{
+  .room {
     height: 100%;
     background-color: #fff;
     .item {
@@ -140,15 +199,16 @@
       }
     }
   }
-  .rule{
+
+  .rule {
     padding: 4vw 0;
-    background-color:#0572ff;
+    background-color: #0572ff;
     color: #fff;
     text-align: center;
-    .title{
+    .title {
       font-size: 4vw;
     }
-    .item{
+    .item {
       margin: 2vw 0;
     }
   }
