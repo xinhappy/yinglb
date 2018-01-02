@@ -4,6 +4,7 @@ import store from 'src/store'
 import * as types from 'src/store/mutation-types'
 import Community from 'components/community/community'
 import Login from 'components/login/login'
+import Register from 'components/register/register'
 import QqLoginBack from 'components/login/qqLoginBack'
 import CompanyList from 'components/company/company-list/company-list'
 import CompanyDetail from 'components/company/company-detail/company-detail'
@@ -244,6 +245,11 @@ const router = new Router({
       path: '/bindPhone/:id',
       name: 'bindPhone',
       component: BindPhone
+    },
+    {
+      path: '/register',
+      name: 'register',
+      component: Register
     },
     // 重定向
     {path: '*', redirect: '/community'}
