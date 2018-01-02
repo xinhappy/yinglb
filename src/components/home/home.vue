@@ -45,7 +45,7 @@
           <span>我的收藏</span>
           <a class="fr"><img src="/src/assets/i_row_right_gray.png" alt=""></a>
         </div>
-        <div class="item clearfix" @click="to('/setAddress')">
+        <div class="item clearfix" @click="to('/address')">
           <img src="/src/assets/home/i_dq.png" alt="">
           <span>地址管理</span>
           <a class="fr"><img src="/src/assets/i_row_right_gray.png" alt=""></a>

@@ -40,6 +40,7 @@ import Zhuan from 'components/pay/zhuan'
 import PayCompany from 'components/pay/pay-company'
 import SetAddress from 'components/address/select-address'
 import AddAddress from 'components/address/add-address'
+import Address from 'components/address/address'
 import SetPwd from 'components/pwd/set-pwd'
 import ItemList from 'components/company/company-item/item-list/item-list'
 import ItemDetail from 'components/company/company-item/item-detail/item-detail'
@@ -110,6 +111,11 @@ const router = new Router({
       path: '/setAddress',
       name: 'setAddress',
       component: SetAddress
+    },
+    {
+      path: '/address',
+      name: 'address',
+      component: Address
     },
     {
       path: '/addAddress/:id',
