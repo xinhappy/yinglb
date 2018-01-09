@@ -1,6 +1,6 @@
 <template>
   <div>
-    <x-header style="background: url('/src/assets/i_bg_normal.png') no-repeat;background-size: cover;"
+    <x-header
               :left-options="{backText: ''}">商品评价
     </x-header>
     <scroller lock-x height="-7vw" @on-scroll-bottom="onScrollBottom" ref="scrollerBottom"
@@ -46,7 +46,7 @@
         page: 1,
         showValue: false,
         resultDesc: '',
-        defaultUrl: '/src/assets/icon_cell.png'
+        defaultUrl: '../../../assets/icon_cell.png'
       }
     },
     created () {

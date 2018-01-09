@@ -1,6 +1,6 @@
 <template>
   <div class="room">
-    <x-header @on-click-back="back" style="background: url('/src/assets/i_bg_normal.png') no-repeat;background-size: cover;"
+    <x-header @on-click-back="back"
               :left-options="{backText: '',preventGoBack: true}">用户消息
       <a href="#/messageEdit" slot="right" style="color: #fff">编辑</a>
     </x-header>
@@ -18,7 +18,7 @@
               <div>{{item.sendContent}}</div>
             </div>
             <div class="fr" style="padding-top: 2vw">
-              <img style="width: 5vw;height: 5vw" src="/src/assets/i_row_right_gray.png" alt="">
+              <img style="width: 5vw;height: 5vw" src="../../../assets/i_row_right_gray.png" alt="">
             </div>
           </div>
         </div>

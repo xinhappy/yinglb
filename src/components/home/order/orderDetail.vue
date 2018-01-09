@@ -1,6 +1,6 @@
 <template>
   <div class="orderRoom">
-    <x-header style="background: url('/src/assets/i_bg_normal.png') no-repeat;background-size: cover;"
+    <x-header
               :left-options="{backText: ''}">订单详情
     </x-header>
     <div class="topWrap">

@@ -10,7 +10,7 @@ export function getImgs() {
 
 // 首页轮播咨询
 export function getInfos() {
-  return axios.get('/api/h5Cms/queryCmsH5.htm?programCode=information&terminalType=1')
+  return axios.get('/api/h5Cms/queryCmsH5.htm?programCode=information&terminalType=3')
 }
 
 // 登录

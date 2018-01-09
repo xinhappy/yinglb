@@ -1,10 +1,10 @@
 <template>
   <div>
-    <x-header @on-click-back="back" style="background: url('/src/assets/i_bg_normal.png') no-repeat;background-size: cover;"
+    <x-header @on-click-back="back"
               :left-options="{backText: '',preventGoBack:true}">支付结果
     </x-header>
     <div class="item" style="text-align: center">
-      <img src="/src/assets/i_success.png" alt="">
+      <img src="../../assets/i_success.png" alt="">
       <p>支付成功</p>
     </div>
     <div class="item clearfix">

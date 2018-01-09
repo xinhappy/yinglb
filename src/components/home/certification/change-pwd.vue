@@ -1,20 +1,20 @@
 <template>
   <div class="wrap">
-    <x-header style="background: url('/src/assets/i_bg_normal.png') no-repeat;background-size: cover;"
+    <x-header
               :left-options="{backText: ''}">修改交易密码
     </x-header>
     <div class="room">
       <div class="item">
-        <span><img src="/src/assets/login/icon_login_pwd.png" alt=""></span><input v-model="oldPwd"
+        <span><img src="../../../assets/login/icon_login_pwd.png" alt=""></span><input v-model="oldPwd"
                                                                                    placeholder="请输入旧密码(6位数字)"
                                                                                    type="password"></div>
       <div class="item">
-        <span><img src="/src/assets/login/icon_login_pwd.png" alt=""></span><input v-model="pwd"
+        <span><img src="../../../assets/login/icon_login_pwd.png" alt=""></span><input v-model="pwd"
                                                                                    placeholder="请输入密码(6位数字)"
                                                                                    type="password">
       </div>
       <div class="item">
-        <span><img src="/src/assets/login/icon_login_pwd.png" alt=""></span><input v-model="rePwd"
+        <span><img src="../../../assets/login/icon_login_pwd.png" alt=""></span><input v-model="rePwd"
                                                                                    placeholder="请确认密码(6位数字)"
                                                                                    type="password">
       </div>

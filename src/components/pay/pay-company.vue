@@ -1,6 +1,6 @@
 <template>
   <div>
-    <x-header style="background: url('/src/assets/i_bg_normal.png') no-repeat;background-size: cover;"
+    <x-header
               :left-options="{backText: ''}">付款
     </x-header>
     <div class="title">
@@ -14,7 +14,7 @@
     </div>
     <div class="item clearfix" @click="getReg">店铺优惠 <span
       style="float: right;display: flex;align-content: center;">{{redName}}<img
-      src="/src/assets/i_row_right_gray.png"
+      src="../../assets/i_row_right_gray.png"
       style="width: 5vw;height: 5vw"
       alt=""></span>
     </div>
@@ -25,7 +25,7 @@
       <popup v-model="showRed" position="bottom" height="50%">
         <div style="padding: 4vw;border-bottom: 1px solid #ccc">
           店铺优惠
-          <img @click="showRed = false" src="/src/assets/i_delete.png" style="float: right;width: 5vw" alt="">
+          <img @click="showRed = false" src="../../assets/i_delete.png" style="float: right;width: 5vw" alt="">
         </div>
         <div style="position: relative;height: 100%">
           <checker v-model="redId" default-item-class="demo1-item" selected-item-class="demo1-item-selected">
@@ -67,17 +67,17 @@
       <popup v-model="showPay" position="bottom" height="20%">
         <div style="border-bottom: 1px solid #ccc;padding: 2vw 0;background-color: #fff;padding-left: 2vw">选择付款方式</div>
         <div @click="yingPay" class="item clearfix" style="background-color: #eee"><img
-          style="width: 8vw;vertical-align: middle;margin-right: 2vw" src="/src/assets/i_logo.png" alt="">盈磅<span
+          style="width: 8vw;vertical-align: middle;margin-right: 2vw" src="../../assets/i_logo.png" alt="">盈磅<span
           style="float: right;display: flex;align-content: center;"><img
-          src="/src/assets/i_row_right_gray.png"
+          src="../../assets/i_row_right_gray.png"
           style="width: 8vw;height: 8vw"
           alt=""></span>
         </div>
         <div class="item clearfix" @click="weiPay" style="background-color: #eee"><img
-          style="width: 8vw;vertical-align: middle;margin-right: 2vw" src="/src/assets/i_pay_wei.png" alt="">微信支付
+          style="width: 8vw;vertical-align: middle;margin-right: 2vw" src="../../assets/i_pay_wei.png" alt="">微信支付
           (实付{{rechargeNumber.realMoney}}元，优惠{{rechargeNumber.discountMoney}}元)<span
             style="float: right;display: flex;align-content: center;"><img
-            src="/src/assets/i_row_right_gray.png"
+            src="../../assets/i_row_right_gray.png"
             style="width: 8vw;height: 8vw"
             alt=""></span>
         </div>
@@ -200,7 +200,7 @@
           let ua = window.navigator.userAgent.toLowerCase()
           if (ua.match(/MicroMessenger/i) == 'micromessenger') {  // eslint-disable-line
             // 跳转到微信授权页面
-            let redirectUri = encodeURIComponent('http://qb48m8.natappfree.cc/#/qqLoginBack')
+            let redirectUri = encodeURIComponent('http://m.ylbzg.com/dist/#/qqLoginBack')
             window.location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxae9cdc00bf788458&redirect_uri=' + redirectUri + '&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect'
             if (!this.$store.state.code) {
               this.$store.commit(types.SETCODE, this.getQueryString('code'))

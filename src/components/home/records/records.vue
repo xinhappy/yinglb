@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <x-header style="background: url('/src/assets/i_bg_normal.png') no-repeat;background-size: cover;"
+  <div class="cont">
+    <x-header
               :left-options="{backText: ''}">消费记录
     </x-header>
     <div class="records">
@@ -84,9 +84,10 @@
   }
 </script>
 
-<style lang="less" rel="stylesheet/less">
-  body {
+<style scoped lang="less" rel="stylesheet/less">
+  .cont{
     background-color: #fff;
+    height: 100%;
     .records {
       padding: 2vw;
       .item {

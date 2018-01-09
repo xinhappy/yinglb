@@ -1,6 +1,6 @@
 <template>
   <div>
-    <x-header style="background: url('/src/assets/i_bg_normal.png') no-repeat;background-size: cover;"
+    <x-header
               :left-options="{backText: ''}">地址管理
     </x-header>
     <div style="max-height: 150vw;overflow-y: auto">
@@ -16,10 +16,10 @@
           <span @click="setDefault(item.id)" class="default fl" :class="{ 'active' : item.defaultStaus === '1' }"><i
             class="icon"></i>默认选择地址</span>
           <p class="fr">
-            <span class="change" @click="edit(item)"><img src="/src/assets/icon_edit_gray.png"
+            <span class="change" @click="edit(item)"><img src="../../assets/icon_edit_gray.png"
                                                           style="width:4vw;height: 4vw;margin-right: 1vw"
                                                           alt="">编辑</span>
-            <span class="change" @click="del(item.id)"><img src="/src/assets/icon_delete_gray.png"
+            <span class="change" @click="del(item.id)"><img src="../../assets/icon_delete_gray.png"
                                                             style="width:4vw;height: 4vw;margin-right: 1vw"
                                                             alt="">删除</span>
           </p>
@@ -140,14 +140,14 @@
         display: inline-block;
         width: 4vw;
         height: 4vw;
-        background: url(/src/assets/icon_default_gray.png) no-repeat;
+        background: url(../../assets/icon_default_gray.png) no-repeat;
         background-size: cover;
         margin-right: 1vw;
       }
       &.active {
         color: #0000ff;
         .icon {
-          background: url(/src/assets/icon_default_blue.png) no-repeat;
+          background: url(../../assets/icon_default_blue.png) no-repeat;
           background-size: cover;
         }
       }

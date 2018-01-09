@@ -1,6 +1,6 @@
 <template>
   <div>
-    <x-header style="background: url('/src/assets/i_bg_normal.png') no-repeat;background-size: cover;"
+    <x-header
               :left-options="{backText: ''}">实名认证
     </x-header>
     <div class="room">

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <x-header style="background: url('/src/assets/i_bg_normal.png') no-repeat;background-size: cover;"
+    <x-header
               :left-options="{backText: ''}">搜索结果
     </x-header>
     <div v-if="inners.length>0">
@@ -32,7 +32,9 @@
     },
     methods: {
       result: function () {
-        ApiService.getCompanyList('/api/h5BusinessManage/queryBusinessInfoH5.htm?businessName=' + this.businessName + '&terminalType=1&latitude=' + this.local.latitude + '&longitude=' + this.local.longitude + '&businessRegion=' + this.userInfo.orgId + '&peopleId=' + this.userInfo.id + '&deviceInfo=' + this.userInfo.deviceInfo + '&checkFlag&page=1&limit=100').then(res => {
+        let latitude = this.local ? this.local.latitude : '0.0'
+        let longitude = this.local ? this.local.longitude : '0.0'
+        ApiService.getCompanyList('/api/h5BusinessManage/queryBusinessInfoH5.htm?businessName=' + this.businessName + '&terminalType=3&latitude=' + latitude + '&longitude=' + longitude + '&businessRegion=' + this.userInfo.orgId + '&peopleId=' + this.userInfo.id + '&deviceInfo=' + this.userInfo.deviceInfo + '&checkFlag&page=1&limit=100').then(res => {
           this.inners.push.apply(this.inners, res.data.rows)
         })
       }

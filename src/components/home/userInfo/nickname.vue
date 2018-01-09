@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <x-header style="background: url('/src/assets/i_bg_normal.png') no-repeat;background-size: cover;"
+  <div class="cont">
+    <x-header
               :left-options="{backText: ''}">修改昵称
       <a slot="right" style="color: #fff" @click="changeName">确定</a>
     </x-header>
@@ -61,9 +61,10 @@
   }
 </script>
 
-<style lang="less" rel="stylesheet/less">
-  body {
-    background-color: #fff !important;
+<style scoped lang="less" rel="stylesheet/less">
+  .cont{
+    background-color: #fff;
+    height: 100%;
     .room {
       padding: 4vw 2vw;
       .input {

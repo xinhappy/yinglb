@@ -1,6 +1,6 @@
 <template>
   <div class="room">
-    <x-header style="background: url('/src/assets/i_bg_normal.png') no-repeat;background-size: cover;"
+    <x-header
               :left-options="{backText: ''}">充值
       <a href="#/rechargeRecords" slot="right" style="color: #fff">充值记录</a>
     </x-header>
@@ -59,7 +59,7 @@
       return {
         userInfo: JSON.parse(localStorage.getItem('userInfo')),
         list: [],
-        src: '/src/assets/i_default_n.png',
+        src: '../../../assets/i_default_n.png',
         account: [],
         inputting: '',
         money: '',
@@ -174,7 +174,7 @@
           let ua = window.navigator.userAgent.toLowerCase()
           if (ua.match(/MicroMessenger/i) == 'micromessenger') {  // eslint-disable-line
             // 跳转到微信授权页面
-            let redirectUri = encodeURIComponent('http://qb48m8.natappfree.cc/#/qqLoginBack')
+            let redirectUri = encodeURIComponent('http://m.ylbzg.com/dist/#/qqLoginBack')
             window.location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxae9cdc00bf788458&redirect_uri=' + redirectUri + '&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect'
             if (!this.$store.state.code) {
               this.$store.commit(types.SETCODE, this.getQueryString('code'))

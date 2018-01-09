@@ -1,6 +1,6 @@
 <template>
   <div>
-    <x-header style="background: url('/src/assets/i_bg_normal.png') no-repeat;background-size: cover;"
+    <x-header
               :left-options="{backText: ''}">{{title}}
     </x-header>
     <div class="room">
@@ -15,7 +15,7 @@
       <div class="item" @click="set">
         <span class="title">所在楼号：</span>
         <input type="text" v-model="addressInfo.orderFlowName">
-        <img src="/src/assets/i_row_right_gray.png" style="float: right;width: 5vw" alt="">
+        <img src="../../assets/i_row_right_gray.png" style="float: right;width: 5vw" alt="">
       </div>
       <div class="item">
         <span class="title">详细地址：</span>
@@ -23,7 +23,7 @@
       </div>
     </div>
     <div v-transfer-dom>
-      <popup position="bottom" height="30%" v-model="show">
+      <popup position="bottom" v-model="show">
         <div style="padding: 2vw;background-color: #eee;text-align: center" class="clearfix">
           <span class="fl" @click="cancel">取消</span>
           <span>选择</span>

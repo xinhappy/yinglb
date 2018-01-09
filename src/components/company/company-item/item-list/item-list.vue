@@ -1,6 +1,6 @@
 <template>
   <div>
-    <x-header style="background: url('/src/assets/i_bg_normal.png') no-repeat;background-size: cover;" @on-click-back="back"
+    <x-header @on-click-back="back"
               :left-options="{backText: '',preventGoBack:true}">商品列表
     </x-header>
     <div class="item-container">
@@ -186,10 +186,10 @@
           background-color: transparent;
           border: none;
           &.add {
-            background-image: url(/src/assets/i_good_order_add.png);
+            background-image: url(../../../../assets/i_good_order_add.png);
           }
           &.reduce {
-            background-image: url(/src/assets/i_good_order_reduce.png);
+            background-image: url(../../../../assets/i_good_order_reduce.png);
           }
           &:focus {
             outline: none
@@ -216,7 +216,7 @@
       display: inline-block;
     }
     .car {
-      background: url(/src/assets/i_shopping.png) no-repeat;
+      background: url(../../../../assets/i_shopping.png) no-repeat;
       width: 10vw;
       height: 10vw;
       background-size: cover;

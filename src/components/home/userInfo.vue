@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <x-header style="background: url('/src/assets/i_bg_normal.png') no-repeat;background-size: cover;"
+  <div class="cont">
+    <x-header
               :left-options="{backText: ''}">个人信息
     </x-header>
     <div>
@@ -9,22 +9,22 @@
       </div>
       <div class="room">
         <div class="item clearfix">
-          <img src="/src/assets/home/i_xm.png" alt="">
+          <img src="../../assets/home/i_xm.png" alt="">
           <span>姓名</span>
           <span class="fr">{{userInfo.realName}}<img style="width: 12vw;height: auto" :src="userInfo.realNameStatus === 0 ? no : yes" alt=""></span>
         </div>
         <div class="item clearfix">
-          <img src="/src/assets/home/i_identify_phone.png" alt="">
+          <img src="../../assets/home/i_identify_phone.png" alt="">
           <span>电话</span>
           <span class="fr">{{userInfo.userPhone}}</span>
         </div>
         <div class="item clearfix">
-          <img src="/src/assets/home/i_dq.png" alt="">
+          <img src="../../assets/home/i_dq.png" alt="">
           <span>地区</span>
           <span class="fr">{{area}}</span>
         </div>
         <div class="item clearfix">
-          <img src="/src/assets/home/i_identify_school.png" alt="">
+          <img src="../../assets/home/i_identify_school.png" alt="">
           <span>学校</span>
           <span class="fr">{{school}}</span>
         </div>
@@ -42,11 +42,11 @@
     data () {
       return {
         userInfo: JSON.parse(localStorage.getItem('userInfo')),
-        defaultUrl: '/src/assets/icon_cell.png',
+        defaultUrl: '../../assets/icon_cell.png',
         school: '',
         area: '',
-        no: '/src/assets/home/i_wshiming.png',
-        yes: '//src/assets/home/i_yshiming.png'
+        no: '../../assets/home/i_wshiming.png',
+        yes: '/../../assets/home/i_yshiming.png'
       }
     },
     created () {
@@ -57,11 +57,12 @@
   }
 </script>
 
-<style lang="less" rel="stylesheet/less">
-  body{
+<style scoped lang="less" rel="stylesheet/less">
+  .cont{
+    height: 100%;
     background-color: #fff;
     .top{
-      background: url(/src/assets/home/i_person_blue_bg.png) no-repeat center bottom;
+      background: url(../../assets/home/i_person_blue_bg.png) no-repeat center bottom;
       background-size: cover;
       height: 16vw;
     }

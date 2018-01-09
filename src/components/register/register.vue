@@ -96,7 +96,7 @@
             if (this.formData.makepassword === this.formData.password) {
               if (this.recotelephone === '' || this.recotelephone.match(Reg.telephone) !== null) {
                 if (this.chose === true) {
-                  ApiService.post('api/h5Member/registeredH5.htm?' + '&telephone=' + this.formData.telephone + '&verifyCode=' + this.formData.vercode + '&password=' + this.formData.password + '&registerTerminal=1' + '&remark=H5注册' + '&referee=' + this.recotelephone + '&accountType=1', this.formData).then((res) => {
+                  ApiService.post('/api/h5Member/registeredH5.htm?telephone=' + this.formData.telephone + '&verifyCode=' + this.formData.vercode + '&password=' + this.formData.password + '&registerTerminal=3' + '&remark=H5注册' + '&referee=' + this.recotelephone + '&accountType=1', this.formData).then((res) => {
                     if (res.data.resultCode === '0') {
                       this.$vux.toast.text(res.data.resultDesc, 'bottom')
                     } else {

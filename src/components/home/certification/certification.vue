@@ -1,57 +1,57 @@
 <template>
   <div>
-    <x-header style="background: url('/src/assets/i_bg_normal.png') no-repeat;background-size: cover;"
+    <x-header
               :left-options="{backText: ''}">个人认证
     </x-header>
     <div class="item">
       <div class="list clearfix" @click="to('/changePhone')">
         <div class="fl left">
-          <img src="/src/assets/home/i_identify_phone.png" alt="">
+          <img src="../../../assets/home/i_identify_phone.png" alt="">
           <span>手机号码</span>
         </div>
         <div class="fr right">
           <span>{{userInfo.userPhone}}</span>
-          <img src="/src/assets/i_row_right_gray.png" alt="">
+          <img src="../../../assets/i_row_right_gray.png" alt="">
         </div>
       </div>
       <div class="list clearfix" @click="to('/realName')">
         <div class="fl left">
-          <img src="/src/assets/home/i_center_ident.png" alt="">
+          <img src="../../../assets/home/i_center_ident.png" alt="">
           <span>实名认证</span>
         </div>
         <div class="fr right">
           <span>{{userInfo.realName ? userInfo.realName : '未实名'}}</span>
-          <img src="/src/assets/i_row_right_gray.png" alt="">
+          <img src="../../../assets/i_row_right_gray.png" alt="">
         </div>
       </div>
     </div>
     <div class="item">
       <div class="list clearfix" @click="to('/changeLoginPwd')">
         <div class="fl left">
-          <img src="/src/assets/home/i_center_ident.png" alt="">
+          <img src="../../../assets/home/i_center_ident.png" alt="">
           <span>更改登录密码</span>
         </div>
         <div class="fr right">
-          <img src="/src/assets/i_row_right_gray.png" alt="">
+          <img src="../../../assets/i_row_right_gray.png" alt="">
         </div>
       </div>
       <div class="list clearfix" @click="to('/changePwd')">
         <div class="fl left">
-          <img src="/src/assets/home/i_center_ident.png" alt="">
+          <img src="../../../assets/home/i_center_ident.png" alt="">
           <span>更改交易密码</span>
         </div>
         <div class="fr right">
-          <img src="/src/assets/i_row_right_gray.png" alt="">
+          <img src="../../../assets/i_row_right_gray.png" alt="">
         </div>
       </div>
       <div class="list clearfix" @click="noChange">
         <div class="fl left">
-          <img src="/src/assets/home/i_center_ident.png" alt="">
+          <img src="../../../assets/home/i_center_ident.png" alt="">
           <span>我的院校</span>
         </div>
         <div class="fr right">
           <span>{{school}}</span>
-          <img src="/src/assets/i_row_right_gray.png" alt="">
+          <img src="../../../assets/i_row_right_gray.png" alt="">
         </div>
       </div>
     </div>

@@ -88,7 +88,7 @@
         let ua = window.navigator.userAgent.toLowerCase()
         if (ua.match(/MicroMessenger/i) == 'micromessenger') {  // eslint-disable-line
           // 跳转到微信授权页面
-          let redirectUri = encodeURIComponent('http://qb48m8.natappfree.cc/#/qqLoginBack')
+          let redirectUri = encodeURIComponent('http://m.ylbzg.com/dist/#/qqLoginBack')
           window.location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxae9cdc00bf788458&redirect_uri=' + redirectUri + '&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect'
           if (!this.$store.state.code) {
             this.$store.commit(types.SETCODE, this.getQueryString('code'))
@@ -140,7 +140,7 @@
 
   .loginForm {
     margin: 30vw auto 0;
-    background: url("../../assets/login/i_login_bg2.png") no-repeat;
+    background: url(../../assets/login/i_login_bg2.png) no-repeat;
     background-size: contain;
     width: 60%;
     height: 66vw;
@@ -160,7 +160,7 @@
     input {
       display: inline-block;
       height: 6vw;
-      width: 80%;
+      width: 75%;
     }
   }
 

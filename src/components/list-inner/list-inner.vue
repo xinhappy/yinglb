@@ -4,7 +4,7 @@
       <div class="fl">
         <img
           style="display: block;border-bottom-left-radius: 5px;border-top-left-radius: 5px;width: 150px;max-height: 90px"
-          :src="item.businessPhoto" alt="">
+          :src="item.businessPhoto ? item.businessPhoto : defaultImg" alt="">
       </div>
       <div class="fl inner_left">
         <p>{{item.businessName}}</p>
@@ -17,6 +17,11 @@
 
 <script type="text/ecmascript-6">
   export default {
+    data() {
+      return {
+        defaultImg: '../../assets/i_default_n.png'
+      }
+    },
     props: ['items'],
     methods: {
       save: function (item) {

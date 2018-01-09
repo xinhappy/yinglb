@@ -1,7 +1,7 @@
 <template>
   <div>
     <div>
-      <x-header style="background: url('/src/assets/i_bg_normal.png') no-repeat;background-size: cover;"
+      <x-header
                 :left-options="{showBack: false}">我的
         <a href="#/message" slot="right" style="color: #fff">消息</a>
       </x-header>
@@ -11,11 +11,11 @@
           {{userInfo.userPhone}}
         </div>
         <router-link to="/userInfo">
-          <img src="/src/assets/i_row_white_right.png" style="width: 2vw;float: right;margin-top: 2vw;" alt="">
+          <img src="../../assets/i_row_white_right.png" style="width: 2vw;float: right;margin-top: 2vw;" alt="">
         </router-link>
       </div>
       <div class="account">
-        <p><img src="/src/assets/home/i_center_income.png" alt="">我的盈磅</p>
+        <p><img src="../../assets/home/i_center_income.png" alt="">我的盈磅</p>
         <div class="clearfix bottom">
           <span style="margin-left: 7vw;color: #777">账户余额</span>
           <p class="fr right">
@@ -26,29 +26,29 @@
       </div>
       <div class="room">
         <div class="item clearfix" @click="to('/records')">
-          <img src="/src/assets/home/i_center_consume.png" alt="">
+          <img src="../../assets/home/i_center_consume.png" alt="">
           <span>消费记录</span>
-          <a class="fr"><img src="/src/assets/i_row_right_gray.png" alt=""></a>
+          <a class="fr"><img src="../../assets/i_row_right_gray.png" alt=""></a>
         </div>
         <div class="item clearfix" @click="to('/order')">
-          <img src="/src/assets/home/i_center_consume.png" alt="">
+          <img src="../../assets/home/i_center_consume.png" alt="">
           <span>我的订单</span>
-          <a class="fr"><img src="/src/assets/i_row_right_gray.png" alt=""></a>
+          <a class="fr"><img src="../../assets/i_row_right_gray.png" alt=""></a>
         </div>
         <div class="item clearfix" @click="to('/certification')">
-          <img src="/src/assets/home/i_center_ident.png" alt="">
+          <img src="../../assets/home/i_center_ident.png" alt="">
           <span>个人认证</span>
-          <a class="fr"><img src="/src/assets/i_row_right_gray.png" alt=""></a>
+          <a class="fr"><img src="../../assets/i_row_right_gray.png" alt=""></a>
         </div>
         <div class="item clearfix" @click="to('/companyList/00/我的收藏')">
-          <img src="/src/assets/home/i_center_collect.png" alt="">
+          <img src="../../assets/home/i_center_collect.png" alt="">
           <span>我的收藏</span>
-          <a class="fr"><img src="/src/assets/i_row_right_gray.png" alt=""></a>
+          <a class="fr"><img src="../../assets/i_row_right_gray.png" alt=""></a>
         </div>
         <div class="item clearfix" @click="to('/address')">
-          <img src="/src/assets/home/i_dq.png" alt="">
+          <img src="../../assets/home/i_dq.png" alt="">
           <span>地址管理</span>
-          <a class="fr"><img src="/src/assets/i_row_right_gray.png" alt=""></a>
+          <a class="fr"><img src="../../assets/i_row_right_gray.png" alt=""></a>
         </div>
       </div>
       <div style="text-align: center;margin-top: 10vw">
@@ -72,7 +72,7 @@
     data () {
       return {
         userInfo: JSON.parse(localStorage.getItem('userInfo')),
-        defaultUrl: '/src/assets/icon_cell.png',
+        defaultUrl: '../../assets/icon_cell.png',
         account: ''
       }
     },
@@ -112,7 +112,7 @@
 
 <style scoped lang="less" rel="stylesheet/less">
   .top {
-    background: url('/src/assets/i_bg_normal.png') no-repeat;
+    background: url(../../assets/i_bg_normal.png) no-repeat;
     background-size: cover;
     padding: 2vw;
     .top_left {

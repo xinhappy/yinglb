@@ -1,6 +1,6 @@
 <template>
   <div>
-    <x-header style="background: url('/src/assets/i_bg_normal.png') no-repeat;background-size: cover;"
+    <x-header
               :left-options="{showBack: false}">
       <a href="#/message" slot="left" style="color: #fff">取消</a>
       用户消息
@@ -21,7 +21,7 @@
               <div>{{item.sendContent}}</div>
             </div>
             <div class="fr" style="padding-top: 2vw">
-              <img style="width: 5vw;height: 5vw" src="/src/assets/i_row_right_gray.png" alt="">
+              <img style="width: 5vw;height: 5vw" src="../../../assets/i_row_right_gray.png" alt="">
             </div>
           </div>
         </checker>
@@ -121,7 +121,7 @@
   }
 
   .demo-item-selected {
-    background: url(/src/assets/i_msg_select.png) no-repeat;
+    background: url(../../../assets/i_msg_select.png) no-repeat;
     background-size: cover;
   }
 

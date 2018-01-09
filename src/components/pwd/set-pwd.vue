@@ -1,12 +1,12 @@
 <template>
-  <div>
-    <x-header style="background: url('/src/assets/i_bg_normal.png') no-repeat;background-size: cover;"
+  <div class="cont">
+    <x-header
               :left-options="{backText: ''}">设置交易密码
     </x-header>
     <div class="room">
-      <div class="item"><img src="/src/assets/login/icon_login_pwd.png" style="width: 4vw;height: 4vw;margin-right: 2vw"
+      <div class="item"><img src="../../assets/login/icon_login_pwd.png" style="width: 4vw;height: 4vw;margin-right: 2vw"
                              alt=""><input type="password" v-model="passWord" placeholder="请输入交易密码(6位数字)"></div>
-      <div class="item"><img src="/src/assets/login/icon_login_pwd.png" style="width: 4vw;height: 4vw;margin-right: 2vw"
+      <div class="item"><img src="../../assets/login/icon_login_pwd.png" style="width: 4vw;height: 4vw;margin-right: 2vw"
                              alt=""><input type="password" v-model="rePassWord" placeholder="请确认交易密码(6位数字)"></div>
     </div>
     <div class="save">
@@ -75,9 +75,10 @@
   }
 </script>
 
-<style lang="less" rel="stylesheet/less">
-  body {
+<style scoped lang="less" rel="stylesheet/less">
+  .cont{
     background-color: #fff;
+    height: 100%;
     .room {
       padding: 2vw;
       .item {

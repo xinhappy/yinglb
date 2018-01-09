@@ -1,6 +1,6 @@
 <template>
   <div class="body">
-    <x-header style="background: url('/src/assets/i_bg_normal.png') no-repeat;background-size: cover;"
+    <x-header
               :left-options="{backText: ''}">我的订单
     </x-header>
     <tab :line-width=1 active-color='#04a9ff' v-model="index">

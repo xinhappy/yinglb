@@ -1,15 +1,15 @@
 <template>
   <div class="wrap">
-    <x-header style="background: url('/src/assets/i_bg_normal.png') no-repeat;background-size: cover;"
+    <x-header
               :left-options="{backText: ''}">重置交易密码
     </x-header>
     <div class="room">
       <div class="item">
-        <span><img src="/src/assets/login/icon_login_pwd.png" alt=""></span><input v-model="phone" placeholder="请输入手机号"
+        <span><img src="../../../assets/login/icon_login_pwd.png" alt=""></span><input v-model="phone" placeholder="请输入手机号"
                                                                                    type="text">
       </div>
       <div class="item">
-        <span><img src="/src/assets/login/icon_login_pwd.png" alt=""></span>
+        <span><img src="../../../assets/login/icon_login_pwd.png" alt=""></span>
         <input v-model="verifyCode" type="text" placeholder="请输入验证码">
         <button :disabled="disable" type="button" @click="getY">
           {{title}}
@@ -17,11 +17,11 @@
         </button>
       </div>
       <div class="item">
-        <span><img src="/src/assets/login/icon_login_pwd.png" alt=""></span><input v-model="pwd" placeholder="请输入密码"
+        <span><img src="../../../assets/login/icon_login_pwd.png" alt=""></span><input v-model="pwd" placeholder="请输入密码"
                                                                                    type="password">
       </div>
       <div class="item">
-        <span><img src="/src/assets/login/icon_login_pwd.png" alt=""></span><input v-model="rePwd" placeholder="请确认密码"
+        <span><img src="../../../assets/login/icon_login_pwd.png" alt=""></span><input v-model="rePwd" placeholder="请确认密码"
                                                                                    type="password">
       </div>
     </div>

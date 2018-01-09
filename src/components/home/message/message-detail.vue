@@ -1,6 +1,6 @@
 <template>
   <div class="room">
-    <x-header style="background: url('/src/assets/i_bg_normal.png') no-repeat;background-size: cover;"
+    <x-header
               :left-options="{backText: ''}">消息详情
     </x-header>
     <div class="info">

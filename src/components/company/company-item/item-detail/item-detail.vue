@@ -3,7 +3,7 @@
     <div>
       <div class="blue_bg">
         <a @click="go" style="float: left;margin-left: 3vw"><img style="width: 2vw"
-                                                                 src="/src/assets/i_back_white.png"
+                                                                 src="src/assets/i_back_white.png"
                                                                  alt=""></a>
         {{itemDetail.goodsName}}
         <a class="collect"></a>

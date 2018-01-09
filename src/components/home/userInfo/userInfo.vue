@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <x-header style="background: url('/src/assets/i_bg_normal.png') no-repeat;background-size: cover;"
+  <div class="cont">
+    <x-header
               :left-options="{backText: ''}">个人信息
     </x-header>
     <div style="position: relative">
@@ -13,23 +13,23 @@
       </div>
       <div class="room">
         <div class="item clearfix">
-          <img src="/src/assets/home/i_xm.png" alt="">
+          <img src="../../../assets/home/i_xm.png" alt="">
           <span>姓名</span>
           <span class="fr">{{userInfo.realName}}<img style="width: 12vw;height: auto"
                                                      :src="userInfo.realNameStatus === 0 ? no : yes" alt=""></span>
         </div>
         <div class="item clearfix">
-          <img src="/src/assets/home/i_identify_phone.png" alt="">
+          <img src="../../../assets/home/i_identify_phone.png" alt="">
           <span>电话</span>
           <span class="fr">{{userInfo.userPhone}}</span>
         </div>
         <div class="item clearfix">
-          <img src="/src/assets/home/i_dq.png" alt="">
+          <img src="../../../assets/home/i_dq.png" alt="">
           <span>地区</span>
           <span class="fr">{{area}}</span>
         </div>
         <div class="item clearfix">
-          <img src="/src/assets/home/i_identify_school.png" alt="">
+          <img src="../../../assets/home/i_identify_school.png" alt="">
           <span>学校</span>
           <span class="fr">{{school}}</span>
         </div>
@@ -67,11 +67,11 @@
     data () {
       return {
         userInfo: JSON.parse(localStorage.getItem('userInfo')),
-        defaultUrl: '/src/assets/icon_cell.png',
+        defaultUrl: '../../../assets/icon_cell.png',
         school: '',
         area: '',
-        no: '/src/assets/home/i_wshiming.png',
-        yes: '//src/assets/home/i_yshiming.png',
+        no: '../../../assets/home/i_wshiming.png',
+        yes: '/../../../assets/home/i_yshiming.png',
         show: false,
         dataUrl: ''
       }
@@ -125,11 +125,12 @@
   }
 </script>
 
-<style lang="less" rel="stylesheet/less">
-  body {
-    background-color: #fff !important;
+<style scoped lang="less" rel="stylesheet/less">
+  .cont{
+    background-color: #fff;
+    height: 100%;
     .topOne {
-      background: url(/src/assets/home/i_person_blue_bg.png) no-repeat center bottom;
+      background: url(../../../assets/home/i_person_blue_bg.png) no-repeat center bottom;
       background-size: cover;
       height: 20vw;
       margin-bottom: 25vw;
@@ -140,7 +141,7 @@
       left: 50%;
       margin-left: -50%;
       width: 100%;
-      background: url(/src/assets/home/i_person_data_bg.png) no-repeat center bottom;
+      background: url(../../../assets/home/i_person_data_bg.png) no-repeat center bottom;
       background-size: contain;
       text-align: center;
       border-radius: 3px;
@@ -167,26 +168,26 @@
         }
       }
     }
-    .box {
-      position: relative;
+  }
+  .box {
+    position: relative;
+    height: 8vw;
+    margin: 0 2vw;
+    .file {
+      position: absolute;
+      left: -9999px;
+    }
+    .select {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 10;
+      background-color: #fff;
+      text-align: center;
       height: 8vw;
-      margin: 0 2vw;
-      .file {
-        position: absolute;
-        left: -9999px;
-      }
-      .select {
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        z-index: 10;
-        background-color: #fff;
-        text-align: center;
-        height: 8vw;
-        line-height: 8vw;
-      }
+      line-height: 8vw;
     }
   }
 </style>
