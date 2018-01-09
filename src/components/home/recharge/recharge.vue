@@ -12,7 +12,8 @@
         <checker-item radio-required v-for="item in list" :value="item.rechargeNumber" :key="item.imgSrc"
                       @on-item-click="select(item)">{{item.rechargeNumber}}
         </checker-item>
-        <checker-item :value="inputting" @on-item-click="selectIn()"><input type="text" v-model="inputting" placeholder="输入金额"></checker-item>
+        <checker-item :value="inputting" @on-item-click="selectIn()"><input type="text" v-model="inputting"
+                                                                            placeholder="输入金额"></checker-item>
       </checker>
     </div>
     <div class="bottom">
@@ -35,13 +36,14 @@
         </div>
       </x-dialog>
     </div>
+    <toast v-model="showFalse" type="text" :time="800" is-show-mask :text="text" position="bottom"></toast>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
-  import {XHeader, Checker, CheckerItem, XDialog, TransferDom} from 'vux'
+  import {XHeader, Checker, CheckerItem, XDialog, TransferDom, Toast} from 'vux'
   import * as ApiService from 'api/api'
-  import wx from 'weixin-js-sdk'
+  import * as types from 'src/store/mutation-types'
   export default {
     directives: {
       TransferDom
@@ -50,26 +52,47 @@
       XHeader,
       Checker,
       CheckerItem,
-      XDialog
+      XDialog,
+      Toast
     },
     data () {
       return {
         userInfo: JSON.parse(localStorage.getItem('userInfo')),
         list: [],
-        src: '/src/assets/i_default.png',
+        src: '/src/assets/i_default_n.png',
         account: [],
         inputting: '',
         money: '',
         show: false,
         returnNumber: '',
         ruleId: '',
-        rechargeFlag: ''
+        rechargeFlag: '',
+        resultData: '',
+        showFalse: false,
+        showValue: false,
+        text: '',
+        hand: false
       }
     },
     created () {
       this.getRule()
       this.getAccount()
-      console.log(this.userInfo)
+    },
+    watch: {
+      inputting (val) {
+        this.inputting = val.replace(/[^\d+(/.\d+)?$]/g, '')
+        let ArrMen = val.split('.')   // 截取字符串
+        if (ArrMen.length === 2) {
+          if (ArrMen[1].length > 1) {    // 判断小数点后面的字符串长度
+            this.showFalse = true
+            this.text = '小数点后最多一位'
+            this.showValue = true
+          } else {
+            this.showValue = false
+          }
+        }
+        this.rechargeNumber = val
+      }
     },
     methods: {
       getAccount () {
@@ -92,52 +115,96 @@
         })
       },
       selectIn () {
-
+        this.ruleId = ''
+        this.returnNumber = ''
+        this.rechargeNumber = this.inputting
+        this.rechargeFlag = 1
+        this.hand = true
       },
       select (item) {
         this.src = item.imgSrc
         this.returnNumber = item.returnNumber
         this.ruleId = item.ruleId
         this.rechargeNumber = item.rechargeNumber
+        this.hand = false
       },
       onBridgeReady: function (data) {
         var vm = this
         WeixinJSBridge.invoke( // eslint-disable-line
           'getBrandWCPayRequest', {
-            'appId': data.appid,     // 公众号名称，由商户传入
-            'timeStamp': data.timestamp, // 时间戳，自1970年以来的秒数
-            'nonceStr': data.noncestr, // 随机串
+            'appId': data.appId,     // 公众号名称，由商户传入
+            'timeStamp': data.timeStamp, // 时间戳，自1970年以来的秒数
+            'nonceStr': data.nonceStr, // 随机串
             'package': data.package,
             'signType': 'MD5', // 微信签名方式：
-            'paySign': data.sign // 微信签名
+            'paySign': data.paySign // 微信签名
           },
           function (res) {
             // 使用以上方式判断前端返回,微信团队郑重提示：res.err_msg将在用户支付成功后返回ok，但并不保证它绝对可靠。
-            if (res.err_msg == 'get_brand_wcpay_request：ok') { // eslint-disable-line
+            if (res.err_msg == 'get_brand_wcpay_request:ok') { // eslint-disable-line
               vm.$router.push('/')
+            } else if (res.err_msg == 'get_brand_wcpay_request:cancel') { // eslint-disable-line
+              ApiService.post('/api/h5Member/cancelCapitalRecordH5.htm', {
+                checkFlag: 0,
+                transactionFlow: vm.resultData
+              }).then(data => {
+                if (data.data.resultCode === '1') {
+                  vm.showValue = true
+                  vm.resultDesc = data.data.resultDesc
+                  vm.show = false
+                }
+              })
             } else {
-              alert(JSON.stringify(res))
+//              alert(JSON.stringify(res))
               alert('支付失败,请跳转页面' + res.err_msg)
             }
           }
         )
       },
+      getQueryString (name) {
+        let reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i')
+        let r = window.location.search.substr(1).match(reg)
+        if (r != null) return unescape(r[2])
+        return null
+      },
       save () {
         var vm = this
         let openid = localStorage.getItem('openid')
+        if (!openid) {
+          let ua = window.navigator.userAgent.toLowerCase()
+          if (ua.match(/MicroMessenger/i) == 'micromessenger') {  // eslint-disable-line
+            // 跳转到微信授权页面
+            let redirectUri = encodeURIComponent('http://qb48m8.natappfree.cc/#/qqLoginBack')
+            window.location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxae9cdc00bf788458&redirect_uri=' + redirectUri + '&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect'
+            if (!this.$store.state.code) {
+              this.$store.commit(types.SETCODE, this.getQueryString('code'))
+            }
+          }
+        }
+        if (vm.rechargeNumber < 20 && this.hand) {
+          vm.showFalse = true
+          vm.text = '充值金额不能小于20'
+          return
+        }
+        if (vm.showValue) {
+          vm.showFalse = true
+          vm.text = '小数点后最多一位'
+          return
+        }
         ApiService.post('/api/h5wechatPay/toPayH5.htm', {
           rechargeNumber: this.rechargeNumber,
           returnNumber: this.returnNumber,
           userId: this.userInfo.id,
           userType: 1,
           userTelephone: this.userInfo.userPhone,
-          terminal: 1,
           userName: this.userInfo.realName,
           openId: openid,
           ruleId: this.ruleId,
-          rechargeFlag: ''
+          rechargeFlag: this.rechargeFlag,
+          flag: 0
         }).then(res => {
           if (res.data.resultCode === '1') {
+            vm.resultData = res.data.resultData
             if (typeof WeixinJSBridge == 'undefined') { // eslint-disable-line
               if (document.addEventListener) {
                 document.addEventListener('WeixinJSBridgeReady', vm.onBridgeReady(res.data.object), false)

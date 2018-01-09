@@ -11,3 +11,5 @@ export const SETADS = 'SETADS'
 
 export const ORDER = 'ORDER'
 export const SETCODE = 'SETCODE'
+export const RED = 'RED'
+export const PEISONG = 'PEISONG'

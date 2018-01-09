@@ -61,6 +61,7 @@
         })
       },
       qqLogin () {
+        /*
         let QC = this.QC
         if (QC.Login.check()) { // 如果已登录
           QC.Login.getMe(function (openId, accessToken) {
@@ -81,13 +82,13 @@
 //          ApiService.post('/api/h5Member/otherLoginH5.htm', {accountId: openId}).then(res => {})
         } else {
           QC.Login.showPopup()
-        }
+        }*/
       },
       wxLogin () {
         let ua = window.navigator.userAgent.toLowerCase()
         if (ua.match(/MicroMessenger/i) == 'micromessenger') {  // eslint-disable-line
           // 跳转到微信授权页面
-          let redirectUri = encodeURIComponent('http://by4xkr.natappfree.cc/#/qqLoginBack')
+          let redirectUri = encodeURIComponent('http://qb48m8.natappfree.cc/#/qqLoginBack')
           window.location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxae9cdc00bf788458&redirect_uri=' + redirectUri + '&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect'
           if (!this.$store.state.code) {
             this.$store.commit(types.SETCODE, this.getQueryString('code'))

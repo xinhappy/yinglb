@@ -8,7 +8,7 @@
       <p>转账成功</p>
     </div>
     <div class="item clearfix">
-      <div>支付金额 <span class="fr red">{{sum}}盈磅</span></div>
+      <div>支付金额 <span class="fr red">{{sum - redAccount > 0 ? sum - redAccount : 0}}盈磅</span></div>
       <div style="margin: 2vw 0">支付对象 <span class="fr">{{companyInfo.businessName}}</span></div>
       <div>交易时间 <span class="fr">{{time}}</span></div>
     </div>
@@ -27,7 +27,8 @@
       return {
         companyInfo: JSON.parse(localStorage.getItem('companyInfo')),
         time: '',
-        sum: this.$route.params.sum
+        sum: this.$route.params.sum,
+        redAccount: this.$store.state.redAccount
       }
     },
     created () {

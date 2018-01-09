@@ -15,7 +15,9 @@ export default new Vuex.Store({
     goodsList: localStorage['goodsList'] ? JSON.parse(localStorage['goodsList']) : [],
     userAddress: [],
     orderDetail: [],
-    code: ''
+    code: '',
+    redAccount: '',
+    distributionFee: ''
   },
   getters: {
     sum: state => {
@@ -44,6 +46,7 @@ export default new Vuex.Store({
       // localStorage.token = data
       // state.token = data
       localStorage.removeItem('userInfo')
+      localStorage.removeItem('openid')
       state.user = null
     },
     [types.SETCODE](state, data) {
@@ -57,6 +60,12 @@ export default new Vuex.Store({
     },
     [types.ORDER] (state, data) {
       state.orderDetail.push(data)
+    },
+    [types.RED] (state, data) {
+      state.redAccount = data
+    },
+    [types.PEISONG] (state, data) {
+      state.distributionFee = data
     },
     addGoods: (state, data) => {
       state.goodsList = data

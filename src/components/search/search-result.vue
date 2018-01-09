@@ -33,7 +33,7 @@
     methods: {
       result: function () {
         ApiService.getCompanyList('/api/h5BusinessManage/queryBusinessInfoH5.htm?businessName=' + this.businessName + '&terminalType=1&latitude=' + this.local.latitude + '&longitude=' + this.local.longitude + '&businessRegion=' + this.userInfo.orgId + '&peopleId=' + this.userInfo.id + '&deviceInfo=' + this.userInfo.deviceInfo + '&checkFlag&page=1&limit=100').then(res => {
-          this.inners.push.apply(this.inner, res.data.rows)
+          this.inners.push.apply(this.inners, res.data.rows)
         })
       }
     }

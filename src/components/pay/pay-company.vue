@@ -30,7 +30,8 @@
         <div style="position: relative;height: 100%">
           <checker v-model="redId" default-item-class="demo1-item" selected-item-class="demo1-item-selected">
             <div style="height: 50vw;overflow-y: auto">
-              <checker-item v-for="(item,index) in red" :key="index" :value="item.id + ',' + item.redName"
+              <checker-item v-for="(item,index) in red" :key="index"
+                            :value="item.id + ',' + item.redName + ',' + item.amount"
                             @on-item-click="redClick">
                 <div class="clearfix">
                   <div class="fl">{{item.redName}}(优惠{{item.amount}})</div>
@@ -65,17 +66,20 @@
     <div v-transfer-dom>
       <popup v-model="showPay" position="bottom" height="20%">
         <div style="border-bottom: 1px solid #ccc;padding: 2vw 0;background-color: #fff;padding-left: 2vw">选择付款方式</div>
-        <div @click="yingPay" class="item clearfix" style="background-color: #eee"><img style="width: 8vw;vertical-align: middle;margin-right: 2vw" src="/src/assets/i_logo.png" alt="">盈磅 <span
+        <div @click="yingPay" class="item clearfix" style="background-color: #eee"><img
+          style="width: 8vw;vertical-align: middle;margin-right: 2vw" src="/src/assets/i_logo.png" alt="">盈磅<span
           style="float: right;display: flex;align-content: center;"><img
           src="/src/assets/i_row_right_gray.png"
           style="width: 8vw;height: 8vw"
           alt=""></span>
         </div>
-        <div class="item clearfix" @click="weiPay" style="background-color: #eee"><img style="width: 8vw;vertical-align: middle;margin-right: 2vw" src="/src/assets/i_pay_wei.png" alt="">微信支付 <span
-          style="float: right;display: flex;align-content: center;"><img
-          src="/src/assets/i_row_right_gray.png"
-          style="width: 8vw;height: 8vw"
-          alt=""></span>
+        <div class="item clearfix" @click="weiPay" style="background-color: #eee"><img
+          style="width: 8vw;vertical-align: middle;margin-right: 2vw" src="/src/assets/i_pay_wei.png" alt="">微信支付
+          (实付{{rechargeNumber.realMoney}}元，优惠{{rechargeNumber.discountMoney}}元)<span
+            style="float: right;display: flex;align-content: center;"><img
+            src="/src/assets/i_row_right_gray.png"
+            style="width: 8vw;height: 8vw"
+            alt=""></span>
         </div>
       </popup>
     </div>
@@ -87,6 +91,7 @@
   import {XHeader, TransferDom, Popup, Toast, Checker, CheckerItem} from 'vux'
   import * as ApiService from 'api/api'
   import Keyboard from 'components/keyboard/keyboard'
+  import * as types from 'src/store/mutation-types'
   export default {
     directives: {
       TransferDom
@@ -119,7 +124,10 @@
         pw5: '',
         pw6: '',
         show: false,
-        showPay: false
+        showPay: false,
+        rechargeNumber: {},
+        resultData: '',
+        redAccount: ''
       }
     },
     methods: {
@@ -147,6 +155,8 @@
         let arr = itemValue.split(',')
         this.redName = arr[1]
         this.showRed = false
+        this.redAccount = arr[2]
+        this.$store.commit(types.RED, this.redAccount)
       },
       onResultChange (val) {
         this.password = val
@@ -158,27 +168,62 @@
           return
         }
         this.showPay = true
+        let arr = this.redId.split(',')
+        let redId = arr[0]
+        ApiService.post('/api/h5SystemRechargeRules/getRealMoney.htm', {
+          terminalType: 3,
+          totalMoney: this.exchangeNum,
+          redId: redId,
+          deviceInfo: this.userInfo.deviceInfo,
+          checkFlag: '',
+          peopleId: this.userInfo.id
+        }).then(res => {
+          if (res.data.resultCode === '1') {
+            this.rechargeNumber = res.data.object
+          }
+        })
       },
       yingPay () {
         this.showPay = false
         this.show = true
       },
+      getQueryString (name) {
+        let reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i')
+        let r = window.location.search.substr(1).match(reg)
+        if (r != null) return unescape(r[2])
+        return null
+      },
       weiPay () {
         var vm = this
         let openid = localStorage.getItem('openid')
+        if (!openid) {
+          let ua = window.navigator.userAgent.toLowerCase()
+          if (ua.match(/MicroMessenger/i) == 'micromessenger') {  // eslint-disable-line
+            // 跳转到微信授权页面
+            let redirectUri = encodeURIComponent('http://qb48m8.natappfree.cc/#/qqLoginBack')
+            window.location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxae9cdc00bf788458&redirect_uri=' + redirectUri + '&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect'
+            if (!this.$store.state.code) {
+              this.$store.commit(types.SETCODE, this.getQueryString('code'))
+            }
+          }
+        }
+        let arr = this.redId.split(',')
+        let redId = arr[0]
         ApiService.post('/api/h5wechatPay/toPayH5.htm', {
-          rechargeNumber: this.rechargeNumber,
-          returnNumber: this.returnNumber,
+          rechargeNumber: this.rechargeNumber.realMoney,
+          returnNumber: this.exchangeNum,
           userId: this.userInfo.id,
           userType: 1,
           userTelephone: this.userInfo.userPhone,
-          terminal: 1,
           userName: this.userInfo.realName,
           openId: openid,
-          ruleId: this.ruleId,
-          rechargeFlag: ''
+          ruleId: '',
+          rechargeFlag: 1,
+          flag: 1,
+          redId: redId
         }).then(res => {
           if (res.data.resultCode === '1') {
+            vm.resultData = res.data.resultData
             if (typeof WeixinJSBridge == 'undefined') { // eslint-disable-line
               if (document.addEventListener) {
                 document.addEventListener('WeixinJSBridgeReady', vm.onBridgeReady(res.data.object), false)
@@ -196,16 +241,16 @@
         var vm = this
         WeixinJSBridge.invoke( // eslint-disable-line
           'getBrandWCPayRequest', {
-            'appId': data.appid,     // 公众号名称，由商户传入
-            'timeStamp': data.timestamp, // 时间戳，自1970年以来的秒数
-            'nonceStr': data.noncestr, // 随机串
+            'appId': data.appId,     // 公众号名称，由商户传入
+            'timeStamp': data.timeStamp, // 时间戳，自1970年以来的秒数
+            'nonceStr': data.nonceStr, // 随机串
             'package': data.package,
             'signType': 'MD5', // 微信签名方式：
-            'paySign': data.sign // 微信签名
+            'paySign': data.paySign // 微信签名
           },
           function (res) {
             // 使用以上方式判断前端返回,微信团队郑重提示：res.err_msg将在用户支付成功后返回ok，但并不保证它绝对可靠。
-            if (res.err_msg == 'get_brand_wcpay_request：ok') { // eslint-disable-line
+            if (res.err_msg == 'get_brand_wcpay_request:ok') { // eslint-disable-line
               let arr = vm.redId.split(',')
               let redId = arr[0]
               ApiService.post('/api/h5MemberExchange/exchangeH5.htm', {
@@ -216,7 +261,8 @@
                 checkFlag: '',
                 deviceInfo: vm.userInfo.deviceInfo,
                 peopleId: vm.userInfo.id,
-                flag: 2
+                flag: 2,
+                transactionFlow: vm.resultData
               }).then(resp => {
                 if (resp.data.resultCode === '0') {
                   vm.showValue = true
@@ -227,8 +273,20 @@
                   vm.$router.push('/zhuan/' + vm.exchangeNum)
                 }
               })
+            } else if (res.err_msg == 'get_brand_wcpay_request:cancel') { // eslint-disable-line
+              ApiService.post('/api/h5Member/cancelCapitalRecordH5.htm', {
+                checkFlag: 0,
+                transactionFlow: vm.resultData
+              }).then(data => {
+                if (data.data.resultCode === '1') {
+                  vm.showValue = true
+                  vm.resultDesc = data.data.resultDesc
+                  vm.showPay = false
+                  vm.show = false
+                }
+              })
             } else {
-              alert(JSON.stringify(res))
+//              alert(JSON.stringify(res))
               alert('支付失败,请跳转页面' + res.err_msg)
             }
           }
@@ -241,7 +299,7 @@
     },
     watch: {
       exchangeNum (val) {
-        this.exchangeNum = val.replace(/[^\d]/g, '')
+        this.exchangeNum = val.replace(/[^\d+(/.\d+)?$]/g, '')
       },
       password (val) {
         this.pw1 = val[0]

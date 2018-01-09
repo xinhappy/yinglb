@@ -8,7 +8,7 @@
       <p>支付成功</p>
     </div>
     <div class="item clearfix">
-      <div>支付金额 <span class="fr red">{{sum}}盈磅</span></div>
+      <div>支付金额 <span class="fr red">{{sum + distributionFee - redAccount > 0 ? sum + distributionFee - redAccount : 0}}盈磅</span></div>
       <div style="margin: 2vw 0">支付对象 <span class="fr">{{companyInfo.businessName}}</span></div>
       <div>交易时间 <span class="fr">{{time}}</span></div>
     </div>
@@ -27,7 +27,9 @@
     data () {
       return {
         companyInfo: JSON.parse(localStorage.getItem('companyInfo')),
-        time: ''
+        time: '',
+        redAccount: this.$store.state.redAccount,
+        distributionFee: this.$store.state.distributionFee
       }
     },
     created () {

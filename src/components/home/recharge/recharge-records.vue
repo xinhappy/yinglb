@@ -55,7 +55,7 @@
         ApiService.post('/api/h5CapitalRecord/queryCapitalRecordHistoryH5.htm', {
           userId: this.userInfo.id,
           userType: '1',
-          typeFlag: '1',
+          typeFlag: '',
           page: this.page,
           limit: 8
         }).then(res => {
