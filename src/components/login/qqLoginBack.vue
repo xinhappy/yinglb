@@ -124,7 +124,7 @@
         ApiService.get('/sns/oauth2/access_token?appid=wxae9cdc00bf788458&secret=e90de7fdd2aa8a91bbe80683f8ed512a&code=' + code + '&grant_type=authorization_code').then(res => {
           if (res.data.errcode === 40029) {
             ApiService.get('/sns/oauth2/refresh_token?appid=wxae9cdc00bf788458&grant_type=refresh_token&refresh_token=REFRESH_TOKEN').then(datas => {
-              localStorage.setItem('openid', res.datas.openid)
+              localStorage.setItem('openid', datas.data.openid)
               ApiService.get('/sns/userinfo?access_token=' + datas.data.access_token + '&openid=' + datas.data.openid + '&lang=zh_CN').then(data => {
                 ApiService.post('/api/h5Member/otherLoginH5.htm', {
                   accountId: data.data.openid,
