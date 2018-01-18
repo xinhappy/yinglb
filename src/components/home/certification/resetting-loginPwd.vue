@@ -124,22 +124,39 @@
           this.text = '确认密码不能为空'
           return
         }
-        ApiService.post('/api/h5Member/resetPwdH5.htm', {
-          telephone: this.phone,
-          verifyCode: this.verifyCode,
-          password: this.pwd,
-          deviceInfo: this.userInfo ? this.userInfo.deviceInfo : this.uuid(),
-          checkFlag: '',
-          peopleId: this.userInfo.id,
-          memberType: 1
-        }).then(res => {
-          if (res.data.resultCode === '1') {
-            this.$router.push('/')
-          } else {
-            this.showValue = true
-            this.text = res.data.resultDesc
-          }
-        })
+        if(this.userInfo){
+          ApiService.post('/api/h5Member/resetPwdH5.htm', {
+            telephone: this.phone,
+            verifyCode: this.verifyCode,
+            password: this.pwd,
+            deviceInfo: this.userInfo.deviceInfo,
+            checkFlag: '',
+            peopleId: this.userInfo.id,
+            memberType: 1
+          }).then(res => {
+            if (res.data.resultCode === '1') {
+              this.$router.push('/')
+            } else {
+              this.showValue = true
+              this.text = res.data.resultDesc
+            }
+          })
+        }else {
+          ApiService.post('/api/h5Member/resetPwdH5.htm', {
+            telephone: this.phone,
+            verifyCode: this.verifyCode,
+            password: this.pwd,
+            checkFlag: '1',
+            memberType: 1
+          }).then(res => {
+            if (res.data.resultCode === '1') {
+              this.$router.push('/')
+            } else {
+              this.showValue = true
+              this.text = res.data.resultDesc
+            }
+          })
+        }
       }
     }
   }
