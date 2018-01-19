@@ -20,9 +20,8 @@
     <div class="qita">
       <p>其他登录方式</p>
       <p><img src="../../assets/login/i_type_line.png" alt="" style="width: 50vw"></p>
-      <p><img @click="wxLogin" src="../../assets/login/icon_login_wx.png" alt=""><img id="qq" @click="qqLogin"
-                                                                                      src="../../assets/login/icon_login_qq.png"
-                                                                                      alt="">
+      <p><img @click="wxLogin" src="../../assets/login/icon_login_wx.png" alt="">
+        <!--<img id="qq" @click="qqLogin" src="../../assets/login/icon_login_qq.png" alt="">-->
       </p>
     </div>
     <toast v-model="show" type="text" :time="800" is-show-mask :text="text" position="bottom"></toast>
