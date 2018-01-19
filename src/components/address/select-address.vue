@@ -81,7 +81,7 @@
           peopleId: this.userInfo.id
         }).then(res => {
           if (res.data.resultCode === '1') {
-             window.location.reload()
+            window.location.reload()
           }
         })
       },

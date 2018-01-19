@@ -56,29 +56,6 @@
           }
         })
       },
-      qqLogin () {
-        let QC = this.QC
-        if (QC.Login.check()) { // 如果已登录
-          QC.Login.getMe(function (openId, accessToken) {
-            QC.api('get_user_info', {access_token: accessToken, openid: openId})
-            // 指定接口访问成功的接收函数，s为成功返回Response对象
-              .success(function (s) {
-                // 成功回调，通过s.data获取OpenAPI的返回数据
-              })
-              // 指定接口访问失败的接收函数，f为失败返回Response对象
-              .error(function (f) {
-                // 失败回调
-              })
-              // 指定接口完成请求后的接收函数，c为完成请求返回Response对象
-              .complete(function (c) {
-                // 完成请求回调
-              })
-          })
-//          ApiService.post('/api/h5Member/otherLoginH5.htm', {accountId: openId}).then(res => {})
-        } else {
-          QC.Login.showPopup()
-        }
-      },
       wxLogin () {
         let ua = window.navigator.userAgent.toLowerCase()
         if (ua.match(/MicroMessenger/i) == 'micromessenger') {  // eslint-disable-line

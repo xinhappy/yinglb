@@ -1,7 +1,7 @@
 <template>
   <div>
     <x-header
-              :left-options="{backText: ''}">{{title}}
+      :left-options="{backText: ''}">{{title}}
     </x-header>
     <div class="room">
       <div class="item">

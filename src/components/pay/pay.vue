@@ -208,9 +208,9 @@
       let hour = new Date().getHours()
       let min = new Date().getMinutes()
       if (hour + min / 60 > 12.5) {
-        this.yuTime = [[{name: '17:30~21:30', value: '17:30~21:30',id: '17:30~21:30', text: '17:30~21:30'}]]
+        this.yuTime = [[{name: '17:30~21:30', value: '17:30~21:30', id: '17:30~21:30', text: '17:30~21:30'}]]
       } else {
-        this.yuTime = [[{name: '12:10~12:20', value: '12:10~12:20',id: '12:10~12:20', text: '12:10~12:20'}, {name: '12:20~12:30', value: '12:20~12:30',id: '12:20~12:30', text: '12:20~12:30'}]]
+        this.yuTime = [[{name: '12:10~12:20', value: '12:10~12:20', id: '12:10~12:20', text: '12:10~12:20'}, {name: '12:20~12:30', value: '12:20~12:30', id: '12:20~12:30', text: '12:20~12:30'}]]
       }
     },
     computed: {
