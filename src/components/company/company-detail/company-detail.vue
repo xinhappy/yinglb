@@ -63,6 +63,7 @@
         </div>
       </div>
     </div>
+    <div style="padding-bottom: 15vw"></div>
     <div class="save">
       <button @click="pay">去支付</button>
     </div>

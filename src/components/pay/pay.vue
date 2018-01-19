@@ -192,7 +192,7 @@
         now: true,
         apoint: '',
         userAddress: {},
-        distributionFee: '0',
+        distributionFee: 0,
         showPay: false,
         rechargeNumber: {},
         resultData: '',
@@ -208,9 +208,9 @@
       let hour = new Date().getHours()
       let min = new Date().getMinutes()
       if (hour + min / 60 > 12.5) {
-        this.yuTime = [[{id: '17:30~21:30', text: '17:30~21:30'}]]
+        this.yuTime = [[{name: '17:30~21:30', value: '17:30~21:30',id: '17:30~21:30', text: '17:30~21:30'}]]
       } else {
-        this.yuTime = [[{id: '12:10~12:20', text: '12:10~12:20'}, {id: '12:20~12:30', text: '12:20~12:30'}]]
+        this.yuTime = [[{name: '12:10~12:20', value: '12:10~12:20',id: '12:10~12:20', text: '12:10~12:20'}, {name: '12:20~12:30', value: '12:20~12:30',id: '12:20~12:30', text: '12:20~12:30'}]]
       }
     },
     computed: {
@@ -360,7 +360,7 @@
       getAddress () {
         var vm = this
         if (vm.$store.state.userAddress.length > 0) {
-          vm.userAddress = vm.$store.state.userAddress[0]
+          vm.userAddress = vm.$store.state.userAddress[vm.$store.state.userAddress.length - 1]
         } else {
           ApiService.post('/api/h5Member/queryMyAddressH5.htm', {
             userId: this.userInfo.id,
@@ -570,12 +570,14 @@
         }
       },
       userAddress (val) {
-        ApiService.get('/api/h5DistributorOrder/countDistributionFeeH5.htm?addressId=' + val.id + '&businessId=' + this.companyInfo.id + '&checkFlag&deviceInfo=' + this.userInfo.deviceInfo + '&peopleId=' + this.userInfo.id).then(res => {
-          if (res.data.resultCode === '1') {
-            this.distributionFee = res.data.object
-            this.$store.commit(types.PEISONG, this.distributionFee)
-          }
-        })
+        if (val) {
+          ApiService.get('/api/h5DistributorOrder/countDistributionFeeH5.htm?addressId=' + val.id + '&businessId=' + this.companyInfo.id + '&checkFlag&deviceInfo=' + this.userInfo.deviceInfo + '&peopleId=' + this.userInfo.id).then(res => {
+            if (res.data.resultCode === '1') {
+              this.distributionFee = parseFloat(res.data.object)
+              this.$store.commit(types.PEISONG, this.distributionFee)
+            }
+          })
+        }
       },
       userInfo (val) {
         this.userInfo = val

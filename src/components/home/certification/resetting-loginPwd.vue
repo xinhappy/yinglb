@@ -1,12 +1,13 @@
 <template>
   <div class="wrap">
     <x-header
-              :left-options="{backText: ''}">重置密码
+      :left-options="{backText: ''}">重置密码
     </x-header>
     <div class="room">
       <div class="item">
-        <span><img src="../../../assets/login/icon_login_pwd.png" alt=""></span><input v-model="phone" placeholder="请输入手机号"
-                                                                                   type="text">
+        <span><img src="../../../assets/login/icon_login_pwd.png" alt=""></span><input v-model="phone"
+                                                                                       placeholder="请输入手机号"
+                                                                                       type="text">
       </div>
       <div class="item">
         <span><img src="../../../assets/login/icon_login_pwd.png" alt=""></span>
@@ -18,11 +19,12 @@
       </div>
       <div class="item">
         <span><img src="../../../assets/login/icon_login_pwd.png" alt=""></span><input v-model="pwd" placeholder="请输入密码"
-                                                                                   type="password">
+                                                                                       type="password">
       </div>
       <div class="item">
-        <span><img src="../../../assets/login/icon_login_pwd.png" alt=""></span><input v-model="rePwd" placeholder="请确认密码"
-                                                                                   type="password">
+        <span><img src="../../../assets/login/icon_login_pwd.png" alt=""></span><input v-model="rePwd"
+                                                                                       placeholder="请确认密码"
+                                                                                       type="password">
       </div>
     </div>
     <div style="text-align: center;margin-top: 2vw;padding: 0 2vw">
@@ -124,7 +126,7 @@
           this.text = '确认密码不能为空'
           return
         }
-        if(this.userInfo){
+        if (this.userInfo) {
           ApiService.post('/api/h5Member/resetPwdH5.htm', {
             telephone: this.phone,
             verifyCode: this.verifyCode,
@@ -141,7 +143,7 @@
               this.text = res.data.resultDesc
             }
           })
-        }else {
+        } else {
           ApiService.post('/api/h5Member/resetPwdH5.htm', {
             telephone: this.phone,
             verifyCode: this.verifyCode,
