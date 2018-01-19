@@ -8,7 +8,7 @@
       <div class="fl" @click="search">
         <span class="glass"></span>
         <input class="searc" type="text" placeholder="请输入搜索内容">
-        <span><a href="" style="color: #fff;font-size: 3.8vw">搜索</a></span>
+        <span><a href="" style="color: #fff;font-size: 3.8vw;padding-left: 2vw">搜索</a></span>
       </div>
     </div>
     <scroller lock-x height="-7vw" @on-scroll-bottom="onScrollBottom" ref="scrollerBottom"
@@ -221,9 +221,9 @@
   }
 
   .searc {
-    width: 60vw;
+    width: 55vw;
     height: 7vw;
-    padding-left: 9vw;
+    padding-left: 10vw;
   }
 
   .glass {
