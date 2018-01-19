@@ -80,7 +80,9 @@
           deviceInfo: this.userInfo.deviceInfo,
           peopleId: this.userInfo.id
         }).then(res => {
-
+          if (res.data.resultCode === '1') {
+             window.location.reload()
+          }
         })
       },
       edit (item) {

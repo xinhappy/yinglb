@@ -144,7 +144,7 @@
       getCompanyList () {
         let latitude = this.local ? this.local.latitude : '0.0'
         let longitude = this.local ? this.local.longitude : '0.0'
-        ApiService.getCompanyList('/api/h5BusinessManage/queryBusinessInfoH5.htm?memberId=' + this.userInfo.id + '&terminalType=3&latitude=' + latitude + '&longitude=' + longitude + '&businessRegion=' + this.circle.orgId + '&peopleId=' + this.userInfo.id + '&deviceInfo=' + this.userInfo.deviceInfo + '&checkFlag&page=' + this.page + '&limit=3').then(res => {
+        ApiService.getCompanyList('/api/h5BusinessManage/queryBusinessInfoH5.htm?memberId=' + this.userInfo.id + '&terminalType=3&latitude=' + latitude + '&longitude=' + longitude + '&businessRegion=' + this.circle.orgId + '&peopleId=' + this.userInfo.id + '&deviceInfo=' + this.userInfo.deviceInfo + '&checkFlag&page=' + this.page + '&limit=5').then(res => {
           if (res.data.resultCode === '1') {
             if (res.data.rows.length > 0) {
               this.inners.push.apply(this.inners, res.data.rows)
