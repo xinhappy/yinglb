@@ -36,13 +36,14 @@
         </div>
       </x-dialog>
     </div>
-    <toast v-model="showFalse" type="text" :time="800" is-show-mask :text="text" position="bottom"></toast>
+    <toast v-model="showFalse" width="20em" type="text" :time="800" is-show-mask :text="text" position="middle"></toast>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
   import {XHeader, Checker, CheckerItem, XDialog, TransferDom, Toast} from 'vux'
   import * as ApiService from 'api/api'
+  import * as config from 'common/config'
   import * as types from 'src/store/mutation-types'
   export default {
     directives: {
@@ -174,14 +175,14 @@
           let ua = window.navigator.userAgent.toLowerCase()
           if (ua.match(/MicroMessenger/i) == 'micromessenger') {  // eslint-disable-line
             // 跳转到微信授权页面
-            let redirectUri = encodeURIComponent('http://m.ylbzg.com/dist/#/qqLoginBack')
+            let redirectUri = encodeURIComponent(config.retrunUrl + '/#/qqLoginBack')
             window.location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxae9cdc00bf788458&redirect_uri=' + redirectUri + '&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect'
             if (!this.$store.state.code) {
               this.$store.commit(types.SETCODE, this.getQueryString('code'))
             }
           }
         }
-        if (vm.rechargeNumber < 20 && this.hand) {
+        if (vm.rechargeNumber < 0 && this.hand) {
           vm.showFalse = true
           vm.text = '充值金额不能小于20'
           return
@@ -215,6 +216,9 @@
             } else {
               vm.onBridgeReady(res.data.object)
             }
+          } else {
+            vm.showFalse = true
+            vm.text = res.data.resultDesc
           }
         })
       }

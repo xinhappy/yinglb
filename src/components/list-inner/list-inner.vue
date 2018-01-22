@@ -1,7 +1,8 @@
 <template>
   <div>
     <div class="list_inner clearfix" v-for="item in items" :key="item.id" @click="save(item)">
-      <div class="fl">
+      <div class="fl" style="position: relative">
+        <p style="position: absolute;color: #eee;" v-show="item.isService === 1">不营业</p>
         <img
           style="display: block;border-bottom-left-radius: 5px;border-top-left-radius: 5px;width: 150px;max-height: 90px"
           :src="item.businessPhoto ? item.businessPhoto : defaultImg" alt="">

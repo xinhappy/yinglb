@@ -60,7 +60,7 @@
         let ua = window.navigator.userAgent.toLowerCase()
         if (ua.match(/MicroMessenger/i) == 'micromessenger') {  // eslint-disable-line
           // 跳转到微信授权页面
-          let redirectUri = encodeURIComponent('http://m.ylbzg.com/dist/#/qqLoginBack')
+          let redirectUri = encodeURIComponent('http://p8ja6q.natappfree.cc/#/qqLoginBack')
           window.location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxae9cdc00bf788458&redirect_uri=' + redirectUri + '&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect'
         }
       },
@@ -97,49 +97,15 @@
       let vm = this
       let code = vm.getQueryString('code')
       if (code) {
-        ApiService.get('/sns/oauth2/access_token?appid=wxae9cdc00bf788458&secret=e90de7fdd2aa8a91bbe80683f8ed512a&code=' + code + '&grant_type=authorization_code').then(res => {
-          if (res.data.errcode === 40029) {
-            ApiService.get('/sns/oauth2/refresh_token?appid=wxae9cdc00bf788458&grant_type=refresh_token&refresh_token=REFRESH_TOKEN').then(datas => {
-              localStorage.setItem('openid', datas.data.openid)
-              ApiService.get('/sns/userinfo?access_token=' + datas.data.access_token + '&openid=' + datas.data.openid + '&lang=zh_CN').then(data => {
-                ApiService.post('/api/h5Member/otherLoginH5.htm', {
-                  accountId: data.data.openid,
-                  nickName: data.data.nickname,
-                  accountFlag: 1,
-                  loginInfo: vm.uuid()
-                }).then(resp => {
-                  if (resp.data.resultCode === '1') {
-                    if (resp.data.object.userPhone) {
-                      this.$store.commit(types.LOGIN, resp.data.object)
-                      this.$router.push('/community')
-                    } else {
-                      this.$store.commit(types.LOGIN, resp.data.object)
-                      vm.$router.push('/bindPhone/1')
-                    }
-                  }
-                })
-              })
-            })
-          } else {
-            localStorage.setItem('openid', res.data.openid)
-            ApiService.get('/sns/userinfo?access_token=' + res.data.access_token + '&openid=' + res.data.openid + '&lang=zh_CN').then(data => {
-              ApiService.post('/api/h5Member/otherLoginH5.htm', {
-                accountId: data.data.openid,
-                nickName: data.data.nickname,
-                accountFlag: 1,
-                loginInfo: vm.uuid()
-              }).then(resp => {
-                if (resp.data.resultCode === '1') {
-                  if (resp.data.object.userPhone) {
-                    this.$store.commit(types.LOGIN, resp.data.object)
-                    this.$router.push('/community')
-                  } else {
-                    this.$store.commit(types.LOGIN, resp.data.object)
-                    vm.$router.push('/bindPhone/1')
-                  }
-                }
-              })
-            })
+        ApiService.post('/api/h5Member/getAccessToken.htm', {code: code}).then(res => {
+          if (res.data.resultCode === '1') {
+            if (res.data.object.userPhone) {
+              this.$store.commit(types.LOGIN, res.data.object)
+              this.$router.push('/community')
+            } else {
+              this.$store.commit(types.LOGIN, res.data.object)
+              vm.$router.push('/bindPhone/1')
+            }
           }
         })
       }

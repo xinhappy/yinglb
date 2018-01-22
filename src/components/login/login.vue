@@ -33,6 +33,7 @@
   import {Toast} from 'vux'
   import * as types from 'src/store/mutation-types'
   import Local from 'components/local/local'
+  import * as config from 'common/config'
   export default {
     components: {
       Toast,
@@ -64,7 +65,7 @@
         if (ua.match(/MicroMessenger/i) == 'micromessenger') {  // eslint-disable-line
           // 跳转到微信授权页面
 //          let redirectUri = encodeURIComponent('http://m.ylbzg.com/dist/#/qqLoginBack')
-          let redirectUri = encodeURIComponent('http://15012551.tunnel.echomod.cn/#/qqLoginBack')
+          let redirectUri = encodeURIComponent(config.retrunUrl + '/#/qqLoginBack')
           window.location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxae9cdc00bf788458&redirect_uri=' + redirectUri + '&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect'
           if (!this.$store.state.code) {
             this.$store.commit(types.SETCODE, this.getQueryString('code'))

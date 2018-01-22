@@ -37,6 +37,7 @@
 <script type="text/ecmascript-6">
   import {XHeader, Countdown, Toast} from 'vux'
   import * as ApiService from 'api/api'
+  import * as types from 'src/store/mutation-types'
   export default {
     components: {
       XHeader,
@@ -152,6 +153,7 @@
             memberType: 1
           }).then(res => {
             if (res.data.resultCode === '1') {
+              this.$store.commit(types.LOGOUT, [])
               this.$router.push('/')
             } else {
               this.showValue = true

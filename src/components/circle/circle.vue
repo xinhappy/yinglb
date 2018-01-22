@@ -62,34 +62,36 @@
       this.getProvince()
     },
     methods: {
-      getProvince: function () {
+      getProvince () {
         ApiService.getCompanyList('/api/h5Organization/queryAreaComboH5.htm?type=1').then(res => {
           this.province.push(res.data.rows)
-          this.cityId = []
-          this.areaId = []
-          this.circleId = []
+          this.area = []
+          this.circle = []
         })
       },
-      change: function () {
+      change () {
         ApiService.getCompanyList('/api/h5Organization/queryAreaComboH5.htm?type=1&id=' + this.provinceId[0]).then(res => {
+          this.city = []
           this.city.push(res.data.rows)
-          this.areaId = []
-          this.circleId = []
+          this.area = []
+          this.circle = []
         })
       },
-      changeCity: function () {
+      changeCity () {
         ApiService.getCompanyList('/api/h5Organization/queryAreaComboH5.htm?type=1&id=' + this.cityId[0]).then(res => {
+          this.area = []
           this.area.push(res.data.rows)
-          this.circleId = []
+          this.circle = []
         })
       },
-      changeArea: function () {
+      changeArea () {
         ApiService.getCompanyList('/api/h5Organization/queryAreaComboH5.htm?type=0&id=' + this.areaId[0]).then(res => {
+          this.circle = []
           this.circle.push(res.data.rows)
           this.circleText = res.data.rows[0].text
         })
       },
-      selected: function () {
+      selected () {
         this.$store.commit(types.SELECTED, {orgId: this.orgId[0], text: this.circleText})
         this.$router.push('/community')
       }

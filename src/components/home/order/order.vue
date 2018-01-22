@@ -39,7 +39,7 @@
                 </div>
                 <div class="total">实付<span>{{i.total}}</span>盈磅</div>
                 <div class="status">
-                  <span class="fl">单号：{{i.businessOrderNum}}</span>
+                  <span class="fl">单号：{{i.orderNum}}</span>
                   <span class="cancel" @click="sure(i.businessId, i.randomNum)">确定收货</span>
                 </div>
               </div>
@@ -54,7 +54,7 @@
                 </div>
                 <div class="total">实付<span>{{i.total}}</span>盈磅</div>
                 <div class="status">
-                  <span class="fl">单号：{{i.businessOrderNum}}</span>
+                  <span class="fl">单号：{{i.orderNum}}</span>
                   <span class="used" v-if="i.orderType !==2">已使用</span>
                   <span class="comments" v-if="i.orderType ===2">去点评</span>
                 </div>
@@ -70,7 +70,7 @@
                 </div>
                 <div class="total">实付<span>{{i.total}}</span>盈磅</div>
                 <div class="status">
-                  <span class="fl">单号：{{i.businessOrderNum}}</span>
+                  <span class="fl">单号：{{i.orderNum}}</span>
                   <span class="cancel">取消中</span>
                 </div>
               </div>

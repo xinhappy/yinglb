@@ -5,7 +5,7 @@
               :left-options="{backText: '',preventGoBack:true}">付款
     </x-header>
     <div class="content">
-      <div class="companyInfo" v-if="mode == 0">
+      <div class="companyInfo" v-if="mode == 0 && showApo">
         <popup-picker title="预约时间（可选）" v-bind:data="yuTime" v-model="yuId"
                       show-name></popup-picker>
       </div>
@@ -55,7 +55,7 @@
       </div>
     </div>
     <div v-transfer-dom>
-      <popup v-model="show" position="bottom" height="50%">
+      <popup v-model="show" position="bottom" height="55%">
         <div style="text-align: center;border-bottom: 1px solid #ccc;padding: 2vw 0">请输入支付密码</div>
         <input type="hidden" v-model="password"/>
         <div class="pay-pwd clearfix">
@@ -64,7 +64,7 @@
           <div class="fl"><input type="password" v-model="pw3"></div>
           <div class="fl"><input type="password" v-model="pw4"></div>
           <div class="fl"><input type="password" v-model="pw5"></div>
-          <div class="fl"><input type="password" v-model="pw6"></div>
+          <div class="fl" style="border-right: 1px solid #e5e5e5;"><input type="password" v-model="pw6"></div>
         </div>
         <div style="text-align: right"><a href="#/resetPwd">忘记密码？</a></div>
         <keyboard :keyboard="password" @on-result-change="onResultChange"></keyboard>
@@ -139,7 +139,7 @@
         </div>
       </popup>
     </div>
-    <toast v-model="showValue" type="text" :time="800" is-show-mask :text="resultDesc" position="bottom"></toast>
+    <toast v-model="showValue" type="text" width="20em" :time="800" is-show-mask :text="resultDesc" position="middle"></toast>
   </div>
 </template>
 
@@ -149,6 +149,7 @@
   import * as ApiService from 'api/api'
   import Keyboard from 'components/keyboard/keyboard'
   import * as types from 'src/store/mutation-types'
+  import * as config from 'common/config'
   export default {
     directives: {
       TransferDom
@@ -219,6 +220,15 @@
       ),
       goodsList() {
         return this.$store.state.goodsList
+      },
+      showApo () {
+        let show = true
+        for (let i = 0; i < this.$store.state.goodsList.length; i++) {
+          if (this.$store.state.goodsList[i].appointmentFlag === 1) {
+            show = false
+          }
+        }
+        return show
       }
     },
     methods: {
@@ -303,6 +313,9 @@
             if (res.data.resultCode === '1') {
               this.showPay = true
               this.orderId = res.data.object.id
+            } else {
+              this.showValue = true
+              this.resultDesc = res.data.resultDesc
             }
           })
         } else {
@@ -396,7 +409,7 @@
           let ua = window.navigator.userAgent.toLowerCase()
           if (ua.match(/MicroMessenger/i) == 'micromessenger') {  // eslint-disable-line
             // 跳转到微信授权页面
-            let redirectUri = encodeURIComponent('http://m.ylbzg.com/dist/#/qqLoginBack')
+            let redirectUri = encodeURIComponent(config.retrunUrl + '/#/qqLoginBack')
             window.location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxae9cdc00bf788458&redirect_uri=' + redirectUri + '&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect'
             if (!this.$store.state.code) {
               this.$store.commit(types.SETCODE, this.getQueryString('code'))
@@ -435,6 +448,9 @@
             } else {
               vm.onBridgeReady(res.data.object)
             }
+          } else {
+            vm.showFalse = true
+            vm.resultDesc = res.data.resultDesc
           }
         })
       },
@@ -639,17 +655,15 @@
   }
 
   .pay-pwd {
-    width: 96vw;
-    margin: 5vw auto;
+    width: 98vw;
+    margin: 4vw auto;
     div {
       border: 1px solid #e5e5e5;
       border-right: none;
-      &:last-child {
-        border-right: 1px solid #e5e5e5;
-      }
+      width: 16%;
     }
     input {
-      width: 15vw;
+      width: 13vw;
       height: 10vw;
       border: none;
       text-align: center;

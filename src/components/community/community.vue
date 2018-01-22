@@ -5,7 +5,7 @@
         <input class="checkCir" v-model="circle.text">
         <i class="jiao"></i>
       </div>
-      <div class="fl" @click="search">
+      <div class="fl" @click="search" style="position: relative">
         <span class="glass"></span>
         <input class="searc" type="text" placeholder="请输入搜索内容">
         <span><a href="" style="color: #fff;font-size: 3.8vw;padding-left: 2vw">搜索</a></span>
@@ -232,8 +232,8 @@
     width: 5vw;
     height: 5vw;
     position: absolute;
-    top: 3.3vw;
-    left: 21vw;
+    top: 5px;
+    left: 5px;
     padding-right: 1vw;
     border-right: 1px solid #ddd;
   }

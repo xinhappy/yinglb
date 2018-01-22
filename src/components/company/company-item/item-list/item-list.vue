@@ -6,13 +6,14 @@
     <div class="item-container">
       <ul>
         <li class="clearfix item-list" v-for="(v,i) in goodsList">
-          <div class="fl" @click="detail(v)">
+          <div class="fl" @click="detail(v)" style="position: relative">
+            <div v-show="v.appointmentFlag === 0" style="position: absolute;right: 0;background-color: red;color: #fff">可预约</div>
             <img :src="v.thumbnail"
                  style="width: 22vw;height: 22vw;display: block;border-bottom-left-radius: 5px;border-top-left-radius: 5px;">
           </div>
           <div class="fl innerRight">
             <p>{{v.goodsName}} <span class="fr">已售{{v.saleCount}}</span></p>
-            <p style="margin: 2vw 0"><span style="color: #f78686;font-size: 3.6vw">{{v.ybPrice}}盈磅 </span>
+            <p style="margin: 2vw 0 0"><span style="color: #f78686;font-size: 3.6vw">{{v.ybPrice}}盈磅 </span>
               剩余数量{{v.count}}</p>
             <p style="display: flex;align-content: center;float: right">
               <button class="number reduce" @click="changeNumber(v.id,-1)"></button>
@@ -31,7 +32,7 @@
         </div>
       </div>
       <div class="fr">
-        <a class="sum-price">{{sum}}</a>
+        <a class="sum-price">¥ {{sum}}</a>
         <a class="to-pay" @click="buy">去结算</a>
       </div>
     </div>
@@ -48,6 +49,7 @@
               </div>
             </li>
           </ul>
+          <p style="position: fixed;bottom: 1vw;right:1vw;font-size: 3.2vw"><a class="to-pay" @click="buy">去结算</a></p>
         </group>
       </popup>
     </div>
@@ -176,12 +178,13 @@
       margin: 2vw;
       .innerRight {
         margin-left: 3vw;
-        padding-top: 2vw;
+        padding-top: 1vw;
         width: 65%;
+        height: 21vw;
         .number {
-          width: 4vw;
-          height: 4vw;
-          background-size: cover;
+          width: 16px;
+          height: 16px;
+          background-size: contain;
           background-repeat: no-repeat;
           background-color: transparent;
           border: none;

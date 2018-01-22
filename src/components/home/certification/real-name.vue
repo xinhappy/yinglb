@@ -67,6 +67,9 @@
           }).then(res => {
             if (res.data.resultCode === '1') {
               this.$router.push('/certification')
+            } else {
+              this.showValue = true
+              this.text = res.data.resultDesc
             }
           })
         } else {

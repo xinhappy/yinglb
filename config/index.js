@@ -12,9 +12,9 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       "/api":{
-        "target":"http://106.14.5.246:8080",
+        // "target":"http://106.14.5.246:8080",
         // "target":"http://192.168.1.107:8080",
-        // "target":"http://192.168.27.221:8088",
+        "target":"http://192.168.27.221:8088",
         changeOrigin: true
       },
       "/sns":{

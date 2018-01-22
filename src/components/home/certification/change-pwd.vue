@@ -60,9 +60,19 @@
           this.text = '密码不能为空'
           return
         }
+        if (this.pwd.length < 6) {
+          this.showValue = true
+          this.text = '密码不能小于6位'
+          return
+        }
         if (!this.rePwd) {
           this.showValue = true
           this.text = '确认密码不能为空'
+          return
+        }
+        if (this.rePwd.length !== this.pwd) {
+          this.showValue = true
+          this.text = '确认密码跟密码不一致'
           return
         }
         ApiService.post('/api/h5TransactionPwd/editPwdH5.htm', {
@@ -75,6 +85,9 @@
         }).then(res => {
           if (res.data.resultCode === '1') {
             this.$router.push('/certification')
+          } else {
+            this.showValue = true
+            this.text = res.data.resultDesc
           }
         })
       }

@@ -1,10 +1,10 @@
 <template>
   <div>
-    <x-header
-              :left-options="{backText: ''}">商品评价
-    </x-header>
     <scroller lock-x height="-7vw" @on-scroll-bottom="onScrollBottom" ref="scrollerBottom"
               :scroll-bottom-offst="10">
+      <x-header
+        :left-options="{backText: ''}">商品评价
+      </x-header>
       <div>
         <div style="text-align: center;padding-top: 10vw" v-if="list.length === 0">暂无数据</div>
         <div v-for="item in list" class="clearfix item">

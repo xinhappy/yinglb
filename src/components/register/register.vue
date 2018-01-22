@@ -113,7 +113,7 @@
               this.$vux.toast.text('两次输入的密码不一致！', 'bottom')
             }
           } else {
-            this.$vux.toast.text('密码要求6到16位数字与字母组合！', 'bottom')
+            this.$vux.toast.text('密码要求6到12位数字、字母、下划线！', 'bottom')
           }
         } else {
           this.$vux.toast.text('手机号未输入或格式不正确！', 'bottom')
@@ -164,7 +164,7 @@
       input {
         display: inline-block;
         height: 6vw;
-        width: 80%;
+        width: 75%;
       }
     }
     div:nth-child(6) {

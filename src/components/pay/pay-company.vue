@@ -48,7 +48,7 @@
       </popup>
     </div>
     <div v-transfer-dom>
-      <popup v-model="show" position="bottom" height="50%">
+      <popup v-model="show" position="bottom" height="55%">
         <div style="text-align: center;border-bottom: 1px solid #ccc;padding: 2vw 0">请输入支付密码</div>
         <input type="hidden" v-model="password"/>
         <div class="pay-pwd clearfix">
@@ -57,7 +57,7 @@
           <div class="fl"><input type="password" v-model="pw3"></div>
           <div class="fl"><input type="password" v-model="pw4"></div>
           <div class="fl"><input type="password" v-model="pw5"></div>
-          <div class="fl"><input type="password" v-model="pw6"></div>
+          <div class="fl" style="border-right: 1px solid #e5e5e5;"><input type="password" v-model="pw6"></div>
         </div>
         <div style="text-align: right"><a href="#/resetPwd">忘记密码？</a></div>
         <keyboard :keyboard="password" @on-result-change="onResultChange"></keyboard>
@@ -83,7 +83,7 @@
         </div>
       </popup>
     </div>
-    <toast v-model="showValue" type="text" :time="800" is-show-mask :text="resultDesc" position="bottom"></toast>
+    <toast v-model="showValue" width="20em" type="text" :time="800" is-show-mask :text="resultDesc" position="middle"></toast>
   </div>
 </template>
 
@@ -234,6 +234,9 @@
             } else {
               vm.onBridgeReady(res.data.object)
             }
+          } else {
+            vm.showFalse = true
+            vm.resultDesc = res.data.resultDesc
           }
         })
       },
@@ -386,17 +389,15 @@
   }
 
   .pay-pwd {
-    width: 96vw;
-    margin: 5vw auto;
+    width: 98vw;
+    margin: 4vw auto;
     div {
       border: 1px solid #e5e5e5;
       border-right: none;
-      &:last-child {
-        border-right: 1px solid #e5e5e5;
-      }
+      width: 16%;
     }
     input {
-      width: 15vw;
+      width: 13vw;
       height: 10vw;
       border: none;
       text-align: center;

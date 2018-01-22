@@ -25,6 +25,7 @@
 
 <script type="text/ecmascript-6">
   import {XHeader, Countdown, Toast} from 'vux'
+  import * as types from 'src/store/mutation-types'
   import * as ApiService from 'api/api'
   export default {
     components: {
@@ -68,7 +69,11 @@
           peopleId: this.userInfo.id
         }).then(res => {
           if (res.data.resultCode === '1') {
+            this.$store.commit(types.LOGOUT, [])
             this.$router.push('/')
+          } else {
+            this.showValue = true
+            this.text = res.data.resultDesc
           }
         })
       }
