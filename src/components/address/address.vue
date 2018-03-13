@@ -1,7 +1,7 @@
 <template>
   <div>
-    <x-header
-              :left-options="{backText: ''}">地址管理
+    <x-header @on-click-back="back"
+              :left-options="{backText: '',preventGoBack: true}">地址管理
     </x-header>
     <div style="max-height: 150vw;overflow-y: auto">
       <div v-for="item in address" class="item">
@@ -81,7 +81,7 @@
           peopleId: this.userInfo.id
         }).then(res => {
           if (res.data.resultCode === '1') {
-            window.location.reload()
+            this.getAddress ()
           }
         })
       },
@@ -97,9 +97,12 @@
           peopleId: this.userInfo.id
         }).then(res => {
           if (res.data.resultCode === '1') {
-            window.location.reload()
+            this.getAddress ()
           }
         })
+      },
+      back () {
+        this.$router.push('/home')
       }
     }
   }

@@ -14,8 +14,8 @@
           <img src="../../assets/i_row_white_right.png" style="width: 2vw;float: right;margin-top: 2vw;" alt="">
         </router-link>
       </div>
-      <div class="account">
-        <p><img src="../../assets/home/i_center_income.png" alt="">我的盈磅</p>
+      <!--<div class="account">
+        <p><img src="../../assets/home/i_center_income.png" alt="">我的元</p>
         <div class="clearfix bottom">
           <span style="margin-left: 7vw;color: #777">账户余额</span>
           <p class="fr right">
@@ -23,7 +23,7 @@
             <a style="margin-left: 1vw" @click="recharge">充值</a>
           </p>
         </div>
-      </div>
+      </div>-->
       <div class="room">
         <div class="item clearfix" @click="to('/records')">
           <img src="../../assets/home/i_center_consume.png" alt="">
@@ -52,7 +52,7 @@
         </div>
       </div>
       <div style="text-align: center;margin-top: 10vw">
-        <button class="btn" @click="logout">退 出</button>
+        <!--<button class="btn" @click="logout">退 出</button>-->
       </div>
     </div>
     <v-footer></v-footer>
@@ -92,7 +92,7 @@
       },
       recharge () {
         if (this.userInfo.realNameStatus !== 2) {
-          this.$router.push('/realName')
+          this.$router.push('/realName/0')
         } else {
           this.$router.push('/recharge')
         }
@@ -106,6 +106,24 @@
           this.$router.push('/')
         })
       }
+    },
+    watch: {
+      userInfo (val) {
+        this.userInfo = val
+        localStorage.setItem('userInfo', JSON.stringify(val))
+      }
+    },
+    mounted () {
+      ApiService.post('/api/h5Member/refreshMemberInfoH5.htm', {
+        userId: this.userInfo.id,
+        deviceInfo: this.userInfo.deviceInfo,
+        checkFlag: '',
+        peopleId: this.userInfo.id
+      }).then(res => {
+        if (res.data.resultCode === '1') {
+          this.userInfo = res.data.object
+        }
+      })
     }
   }
 </script>

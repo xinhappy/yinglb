@@ -73,7 +73,7 @@
               this.showValue = true
               this.text = res.data.resultDesc
             } else {
-              this.$store.commit(types.LOGIN)
+//              this.$store.commit(types.LOGIN)
               this.$router.push('/')
             }
           })

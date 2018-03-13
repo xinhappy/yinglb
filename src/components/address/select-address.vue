@@ -58,7 +58,7 @@
           detailAddress: '',
           id: null
         }))
-        this.$router.push('/addAddress/0')
+        this.$router.push('/addSet/0')
       },
       getAddress () {
         ApiService.post('/api/h5Member/queryMyAddressH5.htm', {
@@ -81,13 +81,14 @@
           peopleId: this.userInfo.id
         }).then(res => {
           if (res.data.resultCode === '1') {
-            window.location.reload()
+//            window.location.reload()
+              this.getAddress ()
           }
         })
       },
       edit (item) {
         localStorage.setItem('addressInfo', JSON.stringify(item))
-        this.$router.push('/addAddress/1')
+        this.$router.push('/addSet/1')
       },
       setDefault (id) {
         ApiService.post('/api/h5Member/updateMyAddressH5.htm', {
@@ -97,7 +98,8 @@
           peopleId: this.userInfo.id
         }).then(res => {
           if (res.data.resultCode === '1') {
-            window.location.reload()
+//            window.location.reload()
+             this.getAddress ()
           }
         })
       },

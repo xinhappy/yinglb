@@ -125,7 +125,7 @@
         }
         ApiService.post('/api/h5Member/saveMyAddressH5.htm', addressInfo).then(res => {
           if (res.data.resultCode === '1') {
-            this.$router.push('/address')
+            this.$router.push('/setAddress')
           }
         })
       },

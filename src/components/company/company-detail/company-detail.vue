@@ -31,7 +31,7 @@
       <div class="title"><i></i>商家信息</div>
       <div class="inner_left">
         <p>{{companyInfo.businessName}}</p>
-        <p class="qian">人均 <span>{{companyInfo.averageCost}}</span> 盈磅起</p>
+        <p class="qian">人均 <span>{{companyInfo.averageCost}}</span> 元起</p>
         <p class="address"><span class="add_icon"></span>{{companyInfo.businessDetailAddress}}</p>
       </div>
     </div>
@@ -231,6 +231,8 @@
     bottom: 0;
     width: 100%;
     padding-bottom: 2vw;
+    padding-top: 2vw;
+    background-color: #eee;
     button {
       width: 85%;
       margin: 0 auto;

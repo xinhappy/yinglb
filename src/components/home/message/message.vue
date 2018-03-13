@@ -1,12 +1,12 @@
 <template>
   <div class="room">
-    <x-header @on-click-back="back"
-              :left-options="{backText: '',preventGoBack: true}">用户消息
-      <a href="#/messageEdit" slot="right" style="color: #fff">编辑</a>
-    </x-header>
     <div>
-      <scroller lock-x height="-7vw" @on-scroll-bottom="onScrollBottom" ref="scrollerBottom"
+      <scroller lock-x height="-46px" @on-scroll-bottom="onScrollBottom" ref="scrollerBottom"
                 :scroll-bottom-offst="10">
+        <x-header @on-click-back="back"
+                  :left-options="{backText: '',preventGoBack: true}">用户消息
+          <a href="#/messageEdit" slot="right" style="color: #fff">编辑</a>
+        </x-header>
         <div style="text-align: center" v-if="list.length === 0">暂无数据</div>
         <div class="content">
           <div v-for="item in list" class="item clearfix" @click="read(item)">

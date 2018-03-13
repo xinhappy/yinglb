@@ -13,8 +13,9 @@ module.exports = {
     proxyTable: {
       "/api":{
         // "target":"http://106.14.5.246:8080",
+        "target":"http://106.14.212.57",
         // "target":"http://192.168.1.107:8080",
-        "target":"http://192.168.27.221:8088",
+        // "target":"http://192.168.27.221:8088",
         changeOrigin: true
       },
       "/sns":{
@@ -29,7 +30,7 @@ module.exports = {
 
     // Various Dev Server settings
     host: 'localhost', // can be overwritten by process.env.HOST
-    port: 8080, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
+    port: 8081, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
     autoOpenBrowser: false,
     errorOverlay: true,
     notifyOnErrors: true,

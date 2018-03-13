@@ -14,7 +14,7 @@
           <img src="../../../assets/i_row_right_gray.png" alt="">
         </div>
       </div>
-      <div class="list clearfix" @click="to('/realName')">
+      <div class="list clearfix" @click="to('/realName/0')">
         <div class="fl left">
           <img src="../../../assets/home/i_center_ident.png" alt="">
           <span>实名认证</span>
@@ -26,7 +26,7 @@
       </div>
     </div>
     <div class="item">
-      <div class="list clearfix" @click="to('/changeLoginPwd')">
+      <!--<div class="list clearfix" @click="to('/changeLoginPwd')">
         <div class="fl left">
           <img src="../../../assets/home/i_center_ident.png" alt="">
           <span>更改登录密码</span>
@@ -43,7 +43,7 @@
         <div class="fr right">
           <img src="../../../assets/i_row_right_gray.png" alt="">
         </div>
-      </div>
+      </div>-->
       <div class="list clearfix" @click="noChange">
         <div class="fl left">
           <img src="../../../assets/home/i_center_ident.png" alt="">

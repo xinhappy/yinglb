@@ -91,33 +91,41 @@
         }
       },
       submit() {
-        if (this.formData.telephone.match(Reg.telephone) !== null) {
-          if (this.formData.password.match(Reg.password) !== null) {
-            if (this.formData.makepassword === this.formData.password) {
-              if (this.recotelephone === '' || this.recotelephone.match(Reg.telephone) !== null) {
-                if (this.chose === true) {
-                  ApiService.post('/api/h5Member/registeredH5.htm?telephone=' + this.formData.telephone + '&verifyCode=' + this.formData.vercode + '&password=' + this.formData.password + '&registerTerminal=3' + '&remark=H5注册' + '&referee=' + this.recotelephone + '&accountType=1', this.formData).then((res) => {
-                    if (res.data.resultCode === '0') {
-                      this.$vux.toast.text(res.data.resultDesc, 'bottom')
-                    } else {
-                      this.$router.push('/')
-                    }
-                  })
-                } else {
-                  this.$vux.toast.text('请同意协议！', 'bottom')
-                }
-              } else {
-                this.$vux.toast.text('输入正确的推荐手机号格式！', 'bottom')
-              }
-            } else {
-              this.$vux.toast.text('两次输入的密码不一致！', 'bottom')
-            }
-          } else {
-            this.$vux.toast.text('密码要求6到12位数字、字母、下划线！', 'bottom')
-          }
-        } else {
+        if (this.formData.telephone.match(Reg.telephone) === null) {
           this.$vux.toast.text('手机号未输入或格式不正确！', 'bottom')
+          return
         }
+        if (!this.formData.vercode) {
+          this.$vux.toast.text('请输入验证码！', 'bottom')
+          return
+        }
+        if (!this.formData.password) {
+          this.$vux.toast.text('请输入密码', 'bottom')
+          return
+        }
+        if (this.formData.password.match(Reg.password) === null) {
+          this.$vux.toast.text('密码要求6到12位数字、字母、下划线！', 'bottom')
+          return
+        }
+        if (!this.formData.makepassword) {
+          this.$vux.toast.text('请输入确认密码！', 'bottom')
+          return
+        }
+        if (this.formData.makepassword !== this.formData.password) {
+          this.$vux.toast.text('两次输入的密码不一致！', 'bottom')
+          return
+        }
+        if (!this.chose) {
+          this.$vux.toast.text('请同意协议！', 'bottom')
+          return
+        }
+        ApiService.post('/api/h5Member/registeredH5.htm?telephone=' + this.formData.telephone + '&verifyCode=' + this.formData.vercode + '&password=' + this.formData.password + '&registerTerminal=3' + '&remark=H5注册' + '&referee=' + this.recotelephone + '&accountType=1', this.formData).then((res) => {
+          if (res.data.resultCode === '0') {
+            this.$vux.toast.text(res.data.resultDesc, 'bottom')
+          } else {
+            this.$router.push('/')
+          }
+        })
       }
     }
   }

@@ -3,7 +3,7 @@
     <x-header
               :left-options="{backText: ''}" :title="title">
     </x-header>
-    <scroller lock-x height="-7vw" @on-scroll-bottom="onScrollBottom" ref="scrollerBottom"
+    <scroller lock-x height="-46px" @on-scroll-bottom="onScrollBottom" ref="scrollerBottom"
               :scroll-bottom-offst="10">
       <div>
         <div class="search-results" v-if="inners.length > 0">
@@ -39,6 +39,7 @@
         title: this.$route.params.title,
         page: 1,
         goodsType: this.$route.params.id,
+        circle: this.$store.state.circle,
         onFetching: false,
         showValue: false
       }
@@ -48,8 +49,10 @@
     },
     methods: {
       getList: function () {
+        let latitude = this.local ? this.local.latitude : '0.0'
+        let longitude = this.local ? this.local.longitude : '0.0'
         if (this.title === '商家活动') {
-          ApiService.getClassCompanyList('/api/h5AdvertisementBusiness/queryBusinessH5.htm?adId=' + this.goodsType + '&latitude=' + this.local.latitude + '&longitude=' + this.local.longitude + '&businessRegion&peopleId=' + this.userInfo.id + '&deviceInfo=' + this.userInfo.deviceInfo + '&checkFlag&page=' + this.page + '&limit=8').then(res => {
+          ApiService.getClassCompanyList('/api/h5AdvertisementBusiness/queryBusinessH5.htm?adId=' + this.goodsType + '&latitude=' + latitude + '&longitude=' + longitude + '&businessRegion&peopleId=' + this.userInfo.id + '&deviceInfo=' + this.userInfo.deviceInfo + '&checkFlag&page=' + this.page + '&limit=8').then(res => {
             if (res.data.resultCode === '1') {
               if (res.data.rows.length > 0) {
                 this.inners.push.apply(this.inners, res.data.rows)
@@ -59,7 +62,7 @@
             }
           })
         } else if (this.title === '我的收藏') {
-          ApiService.get('/api/h5BusinessManage/queryCollectionH5.htm?userId=' + this.userInfo.id + '&latitude=' + this.local.latitude + '&longitude=' + this.local.longitude + '&peopleId=' + this.userInfo.id + '&deviceInfo=' + this.userInfo.deviceInfo + '&checkFlag&page=' + this.page + '&limit=8').then(res => {
+          ApiService.get('/api/h5BusinessManage/queryCollectionH5.htm?userId=' + this.userInfo.id + '&latitude=' + latitude + '&longitude=' + longitude + '&peopleId=' + this.userInfo.id + '&deviceInfo=' + this.userInfo.deviceInfo + '&checkFlag&page=' + this.page + '&limit=8').then(res => {
             if (res.data.resultCode === '1') {
               if (res.data.rows.length > 0) {
                 this.inners.push.apply(this.inners, res.data.rows)
@@ -69,7 +72,7 @@
             }
           })
         } else {
-          ApiService.getClassCompanyList('/api/h5BusinessManage/queryBusinessInfoH5.htm?goodsType=' + this.goodsType + '&memberId=' + this.userInfo.id + '&terminalType=1&latitude=' + this.local.latitude + '&longitude=' + this.local.longitude + '&businessRegion&peopleId=' + this.userInfo.id + '&deviceInfo=' + this.userInfo.deviceInfo + '&checkFlag&page=' + this.page + '&limit=8').then(res => {
+          ApiService.getClassCompanyList('/api/h5BusinessManage/queryBusinessInfoH5.htm?goodsType=' + this.goodsType + '&memberId=' + this.userInfo.id + '&terminalType=1&latitude=' + latitude + '&longitude=' + longitude + '&businessRegion=' + this.circle.orgId + '&peopleId=' + this.userInfo.id + '&deviceInfo=' + this.userInfo.deviceInfo + '&checkFlag&page=' + this.page + '&limit=8').then(res => {
             if (res.data.resultCode === '1') {
               if (res.data.rows.length > 0) {
                 this.inners.push.apply(this.inners, res.data.rows)

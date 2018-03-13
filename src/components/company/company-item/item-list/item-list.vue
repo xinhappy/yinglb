@@ -13,7 +13,7 @@
           </div>
           <div class="fl innerRight">
             <p>{{v.goodsName}} <span class="fr">已售{{v.saleCount}}</span></p>
-            <p style="margin: 2vw 0 0"><span style="color: #f78686;font-size: 3.6vw">{{v.ybPrice}}盈磅 </span>
+            <p style="margin: 2vw 0 0"><span style="color: #f78686;font-size: 3.6vw">{{v.ybPrice}}元 </span>
               剩余数量{{v.count}}</p>
             <p style="display: flex;align-content: center;float: right">
               <button class="number reduce" @click="changeNumber(v.id,-1)"></button>
@@ -45,7 +45,7 @@
               <span>{{i.goodsName}}</span>
               <div class="fr">
                 <span style="margin-right: 3vw">*{{i.number}}</span>
-                <span>{{i.ybPrice}}盈磅</span>
+                <span>{{i.ybPrice}}元</span>
               </div>
             </li>
           </ul>
@@ -162,7 +162,9 @@
     },
     mounted() {
       ApiService.getCompanyList('/api/h5BusinessGoods/queryGoodInfoH5.htm?businessId=' + this.businessId + '&page=1&limit=100').then(res => {
-        this.goodsList.push.apply(this.goodsList, this.fifter(res.data.rows))
+        if (this.goodsList.length === 0) {
+          this.goodsList.push.apply(this.goodsList, this.fifter(res.data.rows))
+        }
       })
     }
   }

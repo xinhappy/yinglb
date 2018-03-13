@@ -1,7 +1,7 @@
 <template>
   <div>
     <x-header
-              :left-options="{backText: ''}">实名认证
+      :left-options="{backText: ''}">实名认证
     </x-header>
     <div class="room">
       <div style="padding-bottom: 2vw;margin-bottom: 2vw;border-bottom: 1px solid #eee">
@@ -21,6 +21,7 @@
   import {XHeader, Countdown, Toast} from 'vux'
   import * as ApiService from 'api/api'
   import * as Reg from 'common/regexp'
+  import * as types from 'src/store/mutation-types'
   export default {
     components: {
       XHeader,
@@ -34,7 +35,8 @@
         userCard: '',
         showValue: false,
         text: '',
-        showBtn: true
+        showBtn: true,
+        id: this.$route.params.id
       }
     },
     created () {
@@ -66,7 +68,17 @@
             peopleId: this.userInfo.id
           }).then(res => {
             if (res.data.resultCode === '1') {
-              this.$router.push('/certification')
+              this.$store.commit(types.LOGIN, res.data.object)
+              if (this.id === '0') {
+                this.$router.push('/certification')
+              } else if (this.id === '1') {
+                this.$router.push('/pay/1')
+              } else if (this.id === '3') {
+                this.$router.push('/pay/0')
+              } else {
+                this.$router.push('/payCompany')
+              }
+
             } else {
               this.showValue = true
               this.text = res.data.resultDesc

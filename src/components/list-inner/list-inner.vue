@@ -2,14 +2,14 @@
   <div>
     <div class="list_inner clearfix" v-for="item in items" :key="item.id" @click="save(item)">
       <div class="fl" style="position: relative">
-        <p style="position: absolute;color: #eee;" v-show="item.isService === 1">不营业</p>
+        <p style="position: absolute;color: #eee;background-color: #999" v-show="item.isService === 1">暂不营业</p>
         <img
           style="display: block;border-bottom-left-radius: 5px;border-top-left-radius: 5px;width: 150px;max-height: 90px"
           :src="item.businessPhoto ? item.businessPhoto : defaultImg" alt="">
       </div>
       <div class="fl inner_left">
         <p>{{item.businessName}}</p>
-        <p class="qian">人均 <span>{{item.averageCost}}</span> 盈磅起</p>
+        <p class="qian">人均 <span>{{item.averageCost}}</span> 元起</p>
         <p class="address"><span class="add_icon"></span>{{item.businessDetailAddress}}</p>
       </div>
     </div>

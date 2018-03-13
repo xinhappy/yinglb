@@ -5,7 +5,7 @@
     </x-header>
     <div class="room">
       <div style="padding-bottom: 2vw;margin-bottom: 2vw;border-bottom: 1px solid #eee"><span>手机号</span><input
-        v-model="telephone" type="text"></div>
+        v-model="telephone" type="text" readonly></div>
       <div><span>验证码</span><input v-model="verifyCode" type="text" placeholder="请输入验证码" maxlength="6">
         <button :disabled="disable" type="button" @click="getY">
           {{title}}

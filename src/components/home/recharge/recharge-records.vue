@@ -1,12 +1,12 @@
 <template>
   <div class="cont">
-    <x-header
-              :left-options="{backText: ''}">充值记录
-    </x-header>
-    <div class="records">
-      <scroller lock-x height="-7vw" @on-scroll-bottom="onScrollBottom" ref="scrollerBottom"
+    <div>
+      <scroller lock-x height="-46px" @on-scroll-bottom="onScrollBottom" ref="scrollerBottom"
                 :scroll-bottom-offst="10">
-        <div>
+        <x-header
+          :left-options="{backText: ''}">充值记录
+        </x-header>
+        <div class="records">
           <div style="text-align: center" v-if="list.length === 0">暂无数据</div>
           <div class="clearfix item" v-for="item in list">
             <div class="fl left">

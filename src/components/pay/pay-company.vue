@@ -1,7 +1,7 @@
 <template>
   <div>
     <x-header
-              :left-options="{backText: ''}">付款
+      :left-options="{backText: ''}">付款
     </x-header>
     <div class="title">
       <img :src="companyInfo.businessPhoto" alt="">
@@ -9,7 +9,7 @@
       <p style="font-size: 2vw;color: #aaa">{{businessTelephone}}</p>
     </div>
     <div class="item">
-      <span>消费金额(盈磅)</span>
+      <span>消费金额(元)</span>
       <input type="text" v-model="exchangeNum" placeholder="输入支付金额">
     </div>
     <div class="item clearfix" @click="getReg">店铺优惠 <span
@@ -57,7 +57,8 @@
           <div class="fl"><input type="password" v-model="pw3"></div>
           <div class="fl"><input type="password" v-model="pw4"></div>
           <div class="fl"><input type="password" v-model="pw5"></div>
-          <div class="fl" style="border-right: 1px solid #e5e5e5;"><input type="password" v-model="pw6"></div>
+          <div class="fl" style="border-right: 1px solid #e5e5e5;"><input style="width: 98%" type="password"
+                                                                          v-model="pw6"></div>
         </div>
         <div style="text-align: right"><a href="#/resetPwd">忘记密码？</a></div>
         <keyboard :keyboard="password" @on-result-change="onResultChange"></keyboard>
@@ -67,7 +68,7 @@
       <popup v-model="showPay" position="bottom" height="20%">
         <div style="border-bottom: 1px solid #ccc;padding: 2vw 0;background-color: #fff;padding-left: 2vw">选择付款方式</div>
         <div @click="yingPay" class="item clearfix" style="background-color: #eee"><img
-          style="width: 8vw;vertical-align: middle;margin-right: 2vw" src="../../assets/i_logo.png" alt="">盈磅<span
+          style="width: 8vw;vertical-align: middle;margin-right: 2vw" src="../../assets/i_logo.png" alt="">元<span
           style="float: right;display: flex;align-content: center;"><img
           src="../../assets/i_row_right_gray.png"
           style="width: 8vw;height: 8vw"
@@ -83,7 +84,8 @@
         </div>
       </popup>
     </div>
-    <toast v-model="showValue" width="20em" type="text" :time="800" is-show-mask :text="resultDesc" position="middle"></toast>
+    <toast v-model="showValue" width="20em" type="text" :time="800" is-show-mask :text="resultDesc"
+           position="middle"></toast>
   </div>
 </template>
 
@@ -92,6 +94,7 @@
   import * as ApiService from 'api/api'
   import Keyboard from 'components/keyboard/keyboard'
   import * as types from 'src/store/mutation-types'
+  import * as config from 'common/config'
   export default {
     directives: {
       TransferDom
@@ -162,26 +165,30 @@
         this.password = val
       },
       save () {
+        let vm = this
         if (!this.exchangeNum) {
           this.showValue = true
           this.resultDesc = '请输入金额'
           return
         }
-        this.showPay = true
-        let arr = this.redId.split(',')
-        let redId = arr[0]
-        ApiService.post('/api/h5SystemRechargeRules/getRealMoney.htm', {
-          terminalType: 3,
-          totalMoney: this.exchangeNum,
-          redId: redId,
-          deviceInfo: this.userInfo.deviceInfo,
-          checkFlag: '',
-          peopleId: this.userInfo.id
-        }).then(res => {
-          if (res.data.resultCode === '1') {
-            this.rechargeNumber = res.data.object
-          }
-        })
+        /*
+         let arr = this.redId.split(',')
+         let redId = arr[0]
+         ApiService.post('/api/h5SystemRechargeRules/getRealMoney.htm', {
+         terminalType: 3,
+         totalMoney: this.exchangeNum,
+         redId: redId,
+         deviceInfo: this.userInfo.deviceInfo,
+         checkFlag: '',
+         peopleId: this.userInfo.id
+         }).then(res => {
+         if (res.data.resultCode === '1') {
+         this.rechargeNumber = res.data.object
+         }
+         })
+         */
+        // this.showPay = true
+        vm.weiPay()
       },
       yingPay () {
         this.showPay = false
@@ -195,12 +202,16 @@
       },
       weiPay () {
         var vm = this
-        let openid = localStorage.getItem('openid')
+        let openid = vm.userInfo.openid
+        if (vm.userInfo.realNameStatus !== 2) {
+          vm.$router.push('/realName/2')
+          return
+        }
         if (!openid) {
           let ua = window.navigator.userAgent.toLowerCase()
           if (ua.match(/MicroMessenger/i) == 'micromessenger') {  // eslint-disable-line
             // 跳转到微信授权页面
-            let redirectUri = encodeURIComponent('http://m.ylbzg.com/dist/#/qqLoginBack')
+            let redirectUri = encodeURIComponent(config.retrunUrl + '/#/qqLoginBack')
             window.location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxae9cdc00bf788458&redirect_uri=' + redirectUri + '&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect'
             if (!this.$store.state.code) {
               this.$store.commit(types.SETCODE, this.getQueryString('code'))
@@ -210,7 +221,8 @@
         let arr = this.redId.split(',')
         let redId = arr[0]
         ApiService.post('/api/h5wechatPay/toPayH5.htm', {
-          rechargeNumber: this.rechargeNumber.realMoney,
+          // rechargeNumber: this.rechargeNumber.realMoney,
+          rechargeNumber: this.exchangeNum,
           returnNumber: this.exchangeNum,
           userId: this.userInfo.id,
           userType: 1,
@@ -397,7 +409,7 @@
       width: 16%;
     }
     input {
-      width: 13vw;
+      width: 16vw;
       height: 10vw;
       border: none;
       text-align: center;

@@ -6,7 +6,7 @@
       用户消息
       <a slot="right" @click="all" style="color: #fff">全选</a>
     </x-header>
-    <scroller lock-x height="-7vw" @on-scroll-bottom="onScrollBottom" ref="scrollerBottom"
+    <scroller lock-x height="-46px" @on-scroll-bottom="onScrollBottom" ref="scrollerBottom"
               :scroll-bottom-offst="10">
       <div style="text-align: center" v-if="list.length === 0">暂无数据</div>
       <div class="content">

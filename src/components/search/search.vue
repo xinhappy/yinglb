@@ -41,10 +41,13 @@
         this.history.splice(index, 1)
         localStorage.setItem('history', JSON.stringify(this.history))
       },
-      result: function (name) {
-        this.history.push({name: name})
-        localStorage.setItem('history', JSON.stringify(this.history))
-        this.$router.push({path: '/searchResult/' + name})
+      result: function (str) {
+        let name = str.replace(/(^\s*)|(\s*$)/g, '')
+        if (name) {
+          this.history.push({name: name})
+          localStorage.setItem('history', JSON.stringify(this.history))
+          this.$router.push({path: '/searchResult/' + name})
+        }
       }
     }
   }

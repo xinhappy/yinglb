@@ -119,7 +119,7 @@
           this.text = '确认密码不能为空'
           return
         }
-        if (this.rePwd.length !== this.pwd) {
+        if (this.rePwd !== this.pwd) {
           this.showValue = true
           this.text = '确认密码跟密码不一致'
           return

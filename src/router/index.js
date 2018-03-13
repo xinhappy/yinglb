@@ -41,6 +41,7 @@ import Zhuan from 'components/pay/zhuan'
 import PayCompany from 'components/pay/pay-company'
 import SetAddress from 'components/address/select-address'
 import AddAddress from 'components/address/add-address'
+import AddSet from 'components/address/add-set'
 import Address from 'components/address/address'
 import SetPwd from 'components/pwd/set-pwd'
 import ItemList from 'components/company/company-item/item-list/item-list'
@@ -122,6 +123,11 @@ const router = new Router({
       path: '/addAddress/:id',
       name: 'addAddress',
       component: AddAddress
+    },
+    {
+      path: '/addSet/:id',
+      name: 'addSet',
+      component: AddSet
     },
     {
       path: '/setPwd',
@@ -224,7 +230,7 @@ const router = new Router({
       component: ChangeNext
     },
     {
-      path: '/realName',
+      path: '/realName/:id',
       name: 'realName',
       component: RealName
     },

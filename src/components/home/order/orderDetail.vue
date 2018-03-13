@@ -12,7 +12,7 @@
         <div class="fl">具体商品：</div>
         <div class="fl right">
           <div v-for="item in orderInfo.orderGoodsList">
-            <span>{{item.goodsName}}</span>
+            <span style="width: 15vw">{{item.goodsName}}</span>
             <span class="center">*{{item.goodsCount}}</span>
             <span>{{item.goodsPrice}}</span>
           </div>
@@ -21,13 +21,13 @@
       <div class="three">订单备注：{{orderInfo.remark}}</div>
       <div class="four">
         配送费用：
-        <span class="fr">{{orderInfo.distributionFee?orderInfo.distributionFee:'0.00'}}盈磅</span>
+        <span class="fr">{{orderInfo.distributionFee?orderInfo.distributionFee:'0.00'}}元</span>
       </div>
       <div>
         订单优惠：
-        <span class="fr">{{orderInfo.discountFee}}盈磅</span>
+        <span class="fr">{{orderInfo.discountFee}}元</span>
       </div>
-      <div class="last">实付{{orderInfo.total}}盈磅</div>
+      <div class="last">实付{{orderInfo.total}}元</div>
     </div>
     <div class="bottomWrap">
       <div>取货地址：{{orderInfo.businessAddress}}</div>

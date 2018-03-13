@@ -21,7 +21,7 @@
         <button @click="save">充值</button>
       </div>
       <div>
-        账户余额：<span style="color: orange">{{money.rebateBalance}}</span>盈磅
+        账户余额：<span style="color: orange">{{money.rebateBalance}}</span>元
         <span class="fr" style="color: #0582ff;margin-right: 4vw" @click="show = true">活动规则</span>
       </div>
     </div>
@@ -30,7 +30,7 @@
         <div class="rule">
           <div class="title">活动规则</div>
           <div class="item" v-for="i in list">
-            充{{i.rechargeNumber}}元，可得{{i.returnNumber}}盈磅
+            充{{i.rechargeNumber}}元，可得{{i.returnNumber}}元
           </div>
           <div class="title" @click="show = false">关闭</div>
         </div>
@@ -170,8 +170,10 @@
       },
       save () {
         var vm = this
-        let openid = localStorage.getItem('openid')
+        let openid = vm.userInfo.openid
         if (!openid) {
+          vm.showFalse = true
+          vm.text = '当前登录非微信账号登录，重新使用微信登录'
           let ua = window.navigator.userAgent.toLowerCase()
           if (ua.match(/MicroMessenger/i) == 'micromessenger') {  // eslint-disable-line
             // 跳转到微信授权页面

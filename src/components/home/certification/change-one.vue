@@ -81,7 +81,7 @@
               this.showValue = true
               this.text = res.data.resultDesc
             } else {
-              this.$store.commit(types.LOGIN)
+              this.$store.commit(types.LOGOUT)
               this.$router.push('/')
             }
           })

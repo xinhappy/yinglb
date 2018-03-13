@@ -1,5 +1,5 @@
 <template>
-  <div class="loginWrap">
+  <!--<div class="loginWrap">
     <div class="loginForm">
       <form @submit.prevent="submit">
         <div class="input"><img src="../../assets/login/icon_login_name.png" alt=""><input v-model="formData.telephone"
@@ -21,12 +21,12 @@
       <p>其他登录方式</p>
       <p><img src="../../assets/login/i_type_line.png" alt="" style="width: 50vw"></p>
       <p><img @click="wxLogin" src="../../assets/login/icon_login_wx.png" alt="">
-        <!--<img id="qq" @click="qqLogin" src="../../assets/login/icon_login_qq.png" alt="">-->
+        <img id="qq" @click="qqLogin" src="../../assets/login/icon_login_qq.png" alt="">
       </p>
     </div>
     <local></local>
     <toast v-model="show" type="text" :time="800" is-show-mask :text="text" position="bottom"></toast>
-  </div>
+  </div>-->
 </template>
 <script type="text/ecmascript-6">
   import * as ApiService from 'api/api'
@@ -46,6 +46,9 @@
         show: false
       }
     },
+    created () {
+      this.wxLogin ()
+    },
     methods: {
       submit: function () {
         this.formData.type = 1
@@ -56,6 +59,7 @@
             this.text = res.data.resultDesc
           } else {
             this.$store.commit(types.LOGIN, res.data.object)
+            this.$store.commit(types.SELECTED, {orgId: res.data.object.orgId, text: res.data.object.orgName.split(',')[1]})
             this.$router.push('/community')
           }
         })

@@ -10,10 +10,6 @@
                       show-name></popup-picker>
       </div>
       <div class="companyInfo" v-if="mode == 1">
-        <div style="padding: 2vw 0;border-bottom: 1px solid #ccc" @click="timeShow">
-          尽快送到（可选时间）{{apoint}}
-          <img src="../../assets/i_row_right_gray.png" style="float: right;width: 5vw" alt="">
-        </div>
         <div style="padding: 2vw 0" @click="setAdd">
           <span v-if="!userAddress">选择配送地址</span>
           <span v-if="userAddress"
@@ -21,6 +17,10 @@
           <span style="float: right;display: flex;align-content: center;">
             <img src="../../assets/i_row_right_gray.png" style="width: 5vw;height:5vw" alt="">
           </span>
+        </div>
+        <div style="padding: 2vw 0;border-top: 1px solid #ccc" @click="timeShow">
+          尽快送到（可选时间）{{apoint}}
+          <img src="../../assets/i_row_right_gray.png" style="float: right;width: 5vw" alt="">
         </div>
       </div>
       <div class="companyInfo">
@@ -31,7 +31,7 @@
               <span>{{i.goodsName}}</span>
               <div class="fr">
                 <span style="margin-right: 3vw">*{{i.number}}</span>
-                <span>{{i.ybPrice}}盈磅</span>
+                <span>{{i.ybPrice}}元</span>
               </div>
             </li>
           </ul>
@@ -41,8 +41,8 @@
             style="width: 5vw;height: 5vw"
             alt=""></span>
           </div>
-          <div class="item clearfix">配送费用 <span class="fr">{{distributionFee}} 盈磅</span></div>
-          <div class="total">小计：<span>{{sum + distributionFee}}盈磅</span></div>
+          <div class="item clearfix">配送费用 <span class="fr">{{distributionFee}} 元</span></div>
+          <div class="total">小计：<span>{{sum + distributionFee}}元</span></div>
         </div>
       </div>
       <div class="companyInfo">
@@ -50,7 +50,7 @@
       </div>
       <div class="save">
         <button type="button" @click="pay">支付：{{sum + distributionFee - redAccount > 0 ? sum + distributionFee -
-          redAccount : 0}}盈磅
+          redAccount : 0}}元
         </button>
       </div>
     </div>
@@ -64,7 +64,7 @@
           <div class="fl"><input type="password" v-model="pw3"></div>
           <div class="fl"><input type="password" v-model="pw4"></div>
           <div class="fl"><input type="password" v-model="pw5"></div>
-          <div class="fl" style="border-right: 1px solid #e5e5e5;"><input type="password" v-model="pw6"></div>
+          <div class="fl" style="border-right: 1px solid #e5e5e5;"><input style="width: 98%" type="password" v-model="pw6"></div>
         </div>
         <div style="text-align: right"><a href="#/resetPwd">忘记密码？</a></div>
         <keyboard :keyboard="password" @on-result-change="onResultChange"></keyboard>
@@ -123,7 +123,7 @@
       <popup v-model="showPay" position="bottom" height="20%">
         <div style="border-bottom: 1px solid #ccc;padding: 2vw 0;background-color: #fff;padding-left: 2vw">选择付款方式</div>
         <div @click="yingPay" class="item clearfix" style="margin: 2vw 0;padding-left: 2vw"><img
-          style="width: 8vw;vertical-align: middle;margin-right: 2vw" src="../../assets/i_logo.png" alt="">盈磅 <span
+          style="width: 8vw;vertical-align: middle;margin-right: 2vw" src="../../assets/i_logo.png" alt="">元 <span
           style="float: right;display: flex;align-content: center;"><img
           src="../../assets/i_row_right_gray.png"
           style="width: 8vw;height: 8vw"
@@ -224,7 +224,7 @@
       showApo () {
         let show = true
         for (let i = 0; i < this.$store.state.goodsList.length; i++) {
-          if (this.$store.state.goodsList[i].appointmentFlag === 1) {
+          if (this.$store.state.goodsList[i].appointmentFlag === 1 && this.$store.state.goodsList[i].number !== 0) {
             show = false
           }
         }
@@ -281,6 +281,7 @@
             goodsList = goodsList + this.goodsList[i].id + ',' + this.goodsList[i].number + ';'
           }
         }
+        /*
         if (this.userInfo.transactionPwdStatus === 0) {
           this.$router.push('/setPwd')
           return
@@ -299,6 +300,7 @@
             this.rechargeNumber = res.data.object
           }
         })
+        */
         if (this.mode === '0') {
           ApiService.post('/api/h5MemberExchange/produceOrderH5.htm', {
             businessId: this.companyInfo.id,
@@ -311,8 +313,9 @@
             peopleId: this.userInfo.id
           }).then(res => {
             if (res.data.resultCode === '1') {
-              this.showPay = true
+              // this.showPay = true
               this.orderId = res.data.object.id
+              this.weiPay()
             } else {
               this.showValue = true
               this.resultDesc = res.data.resultDesc
@@ -336,8 +339,12 @@
             peopleId: this.userInfo.id
           }).then(res => {
             if (res.data.resultCode === '1') {
-              this.showPay = true
+              // this.showPay = true
               this.orderId = res.data.object.id
+              this.weiPay()
+            } else {
+              this.showValue = true
+              this.resultDesc = res.data.resultDesc
             }
           })
         }
@@ -390,7 +397,7 @@
       },
       back () {
         this.addGoods([])
-        this.$router.back()
+        this.$router.push('/companyDetail')
       },
       yingPay () {
         this.showPay = false
@@ -404,7 +411,16 @@
       },
       weiPay () {
         var vm = this
-        let openid = localStorage.getItem('openid')
+        let openid = vm.userInfo.openid
+        if (vm.userInfo.realNameStatus !== 2) {
+          if (vm.mode === '0') {
+            vm.$router.push('/realName/3')
+            return
+          } else {
+            vm.$router.push('/realName/1')
+            return
+          }
+        }
         if (!openid) {
           let ua = window.navigator.userAgent.toLowerCase()
           if (ua.match(/MicroMessenger/i) == 'micromessenger') {  // eslint-disable-line
@@ -424,7 +440,8 @@
           return
         }
         ApiService.post('/api/h5wechatPay/toPayH5.htm', {
-          rechargeNumber: vm.rechargeNumber.realMoney,
+          // rechargeNumber: vm.rechargeNumber.realMoney,
+          rechargeNumber: vm.sum + vm.distributionFee,
           returnNumber: vm.sum + vm.distributionFee,
           userId: vm.userInfo.id,
           userType: 1,
@@ -663,7 +680,7 @@
       width: 16%;
     }
     input {
-      width: 13vw;
+      width: 100%;
       height: 10vw;
       border: none;
       text-align: center;

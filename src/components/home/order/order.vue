@@ -11,7 +11,7 @@
     <swiper v-model="index" :aspect-ratio='num' :show-dots="false">
       <swiper-item v-for="(item, index) in list" :key="index">
         <div class="order">
-          <scroller lock-x height="-14vw" @on-scroll-bottom="onScrollBottom" ref="scrollerBottom"
+          <scroller lock-x height="-46px" @on-scroll-bottom="onScrollBottom" ref="scrollerBottom"
                     :scroll-bottom-offst="10">
             <div :class="{'toUse': item === '待使用','used': item ==='已使用', 'handling': item ==='处理中' }">
               <div class="item" v-if="item === '待使用' && i.orderType === 2" v-for="i in toUseList">
@@ -37,7 +37,7 @@
                   <div class="fl">{{k.goodsName}}</div>
                   <div class="fr"><span class="left">*{{k.goodsCount}}</span><span>{{k.goodsPrice}}</span></div>
                 </div>
-                <div class="total">实付<span>{{i.total}}</span>盈磅</div>
+                <div class="total">实付<span>{{i.total}}</span>元</div>
                 <div class="status">
                   <span class="fl">单号：{{i.orderNum}}</span>
                   <span class="cancel" @click="sure(i.businessId, i.randomNum)">确定收货</span>
@@ -52,7 +52,7 @@
                   <div class="fl">{{k.goodsName}}</div>
                   <div class="fr"><span class="left">*{{k.goodsCount}}</span><span>{{k.goodsPrice}}</span></div>
                 </div>
-                <div class="total">实付<span>{{i.total}}</span>盈磅</div>
+                <div class="total">实付<span>{{i.total}}</span>元</div>
                 <div class="status">
                   <span class="fl">单号：{{i.orderNum}}</span>
                   <span class="used" v-if="i.orderType !==2">已使用</span>
@@ -68,7 +68,7 @@
                   <div class="fl">{{k.goodsName}}</div>
                   <div class="fr"><span class="left">*{{k.goodsCount}}</span><span>{{k.goodsPrice}}</span></div>
                 </div>
-                <div class="total">实付<span>{{i.total}}</span>盈磅</div>
+                <div class="total">实付<span>{{i.total}}</span>元</div>
                 <div class="status">
                   <span class="fl">单号：{{i.orderNum}}</span>
                   <span class="cancel">取消中</span>

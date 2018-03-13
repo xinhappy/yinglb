@@ -4,7 +4,7 @@
       class="m-header fixed-top">
       待抢单
     </header>
-    <scroller lock-x height="-7vw" :bounce=true @on-scroll-bottom="onScrollBottom" ref="scrollerBottom"
+    <scroller lock-x height="-46px" :bounce=true @on-scroll-bottom="onScrollBottom" ref="scrollerBottom"
               :scroll-bottom-offst="50" :use-pullup="false">
       <div class="griblist" style="padding:40px 15px 50px 15px;">
         <grib-list v-bind:items="grib" v-on:showErod="showErod"></grib-list>
@@ -79,7 +79,7 @@
       getGribList() {
         let latitude = this.local ? this.local.latitude : '0.0'
         let longitude = this.local ? this.local.longitude : '0.0'
-        ApiService.get('/api/h5DistributorOrder/queryDistributorOrderH5.htm?distributorId=' + this.distributorId + '&checkFlag' + '&deviceInfo=' + this.userInfo.deviceInfo + '&peopleId=' + this.userInfo.id + '&status=0' + '&latitude=' + latitude + '&longitude=' + longitude + '&page=' + this.page + '&limit=3').then(res => {
+        ApiService.get('/api/h5DistributorOrder/queryDistributorOrderH5.htm?distributorId=' + this.distributorId + '&checkFlag=&deviceInfo=' + this.userInfo.deviceInfo + '&peopleId=' + this.userInfo.id + '&status=0' + '&latitude=' + latitude + '&longitude=' + longitude + '&page=' + this.page + '&limit=3').then(res => {
           if (res.data.rows.length > 1) {
             this.grib.push.apply(this.grib, res.data.rows)
           } else {

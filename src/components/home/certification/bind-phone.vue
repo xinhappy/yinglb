@@ -111,9 +111,19 @@
             this.text = '密码不能为空'
             return
           }
+          if (this.pwd.length < 6) {
+            this.showValue = true
+            this.text = '密码不能小于6位'
+            return
+          }
           if (!this.rePwd) {
             this.showValue = true
             this.text = '确认密码不能为空'
+            return
+          }
+          if (this.rePwd !== this.pwd) {
+            this.showValue = true
+            this.text = '确认密码跟密码不一致'
             return
           }
         }
@@ -126,7 +136,7 @@
           peopleId: this.userInfo.id,
           userId: this.userInfo.id,
           registerType: this.registerType,
-          accountId: localStorage.getItem('openid'),
+          accountId: this.userInfo.openid,
           accountType: '1',
           registerTerminal: '3',
           remark: '当前为H5三方登录',
