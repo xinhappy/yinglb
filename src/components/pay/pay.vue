@@ -307,7 +307,7 @@
             goodsList: goodsList,
             appointmentTime: this.yuId[0],
             userId: this.userInfo.id,
-            remark: this.remark[0],
+            remark: this.remark,
             checkFlag: '',
             deviceInfo: this.userInfo.deviceInfo,
             peopleId: this.userInfo.id
@@ -332,7 +332,7 @@
             goodsList: goodsList,
             appointmentTime: this.yuId[0],
             userId: this.userInfo.id,
-            remark: this.remark[0],
+            remark: this.remark,
             userAddress: this.userAddress.id,
             checkFlag: '',
             deviceInfo: this.userInfo.deviceInfo,
