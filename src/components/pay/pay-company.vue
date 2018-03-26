@@ -231,9 +231,10 @@
           openId: openid,
           ruleId: '',
           rechargeFlag: 1,
-          flag: 1,
-          redId: redId
+          redId: redId/*,
+          flag:1*/
         }).then(res => {
+        	console.log(res)
           if (res.data.resultCode === '1') {
             vm.resultData = res.data.resultData
             if (typeof WeixinJSBridge == 'undefined') { // eslint-disable-line

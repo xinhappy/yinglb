@@ -35,7 +35,7 @@
         <p class="address"><span class="add_icon"></span>{{companyInfo.businessDetailAddress}}</p>
       </div>
     </div>
-    <div @click="look" class="list_inner clearfix">
+    <div @click="look" class="list_inner clearfix" v-if="companyInfo.distributionFlag==1">
       <div class="fl">
         <div class="title"><i></i>商品列表</div>
         <div class="inner_left">
@@ -67,24 +67,29 @@
     <div class="save">
       <button @click="pay">去支付</button>
     </div>
+    <toast v-model="showValue" width="20em" type="text" :time="800" is-show-mask :text="resultDesc"
+           position="middle"></toast>
   </div>
 
 </template>
 
 <script type="text/ecmascript-6">
-  import {Swiper, SwiperItem} from 'vux'
+  import {Swiper, SwiperItem ,Toast} from 'vux'
   import * as ApiService from 'api/api'
   export default {
     components: {
       Swiper,
-      SwiperItem
+      SwiperItem,
+      Toast
     },
     data () {
       return {
         imgs: [],
         userInfo: JSON.parse(localStorage.getItem('userInfo')),
         companyInfo: JSON.parse(localStorage.getItem('companyInfo')),
-        collectionFlag: '0'
+        collectionFlag: '0',
+        showValue: false,
+        resultDesc: ''
       }
     },
     created () {
@@ -94,6 +99,8 @@
       getInfo: function () {
         ApiService.getCompanyList('/api/h5BusinessManage/queryAdsH5.htm?peopleId=' + this.userInfo.id + '&deviceInfo=' + this.userInfo.deviceInfo + '&checkFlag&memberId=' + this.userInfo.id + '&businessAdId=' + this.companyInfo.id).then(res => {
           this.imgs = res.data.rows
+          console.log(res.data)
+          
           this.collectionFlag = res.data.rows[0].flag
         })
       },
@@ -101,7 +108,15 @@
         this.$router.push('/itemList/' + this.companyInfo.id)
       },
       pay () {
-        this.$router.push('/payCompany')
+        //this.$router.push('/payCompany')
+        console.log(this.companyInfo)
+        if(this.companyInfo.isService==1){
+        	this.showValue = true
+          this.resultDesc = '商家暂时不营业'
+        }else{
+        	this.$router.push('/payCompany')
+        }
+        
       },
       go () {
         this.$router.push('/community')
